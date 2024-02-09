@@ -75,9 +75,7 @@ insert into Attendance values
 (9,'true','good',2,2),
 (10,'true','good',3,2)
 
-select * from Attendance a join Session s on a.session_id=s.id join Student st on st.id=a.student_id
-select st.name,a.status,a.description,s.timeSlot_id,t.name as TeacherName,s.date from Attendance a join Session s on a.session_id=s.id join Student st on st.id=a.student_id join Teacher t on t.id=s.lecture_id
-select * from Session
+
 
 
 
