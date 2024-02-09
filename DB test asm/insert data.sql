@@ -49,21 +49,35 @@ insert into room values
 (4,'al202'),
 (5,'de201')
 select * from session
-select * from course
-select * from [group]
-select * from teacher
+
 insert into [session] values
 (1,'true',1,1,1,2,'2023-12-15'),
-(2,'true',,,,,''),
-(3,'false',,,,,''),
-(4,'false',,,,,''),
-(5,'true',,,,,''),
-(6,'false',,,,,''),
-(7,'true',,,,,''),
-(8,'false',,,,,''),
-(9,'true',,,,,''),
-(10,'true',,,,,'')
+(2,'true',2,1,2,1,'2023-12-15'),
+(3,'false',3,1,3,6,'2023-12-15'),
+(4,'false',4,1,4,5,'2023-12-15'),
+(5,'true',5,2,1,3,'2023-12-16'),
+(6,'false',1,1,2,2,'2023-12-17'),
+(7,'true',2,1,1,1,'2023-12-17'),
+(8,'false',3,1,4,6,'2023-12-17'),
+(9,'true',4,1,3,5,'2023-12-17'),
+(10,'true',5,2,2,3,'2023-12-18')
 
+
+insert into Attendance values 
+(1,'true','good',1,1),
+(2,'false','nghi hoc',2,1),
+(3,'true','good',3,1),
+(4,'true','good',4,1),
+(5,'true','good',5,1),
+(6,'false','ngu trong lop',6,1),
+(7,'true','good',7,1),
+(8,'fale','tu y ra khoi lop',1,2),
+(9,'true','good',2,2),
+(10,'true','good',3,2)
+
+select * from Attendance a join Session s on a.session_id=s.id join Student st on st.id=a.student_id
+select st.name,a.status,a.description,s.timeSlot_id,t.name as TeacherName,s.date from Attendance a join Session s on a.session_id=s.id join Student st on st.id=a.student_id join Teacher t on t.id=s.lecture_id
+select * from Session
 
 
 
