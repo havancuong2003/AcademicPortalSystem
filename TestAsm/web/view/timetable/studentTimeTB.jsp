@@ -56,7 +56,7 @@
     <body>
         <h1>${requestScope.test1} aaa</h1>
         <div class="home">
-            <a href="../index.html">Home</a>
+            <a href="/testasm/student/home">Home</a>
         </div>
         <div>
             <h2 id="header-timetable">Student Time Table</h2>
@@ -112,7 +112,6 @@
             function updateTimetable() {
                 var selectedYear = yearElement.value;
                 var selectedWeek = weekElement.value;
-                var weekRange = getWeekRange(selectedYear, selectedWeek);
 
                 // Clear existing timetable
                 timetableContainer.innerHTML = "";
@@ -214,6 +213,7 @@
                     group: "${a.session.group.name}",
                     room: "${a.session.room.description}",
                     attendanceStatus: "${a.status}"
+
                 };
                 timetableData.push(timetable);
             </c:forEach>

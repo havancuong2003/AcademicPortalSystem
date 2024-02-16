@@ -4,8 +4,16 @@
         <servlet-name>AttendanceStudentController</servlet-name>
         <servlet-class>controller.attendance.AttendanceController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HomeController</servlet-name>
+        <servlet-class>controller.home.HomeController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AttendanceStudentController</servlet-name>
         <url-pattern>/student/attendance</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeController</servlet-name>
+        <url-pattern>/student/home</url-pattern>
     </servlet-mapping>
 </web-app>

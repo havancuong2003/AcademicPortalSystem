@@ -168,7 +168,12 @@ public class AttendanceDBContext extends DBContext<Attendance> {
                 Attendance a = new Attendance();
                 a.setId(rs.getInt("id"));
                 a.setDescription(rs.getString("description"));
-                a.setStatus(rs.getBoolean("status"));
+                if ("true".equals(rs.getString("status"))) {
+                    a.setStatus("Present");
+                } else {
+                    a.setStatus("Absent");
+                }
+
                 a.setStudent(getStudentByID(rs.getInt("student_id")));
                 a.setSession(getSessionByID(rs.getInt("session_id")));
                 attendances.add(a);

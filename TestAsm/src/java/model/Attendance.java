@@ -8,17 +8,18 @@ package model;
  *
  * @author -MSI-
  */
-public class Attendance implements IEntity{
+public class Attendance implements IEntity {
+
     private int id;
     private Student student;
     private Session session;
-    private boolean  status;
+    private String status;
     private String description;
 
     public Attendance() {
     }
 
-    public Attendance(int id, Student student, Session session, boolean status, String description) {
+    public Attendance(int id, Student student, Session session, String status, String description) {
         this.id = id;
         this.student = student;
         this.session = session;
@@ -50,11 +51,11 @@ public class Attendance implements IEntity{
         this.session = session;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -65,5 +66,5 @@ public class Attendance implements IEntity{
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
 }
