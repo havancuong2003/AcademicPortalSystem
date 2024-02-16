@@ -12,13 +12,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <style>
+        
+        </style>
     </head>
     <body>
-        <h1>${requestScope.test}</h1>
-        <c:forEach items="${requestScope.list}" var="s" >
-            <h1>
-                ${s.id}
-            </h1>
-        </c:forEach>
+        <h2>Student Time Table</h2>
+      
     </body>
 </html>

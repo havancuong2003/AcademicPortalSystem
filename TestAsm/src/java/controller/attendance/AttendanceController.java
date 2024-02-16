@@ -60,10 +60,8 @@ public class AttendanceController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         AttendanceDBContext adb = new AttendanceDBContext();
-        ArrayList<Session> listInfoStudent = adb.listInfoTeacher();
-        request.setAttribute("test", listInfoStudent.size());
-        request.setAttribute("list", listInfoStudent);
-        request.getRequestDispatcher("../view/timetable/lecture.jsp").forward(request, response);
+        request.setAttribute("list", adb.listInfoStudent());
+        request.getRequestDispatcher("../view/timetable/studentTimeTB.jsp").forward(request, response);
     } 
 
     /** 
