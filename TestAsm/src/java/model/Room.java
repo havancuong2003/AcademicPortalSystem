@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Room implements IEntity {
 
     private int id;
-    private String desription;
+    private String description;
     private ArrayList<Session> sessions = new ArrayList<>();
 
     public Room() {
@@ -21,7 +21,7 @@ public class Room implements IEntity {
 
     public Room(int id, String desription) {
         this.id = id;
-        this.desription = desription;
+        this.description = desription;
     }
 
     public int getId() {
@@ -32,12 +32,12 @@ public class Room implements IEntity {
         this.id = id;
     }
 
-    public String getDesription() {
-        return desription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesription(String desription) {
-        this.desription = desription;
+    public void setDescription(String desription) {
+        this.description = desription;
     }
 
     public ArrayList<Session> getSessions() {
