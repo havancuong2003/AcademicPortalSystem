@@ -58,30 +58,52 @@ public class LectureAttendance extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        int ssId = Integer.parseInt(request.getParameter("sessionID"));
-        String a = request.getParameter("sessionid");
+        String a_raw = request.getParameter("sessionid");
+        int ssid = Integer.parseInt(a_raw);
 
         AttendanceDBContext adb = new AttendanceDBContext();
-        ArrayList<Attendance> studentsBySessionID = adb.getStudentsBySessionID(Integer.parseInt(a));
-        request.setAttribute("test", studentsBySessionID.size());
+        ArrayList<Attendance> studentsBySessionID = adb.getStudentsBySessionID(ssid);
+
         request.setAttribute("list", studentsBySessionID);
-        //    ArrayList<Attendance> studentList = adb.getStudentsBySessionID(ssId);
-        //    request.setAttribute("test", studentList.size());
         request.getRequestDispatcher("../view/attendance/lecture.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String a_raw = request.getParameter("sessionid");
+        int ssid = Integer.parseInt(a_raw);
+
+        AttendanceDBContext adb = new AttendanceDBContext();
+        ArrayList<Attendance> studentsBySessionID = adb.getStudentsBySessionID(ssid);
+
+        for (Attendance attendance : studentsBySessionID) {
+            String attendanceValue = request.getParameter("attendance" + attendance.getStudent().getId());
+            String status = "";
+            if (attendanceValue.equals("present")) {
+                status = "true";
+            } else {
+                status = "false";
+            }
+            attendance.setStatus(status);
+
+        }
+
+        adb.updateAttendanceStatus(studentsBySessionID, ssid);
+        response.sendRedirect("timetable");
+
+    }
+// check cai nay de biet la giang vien da diem danh chua, neu khong ton tai co nghia la giaing vien chua diem danh
+// sau do add data moi
+// giang vien diem danh roi thi update lai data 
+
+    public boolean checkSessionExist(int id, ArrayList<Attendance> attendances) {
+        for (Attendance a : attendances) {
+            if (a.getSession().getId() == id) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

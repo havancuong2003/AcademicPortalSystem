@@ -63,9 +63,9 @@
 
     </style>
     <body>
-        <h1>${requestScope.test} aa</h1>
+
         <div class="home">
-            <a href="/testasm/lecture/home">Home</a>
+            <a href="home">Home</a>
         </div>
         <div>
             <h2 id="header-timetable">Lecture Time Table</h2>
@@ -122,10 +122,8 @@
                 var selectedYear = yearElement.value;
                 var selectedWeek = weekElement.value;
 
-                // Clear existing timetable
                 timetableContainer.innerHTML = "";
 
-                // Render timetable for selected week
                 var timetableData = getTimetableData(selectedYear, selectedWeek);
                 if (timetableData.length === 0) {
                     timetableContainer.innerHTML = `<div class="no-timetable">No timetable available for the selected week and year</div>`;
@@ -134,18 +132,14 @@
 
                 var table = document.createElement("table");
                 var headerRow = table.insertRow();
-                for (let key of [
-                    "Date",
-                    "Time Slot",
-                    "Course",
-                    "Group",
-                    "Room",
-                    "Attendance Status"
-                ]) {
-                    const headerCell = document.createElement("th");
-                    headerCell.textContent = "Attendance Status";
+
+                var headers = ["Date", "Time Slot", "Course", "Group", "Room", "Attendance Status"];
+
+                headers.forEach(function (headerText) {
+                    var headerCell = document.createElement("th");
+                    headerCell.textContent = headerText;
                     headerRow.appendChild(headerCell);
-                }
+                });
 
 
                 for (let entry of timetableData) {
@@ -160,6 +154,7 @@
                     const statusLink = document.createElement("a");
                     statusLink.textContent = entry["attendanceStatus"];
                     statusLink.href = "../lecture/attendance?sessionid=" + entry["sessionId"];
+                   
                     // Sẽ được thay đổi sau
                     statusLink.className = entry["attendanceStatus"] === "attendanced" ? "attendanced" : "take-attendance";
                     statusLink.addEventListener("click", function () {

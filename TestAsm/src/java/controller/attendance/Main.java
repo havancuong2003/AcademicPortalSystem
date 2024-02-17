@@ -7,16 +7,16 @@ package controller.attendance;
 import dal.AttendanceDBContext;
 import java.util.ArrayList;
 import model.Attendance;
-import model.Student;
 
 /**
  *
  * @author -MSI-
  */
 public class Main {
+
     public static void main(String[] args) {
-        AttendanceDBContext adb =new AttendanceDBContext();
+        AttendanceDBContext adb = new AttendanceDBContext();
         ArrayList<Attendance> s = adb.getStudentsBySessionID(1);
-        System.out.println(s.get(0).getSession().getGroup().getName());
+  
     }
 }

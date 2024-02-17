@@ -53,19 +53,32 @@
                 bottom: 0;
             }
             #submitAtd{
-             text-align: center;   
+                text-align: center;
             }
             .header-attendance{
                 font-size: 50px;
                 text-align: center;
             }
+            .home a {
+                color: rgb(13, 90, 235);
+                font-size: 25px;
+                padding: 5px 10px;
+            }
+            .home {
+                padding: 10px;
+                border-radius: 5px;
+                margin: 25px 0;
+            }
         </style>
     </head>
     <body>
-
+        <h1>${requestScope.test} a</h1>
         <div class="container">
+            <div class="home">
+                <a href="home">Home</a>
+            </div>
             <h2 class="header-attendance">Điểm danh Sinh viên</h2>
-            <form>
+            <form action="attendance" method="post">
                 <table>
                     <thead>
                         <tr>
@@ -75,6 +88,7 @@
                             <th>Name</th>
                             <th>Image</th>
                             <th>Attendance Status</th>
+                            <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -85,22 +99,22 @@
                                 <td>${s.session.group.name}</td>
                                 <td>${s.student.id}</td>
                                 <td>${s.student.name}</td>                                  
-                             
+                                
                                 <td><img src="../img/${s.student.imgUrl}" alt="Student image"></td>
                                 <td>
-                                    <label><input type="radio" name="attendance${s.student.id}" value="present">Presnet</label>
-                                    <label><input type="radio" name="attendance${s.student.id}" value="absent"> Absent</label>
+                                    <label><input type="radio" name="attendance${s.student.id}" value="present" ${s.status eq "true" ? 'checked' : ''}> Present</label>
+                                    <label><input type="radio" name="attendance${s.student.id}" value="absent" ${s.status eq "false" ? 'checked' : ''}> Absent</label>
+
                                 </td>
+                                <td>${s.description}</td>
+                        <input type="hidden" value="${s.session.id}" name="sessionid"/>
                             </tr>
                         </c:forEach>
-
                     </tbody>
                 </table>
                 <div id="submitAtd">
-
                     <input type="submit" id ="submit" value ="Save">
                 </div>
-
             </form>
 
 

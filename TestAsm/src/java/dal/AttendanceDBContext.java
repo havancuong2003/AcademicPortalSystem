@@ -232,6 +232,26 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         return sessions;
     }
 
+    public void updateAttendanceStatus(ArrayList<Attendance> attendances, int id) {
+        try {
+            for (Attendance a : attendances) {
+
+                String sql = "update Attendance \n"
+                        + "set [status] = ? \n"
+                        + "where student_id= ? and session_id=?";
+
+                PreparedStatement stm = connection.prepareStatement(sql);
+
+                stm.setString(1, a.getStatus());
+                stm.setInt(2, a.getStudent().getId());
+                stm.setInt(3, id);
+                stm.executeUpdate();
+            }
+        } catch (SQLException e) {
+        }
+        
+    }
+
     @Override
     public void insert(Attendance entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
