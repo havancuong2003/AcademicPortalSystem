@@ -63,7 +63,7 @@
 
     </style>
     <body>
-
+        <h1>${requestScope.test} a</h1>
         <div class="home">
             <a href="home">Home</a>
         </div>
@@ -153,8 +153,9 @@
                     const statusCell = row.insertCell();
                     const statusLink = document.createElement("a");
                     statusLink.textContent = entry["attendanceStatus"];
+
                     statusLink.href = "../lecture/attendance?sessionid=" + entry["sessionId"];
-                   
+
                     // Sẽ được thay đổi sau
                     statusLink.className = entry["attendanceStatus"] === "attendanced" ? "attendanced" : "take-attendance";
                     statusLink.addEventListener("click", function () {
@@ -223,8 +224,8 @@
                     room: "${s.room.description}",
                     attendanceStatus: "${s.status}",
                     sessionId: "${s.id}"
-
                 };
+                console.log(timetable.attendanceStatus);
                 timetableData.push(timetable);
             </c:forEach>
 

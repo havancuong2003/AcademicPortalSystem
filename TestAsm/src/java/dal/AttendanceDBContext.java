@@ -249,7 +249,22 @@ public class AttendanceDBContext extends DBContext<Attendance> {
             }
         } catch (SQLException e) {
         }
-        
+
+    }
+
+    public void insertAttendance(ArrayList<Attendance> attendances, int id) {
+        try {
+            for (Attendance a : attendances) {
+
+                String sql = "Insert into attendance values ('?','?',?,?)";
+                PreparedStatement stm = connection.prepareStatement(sql);
+                stm.setString(1, a.getStatus());
+                stm.setString(2, a.getDescription());
+                stm.setInt(3, a.getStudent().getId());
+                stm.setInt(4, id);
+            }
+        } catch (SQLException e) {
+        }
     }
 
     @Override

@@ -6,7 +6,6 @@ package controller.attendance;
 
 import dal.AttendanceDBContext;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,41 +19,6 @@ import model.Attendance;
  */
 public class LectureAttendance extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LectureAttendance</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LectureAttendance at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -73,23 +37,29 @@ public class LectureAttendance extends HttpServlet {
             throws ServletException, IOException {
         String a_raw = request.getParameter("sessionid");
         int ssid = Integer.parseInt(a_raw);
-
         AttendanceDBContext adb = new AttendanceDBContext();
         ArrayList<Attendance> studentsBySessionID = adb.getStudentsBySessionID(ssid);
 
         for (Attendance attendance : studentsBySessionID) {
             String attendanceValue = request.getParameter("attendance" + attendance.getStudent().getId());
-            String status = "";
+            String status = null;
             if (attendanceValue.equals("present")) {
                 status = "true";
-            } else {
+            } else if (!attendanceValue.equals("present")) {
                 status = "false";
             }
+
             attendance.setStatus(status);
 
         }
+        //    if (checkSessionExist(ssid, studentsBySessionID)) {
 
         adb.updateAttendanceStatus(studentsBySessionID, ssid);
+        //    }
+
+//        else{
+//            adb.insertAttendance(studentsBySessionID, ssid);
+//        }
         response.sendRedirect("timetable");
 
     }

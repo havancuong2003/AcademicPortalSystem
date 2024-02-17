@@ -55,7 +55,7 @@ CREATE TABLE Session (
 );
 
 CREATE TABLE Attendance (
-    id INT PRIMARY KEY,
+    id INT identity(1,1) PRIMARY KEY,
     status NVARCHAR(255),
     description NVARCHAR(255),
     student_id INT,

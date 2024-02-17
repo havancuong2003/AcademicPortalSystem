@@ -99,17 +99,24 @@
                                 <td>${s.session.group.name}</td>
                                 <td>${s.student.id}</td>
                                 <td>${s.student.name}</td>                                  
-                                
+
                                 <td><img src="../img/${s.student.imgUrl}" alt="Student image"></td>
                                 <td>
-                                    <label><input type="radio" name="attendance${s.student.id}" value="present" ${s.status eq "true" ? 'checked' : ''}> Present</label>
-                                    <label><input type="radio" name="attendance${s.student.id}" value="absent" ${s.status eq "false" ? 'checked' : ''}> Absent</label>
+                                    <c:if test="${s.session.status eq 'true'}">
+                                        <label><input type="radio" name="attendance${s.student.id}" value="present" ${s.status eq 'true' ? 'checked' : ''}> Present</label>
+                                        <label><input type="radio" name="attendance${s.student.id}" value="absent" ${s.status eq 'false' ? 'checked' : ''}> Absent</label>
+                                        </c:if>
+
+                                    <c:if test="${s.session.status eq 'false'}">
+                                        <label><input type="radio" name="attendance${s.student.id}" value="present"> Present</label>
+                                        <label><input type="radio" name="attendance${s.student.id}" value="absent"> Absent</label>
+                                        </c:if>
 
                                 </td>
                                 <td>${s.description}</td>
                         <input type="hidden" value="${s.session.id}" name="sessionid"/>
-                            </tr>
-                        </c:forEach>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
                 <div id="submitAtd">
