@@ -235,21 +235,25 @@ public class AttendanceDBContext extends DBContext<Attendance> {
     public void updateAttendanceStatus(ArrayList<Attendance> attendances, int id) {
         try {
             for (Attendance a : attendances) {
-
-                String sql = "update Attendance \n"
-                        + "set [status] = ? \n"
-                        + "where student_id= ? and session_id=?";
-
+                String sql = "update Attendance "
+                        + "set status = ? ,description = ? "
+                        + "where session_id = ? and student_id = ?; "
+                        + "update Session "
+                        + "set status = ? "
+                        + "where id = ?;";
                 PreparedStatement stm = connection.prepareStatement(sql);
 
                 stm.setString(1, a.getStatus());
-                stm.setInt(2, a.getStudent().getId());
+                stm.setString(2, a.getDescription());
                 stm.setInt(3, id);
+                stm.setInt(4, a.getStudent().getId());
+                stm.setString(5, "true");
+                stm.setInt(6, id);
                 stm.executeUpdate();
             }
         } catch (SQLException e) {
+            // Xử lý ngoại lệ SQL
         }
-
     }
 
     public void insertAttendance(ArrayList<Attendance> attendances, int id) {

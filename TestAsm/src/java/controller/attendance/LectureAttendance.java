@@ -42,26 +42,22 @@ public class LectureAttendance extends HttpServlet {
 
         for (Attendance attendance : studentsBySessionID) {
             String attendanceValue = request.getParameter("attendance" + attendance.getStudent().getId());
+            String descriptionValue = request.getParameter("description"+attendance.getStudent().getId());
             String status = null;
-            if (attendanceValue.equals("present")) {
-                status = "true";
-            } else if (!attendanceValue.equals("present")) {
-                status = "false";
+            if (attendanceValue != null) {
+
+                if (attendanceValue.equals("present")) {
+                    status = "true";
+                } else if (!attendanceValue.equals("present")) {
+                    status = "false";
+                }
             }
-
+            attendance.setDescription(descriptionValue);
             attendance.setStatus(status);
-
         }
-        //    if (checkSessionExist(ssid, studentsBySessionID)) {
-
+        
         adb.updateAttendanceStatus(studentsBySessionID, ssid);
-        //    }
-
-//        else{
-//            adb.insertAttendance(studentsBySessionID, ssid);
-//        }
         response.sendRedirect("timetable");
-
     }
 // check cai nay de biet la giang vien da diem danh chua, neu khong ton tai co nghia la giaing vien chua diem danh
 // sau do add data moi

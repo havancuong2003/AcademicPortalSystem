@@ -113,7 +113,10 @@
                                         </c:if>
 
                                 </td>
-                                <td>${s.description}</td>
+                                <td>
+                                    <input type="text" name="description${s.student.id}" value="${s.description}">
+                                </td>
+
                         <input type="hidden" value="${s.session.id}" name="sessionid"/>
                         </tr>
                     </c:forEach>
