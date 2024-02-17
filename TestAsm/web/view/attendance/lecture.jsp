@@ -72,7 +72,7 @@
         </style>
     </head>
     <body>
-        <h1>${requestScope.test} a</h1>
+      
         <div class="container">
             <div class="home">
                 <a href="home">Home</a>

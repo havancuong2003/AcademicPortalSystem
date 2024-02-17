@@ -18,20 +18,20 @@ import model.Attendance;
  * @author -MSI-
  */
 public class LectureAttendance extends HttpServlet {
-
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String a_raw = request.getParameter("sessionid");
         int ssid = Integer.parseInt(a_raw);
-
+        
         AttendanceDBContext adb = new AttendanceDBContext();
         ArrayList<Attendance> studentsBySessionID = adb.getStudentsBySessionID(ssid);
-
+        
         request.setAttribute("list", studentsBySessionID);
         request.getRequestDispatcher("../view/attendance/lecture.jsp").forward(request, response);
     }
-
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,13 +39,13 @@ public class LectureAttendance extends HttpServlet {
         int ssid = Integer.parseInt(a_raw);
         AttendanceDBContext adb = new AttendanceDBContext();
         ArrayList<Attendance> studentsBySessionID = adb.getStudentsBySessionID(ssid);
-
+        
         for (Attendance attendance : studentsBySessionID) {
             String attendanceValue = request.getParameter("attendance" + attendance.getStudent().getId());
-            String descriptionValue = request.getParameter("description"+attendance.getStudent().getId());
+            String descriptionValue = request.getParameter("description" + attendance.getStudent().getId());
             String status = null;
             if (attendanceValue != null) {
-
+                
                 if (attendanceValue.equals("present")) {
                     status = "true";
                 } else if (!attendanceValue.equals("present")) {

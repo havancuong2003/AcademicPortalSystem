@@ -63,7 +63,7 @@
 
     </style>
     <body>
-        <h1>${requestScope.test} a</h1>
+
         <div class="home">
             <a href="home">Home</a>
         </div>
