@@ -59,10 +59,14 @@ public class LectureAttendance extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        int ssId = Integer.parseInt(request.getParameter("sessionID"));
-String a =request.getParameter("sessionid");
+        String a = request.getParameter("sessionid");
+
         AttendanceDBContext adb = new AttendanceDBContext();
-    //    ArrayList<Attendance> studentList = adb.getStudentsBySessionID(ssId);
-    //    request.setAttribute("test", studentList.size());
+        ArrayList<Attendance> studentsBySessionID = adb.getStudentsBySessionID(Integer.parseInt(a));
+        request.setAttribute("test", studentsBySessionID.size());
+        request.setAttribute("list", studentsBySessionID);
+        //    ArrayList<Attendance> studentList = adb.getStudentsBySessionID(ssId);
+        //    request.setAttribute("test", studentList.size());
         request.getRequestDispatcher("../view/attendance/lecture.jsp").forward(request, response);
     }
 

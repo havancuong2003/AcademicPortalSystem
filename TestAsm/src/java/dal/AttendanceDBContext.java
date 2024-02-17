@@ -22,12 +22,12 @@ import model.TimeSlot;
  * @author -MSI-
  */
 public class AttendanceDBContext extends DBContext<Attendance> {
-    
+
     @Override
     public ArrayList<Attendance> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     public Course getCourseByID(int id) {
         Course c = null;
         try {
@@ -44,7 +44,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return c;
     }
-    
+
     public Group getGroupByID(int id) {
         Group g = null;
         try {
@@ -62,7 +62,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return g;
     }
-    
+
     public Room getRoomByID(int id) {
         Room r = null;
         try {
@@ -74,13 +74,13 @@ public class AttendanceDBContext extends DBContext<Attendance> {
                 r = new Room();
                 r.setId(rs.getInt("id"));
                 r.setDescription(rs.getString("name"));
-                
+
             }
         } catch (SQLException e) {
         }
         return r;
     }
-    
+
     public TimeSlot getTimeSlotByID(int id) {
         TimeSlot ts = null;
         try {
@@ -97,7 +97,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return ts;
     }
-    
+
     public Teacher getLectureByID(int id) {
         Teacher t = null;
         try {
@@ -114,7 +114,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return t;
     }
-    
+
     public Session getSessionByID(int id) {
         Session s = null; // Khởi tạo đối tượng Session là null
         try {
@@ -137,26 +137,29 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return s;
     }
-    
+
     public ArrayList<Attendance> getStudentsBySessionID(int id) {
         ArrayList<Attendance> students = new ArrayList<>();
         try {
-            String sql = "select s.id,s.name,s.imgUrf,a.status from student s join Attendance a on a.student_id= s.id\n"
-                    + "join [session] ss on ss.id=a.session_id\n"
-                    + "where ss.id=?";
+            String sql = "select * from attendance \n"
+                    + "where session_id=?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Attendance a = new Attendance();
-                a.setStudent(getStudentByID(rs.getInt("id")));
+                a.setStudent(getStudentByID(rs.getInt("student_id")));
                 a.setStatus(rs.getString("status"));
+                a.setSession(getSessionByID(rs.getInt("session_id")));
+                a.setId(rs.getInt("id"));
+                a.setDescription(rs.getString("description"));
+                students.add(a);
             }
         } catch (SQLException e) {
         }
         return students;
     }
-    
+
     public Student getStudentByID(int id) {
         Student s = null;
         try {
@@ -174,17 +177,17 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return s;
     }
-    
+
     public ArrayList<Attendance> listInfoStudent() {
         ArrayList<Attendance> attendances = new ArrayList<>();
-        
+
         try {
             String sql = "select * from attendance";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-            
+
             while (rs.next()) {
-                
+
                 Attendance a = new Attendance();
                 a.setId(rs.getInt("id"));
                 a.setDescription(rs.getString("description"));
@@ -193,7 +196,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
                 } else {
                     a.setStatus("Absent");
                 }
-                
+
                 a.setStudent(getStudentByID(rs.getInt("student_id")));
                 a.setSession(getSessionByID(rs.getInt("session_id")));
                 attendances.add(a);
@@ -202,7 +205,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return attendances;
     }
-    
+
     public ArrayList<Session> listInfoLecture() {
         ArrayList<Session> sessions = new ArrayList<>();
         try {
@@ -228,25 +231,25 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return sessions;
     }
-    
+
     @Override
     public void insert(Attendance entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public void update(Attendance entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public void delete(Attendance entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public Attendance get(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
 }

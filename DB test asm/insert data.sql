@@ -170,7 +170,7 @@ insert into [session] values
 (16,'true',3,1,4,4,'2023-01-13')
 
 
-
+ 
 insert into Attendance values 
 (1,'true','good',1,1),
 (2,'true','good',2,1),
