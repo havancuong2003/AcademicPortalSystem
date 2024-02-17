@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.attendance;
+package controller.timetable;
 
 import dal.AttendanceDBContext;
 import java.io.IOException;
@@ -12,18 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import model.Attendance;
-import model.Session;
 
 /**
  *
  * @author -MSI-
  */
 @WebServlet(name = "AttendanceStudentController", urlPatterns = {"/student/attendance"})
-public class AttendanceController extends HttpServlet {
+public class TimetableStudentController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -66,9 +61,6 @@ public class AttendanceController extends HttpServlet {
         AttendanceDBContext adb = new AttendanceDBContext();
         request.setAttribute("list", adb.listInfoStudent());
 
-        Date a = adb.getSessionByID(1).getDate();
-
-        request.setAttribute("test1", a);
         request.getRequestDispatcher("../view/timetable/studentTimeTB.jsp").forward(request, response);
     }
 

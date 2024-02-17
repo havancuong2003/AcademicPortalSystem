@@ -10,17 +10,28 @@ import java.util.ArrayList;
  *
  * @author -MSI-
  */
-public class Student implements IEntity{
+public class Student implements IEntity {
+
     private int id;
     private String name;
     private ArrayList<Group> groups = new ArrayList<>();
+    private String imgUrl;
 
     public Student() {
     }
 
-    public Student(int id, String name) {
+    public Student(int id, String name, String imgUrl) {
         this.id = id;
         this.name = name;
+        this.imgUrl = imgUrl;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public int getId() {
@@ -46,5 +57,5 @@ public class Student implements IEntity{
     public void setGroups(ArrayList<Group> groups) {
         this.groups = groups;
     }
-   
+
 }

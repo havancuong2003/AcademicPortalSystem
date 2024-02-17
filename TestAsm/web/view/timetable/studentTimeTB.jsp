@@ -43,8 +43,8 @@
         }
         .home a {
             color: rgb(13, 90, 235);
-            font-size: 20px;
-            padding: 10px;
+            font-size: 25px;
+            padding: 5px 10px;
         }
         .home {
             padding: 10px;
@@ -54,7 +54,7 @@
 
     </style>
     <body>
-        <h1>${requestScope.test1} aaa</h1>
+     
         <div class="home">
             <a href="/testasm/student/home">Home</a>
         </div>
@@ -217,81 +217,7 @@
                 };
                 timetableData.push(timetable);
             </c:forEach>
-//                const timetableData = [
-//                    {
-//                        date: "2023-01-03",
-//                        timeSlot: "8:00 - 9:00",
-//                        lecture: "Dr. Smith",
-//                        course: "Math",
-//                        group: "A",
-//                        room: "101",
-//                        attendanceStatus: "Present"
-//                    },
-//                    {
-//                        date: "2023-09-04",
-//                        timeSlot: "8:00 - 9:00",
-//                        lecture: "Dr. Smith",
-//                        course: "Math",
-//                        group: "A",
-//                        room: "101",
-//                        attendanceStatus: "Present"
-//                    },
-//                    {
-//                        date: "2023-09-09",
-//                        timeSlot: "9:00 - 10:00",
-//                        lecture: "Prof. Johnson",
-//                        course: "Science",
-//                        group: "B",
-//                        room: "102",
-//                        attendanceStatus: "Absent"
-//                    },
-//                    // Add more entries for different dates, times, and courses
-//                    {
-//                        date: "2023-09-11", // Ngày của tuần 2
-//                        timeSlot: "10:00 - 11:00",
-//                        lecture: "Dr. Brown",
-//                        course: "English",
-//                        group: "C",
-//                        room: "103",
-//                        attendanceStatus: "Present"
-//                    },
-//                    {
-//                        date: "2023-09-11", // Ngày của tuần 2
-//                        timeSlot: "11:00 - 12:00",
-//                        lecture: "Prof. White",
-//                        course: "History",
-//                        group: "D",
-//                        room: "104",
-//                        attendanceStatus: "Present"
-//                    },
-//                    {
-//                        date: "2023-09-18", // Ngày của tuần 3
-//                        timeSlot: "13:00 - 14:00",
-//                        lecture: "Dr. Lee",
-//                        course: "Physics",
-//                        group: "E",
-//                        room: "105",
-//                        attendanceStatus: "Absent"
-//                    },
-//                    {
-//                        date: "2023-09-25", // Ngày của tuần 4
-//                        timeSlot: "14:00 - 15:00",
-//                        lecture: "Prof. Black",
-//                        course: "Chemistry",
-//                        group: "F",
-//                        room: "106",
-//                        attendanceStatus: "Present"
-//                    },
-//                    {
-//                        date: "2023-10-02", // Ngày của tuần 5
-//                        timeSlot: "15:00 - 16:00",
-//                        lecture: "Dr. Green",
-//                        course: "Biology",
-//                        group: "G",
-//                        room: "107",
-//                        attendanceStatus: "Present"
-//                    }
-//                ];
+
 
                 // Filter timetable data based on selected week and year
                 const filteredData = timetableData.filter((entry) => {

@@ -10,9 +10,10 @@ import java.util.Date;
  *
  * @author -MSI-
  */
-public class Session implements IEntity{
+public class Session implements IEntity {
+
     private int id;
-    private boolean status;
+    private String status;
     private Group group;
     private Room room;
     private TimeSlot timeSlot;
@@ -22,7 +23,7 @@ public class Session implements IEntity{
     public Session() {
     }
 
-    public Session(int id, boolean status, Group group, Room room, TimeSlot timeSlot, Teacher teacher, Date date) {
+    public Session(int id, String status, Group group, Room room, TimeSlot timeSlot, Teacher teacher, Date date) {
         this.id = id;
         this.status = status;
         this.group = group;
@@ -40,11 +41,11 @@ public class Session implements IEntity{
         this.id = id;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -87,5 +88,5 @@ public class Session implements IEntity{
     public void setDate(Date date) {
         this.date = date;
     }
-    
+
 }

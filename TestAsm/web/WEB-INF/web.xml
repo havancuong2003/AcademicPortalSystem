@@ -2,18 +2,42 @@
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <servlet>
         <servlet-name>AttendanceStudentController</servlet-name>
-        <servlet-class>controller.attendance.AttendanceController</servlet-class>
+        <servlet-class>controller.timetable.TimetableStudentController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>HomeController</servlet-name>
-        <servlet-class>controller.home.HomeController</servlet-class>
+        <servlet-class>controller.home.HomeStudentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AttendanceLectureController</servlet-name>
+        <servlet-class>controller.timetable.TimetableLectureController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomeLectureController</servlet-name>
+        <servlet-class>controller.home.HomeLectureController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LectureAttendance</servlet-name>
+        <servlet-class>controller.attendance.LectureAttendance</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AttendanceStudentController</servlet-name>
-        <url-pattern>/student/attendance</url-pattern>
+        <url-pattern>/student/timetable</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/student/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AttendanceLectureController</servlet-name>
+        <url-pattern>/lecture/timetable</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeLectureController</servlet-name>
+        <url-pattern>/lecture/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LectureAttendance</servlet-name>
+        <url-pattern>/lecture/attendance</url-pattern>
     </servlet-mapping>
 </web-app>
