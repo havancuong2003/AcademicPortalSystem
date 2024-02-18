@@ -1,6 +1,6 @@
 <%-- 
-    Document   : test
-    Created on : Feb 17, 2024, 4:11:47 PM
+    Document   : student
+    Created on : Feb 18, 2024, 8:07:54 AM
     Author     : -MSI-
 --%>
 
@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>${requestScope.test} aasdas</h1>
+        <h1>Hello World mark!</h1>
     </body>
 </html>

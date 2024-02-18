@@ -54,7 +54,7 @@
 
     </style>
     <body>
-        <h1>${requestScope.test} a</h1>
+      
         <div class="home">
             <a href="/testasm/student/home">Home</a>
         </div>

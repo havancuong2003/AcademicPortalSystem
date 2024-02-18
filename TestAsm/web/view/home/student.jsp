@@ -133,11 +133,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <nav>
                 <ul>
                     <li><a href="timetable">Weekly Timetable</a></li>
-                    <li><a href="student_info.html">Thông Tin Sinh/Viên</a></li>
-                    <!-- Thêm các liên kết tới các trang khác ở đây -->
+                    <li><a href="student_info.html">Student information</a></li>
+                    <li><a href="mark" >Mark report</a></li>
+                 
                 </ul>
             </nav>
         </div>
+        
         <div class="footer">
             <p>FPT UNIVERSITY</p>
             <span>DAI HOC FPT HA NOI</span>
