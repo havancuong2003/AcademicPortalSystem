@@ -1,4 +1,4 @@
-CREATE TABLE Student (
+﻿CREATE TABLE Student (
     id INT PRIMARY KEY,
     name NVARCHAR(255)
 );
@@ -63,3 +63,11 @@ CREATE TABLE Attendance (
     FOREIGN KEY (student_id) REFERENCES Student(id),
     FOREIGN KEY (session_id) REFERENCES Session(id)
 );
+
+create table Student_course(
+̣studentid int,
+courseid int,
+FOREIGN KEY (studentid) REFERENCES Student(id),
+FOREIGN KEY (courseid) REFERENCES course(id)
+);
+
