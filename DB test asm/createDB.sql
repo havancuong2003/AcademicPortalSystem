@@ -71,3 +71,27 @@ FOREIGN KEY (studentid) REFERENCES Student(id),
 FOREIGN KEY (courseid) REFERENCES course(id)
 );
 
+create table grade_category(
+id int primary key,
+courseid int,
+FOREIGN KEY (courseid) REFERENCES course(id),
+description nvarchar(255)
+);
+
+create table grade_item(
+id int primary key,
+item nvarchar(255),
+[weight] nvarchar(50),
+grade_categoryid int,
+FOREIGN KEY (grade_categoryid) REFERENCES grade_category(id)
+
+);
+
+create table student_mark(
+id int primary key,
+[value] float,
+comment nvarchar(max),
+grade_itemid int,
+FOREIGN KEY (grade_itemid) REFERENCES grade_item(id)
+);
+
