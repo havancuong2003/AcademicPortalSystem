@@ -14,7 +14,7 @@ public class Student implements IEntity {
 
     private int id;
     private String name;
-    private ArrayList<Group> groups = new ArrayList<>();
+   // private ArrayList<Group> groups = new ArrayList<>();
     private String imgUrl;
 
     public Student() {
@@ -50,12 +50,12 @@ public class Student implements IEntity {
         this.name = name;
     }
 
-    public ArrayList<Group> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(ArrayList<Group> groups) {
-        this.groups = groups;
-    }
+//    public ArrayList<Group> getGroups() {
+//        return groups;
+//    }
+//
+//    public void setGroups(ArrayList<Group> groups) {
+//        this.groups = groups;
+//    }
 
 }
