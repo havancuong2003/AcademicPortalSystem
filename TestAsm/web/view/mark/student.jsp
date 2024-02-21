@@ -64,40 +64,40 @@
                             data: ${course.course.id}Data
                         });
             </c:forEach>
-                        var mathData = [
-                            {gradeCategory: 'Active Learning', gradeItem: 'Active Learning', weight: '10.0 %', value: '9.8', comment: ''},
-                            {gradeCategory: 'Exercise', gradeItem: 'Exercise 1', weight: '5.0 %', value: '8.5', comment: ''},
-                            {gradeCategory: 'Exercise', gradeItem: 'Exercise 2', weight: '5.0 %', value: '7.5', comment: ''},
-                            {gradeCategory: 'Presentation', gradeItem: 'Presentation', weight: '10.0 %', value: '8.5', comment: ''},
-                            {gradeCategory: 'Project', gradeItem: 'Project', weight: '30.0 %', value: '7', comment: ''},
-                            {gradeCategory: 'Final Exam', gradeItem: 'Final Exam', weight: '40.0 %', value: '', comment: ''},
-                            {gradeCategory: 'Final Exam Resit', gradeItem: 'Final Exam Resit', weight: '40.0 %', value: '', comment: ''},
-                            {gradeCategory: 'COURSE TOTAL', gradeItem: 'AVERAGE', weight: '0.0', value: '', comment: ''},
-                            {gradeCategory: 'COURSE TOTAL', gradeItem: 'STATUS', weight: '', value: '', comment: 'NOT PASSED'}
-                        ];
-
-                        // Sample data for English
-                        var englishData = [
-                            {gradeCategory: 'Active Learning', gradeItem: 'Active Learning', weight: '10.0 %', value: '9.5', comment: ''},
-                            {gradeCategory: 'Homework', gradeItem: 'Homework 1', weight: '10.0 %', value: '8.0', comment: ''},
-                            {gradeCategory: 'Homework', gradeItem: 'Homework 2', weight: '10.0 %', value: '7.5', comment: ''},
-                            {gradeCategory: 'Quiz', gradeItem: 'Quiz 1', weight: '20.0 %', value: '8.5', comment: ''},
-                            {gradeCategory: 'Quiz', gradeItem: 'Quiz 2', weight: '20.0 %', value: '9.0', comment: ''},
-                            {gradeCategory: 'Final Exam', gradeItem: 'Final Exam', weight: '30.0 %', value: '', comment: ''},
-                            {gradeCategory: 'Final Exam Resit', gradeItem: 'Final Exam Resit', weight: '30.0 %', value: '', comment: ''},
-                            {gradeCategory: 'COURSE TOTAL', gradeItem: 'AVERAGE', weight: '0.0', value: '', comment: ''},
-                            {gradeCategory: 'COURSE TOTAL', gradeItem: 'STATUS', weight: '', value: '', comment: 'PASSED'}
-                        ];
-
-                        // Sample data for Science
-                        var scienceData = [
-                            {gradeCategory: 'Lab Work', gradeItem: 'Lab Report 1', weight: '20.0 %', value: '9.0', comment: ''},
-                            {gradeCategory: 'Lab Work', gradeItem: 'Lab Report 2', weight: '20.0 %', value: '8.5', comment: ''},
-                            {gradeCategory: 'Midterm Exam', gradeItem: 'Midterm Exam', weight: '30.0 %', value: '8.0', comment: ''},
-                            {gradeCategory: 'Final Exam', gradeItem: 'Final Exam', weight: '30.0 %', value: '', comment: ''},
-                            {gradeCategory: 'COURSE TOTAL', gradeItem: 'AVERAGE', weight: '0.0', value: '', comment: ''},
-                            {gradeCategory: 'COURSE TOTAL', gradeItem: 'STATUS', weight: '', value: '', comment: 'PASSED'}
-                        ];
+//                        var mathData = [
+//                            {gradeCategory: 'Active Learning', gradeItem: 'Active Learning', weight: '10.0 %', value: '9.8', comment: ''},
+//                            {gradeCategory: 'Exercise', gradeItem: 'Exercise 1', weight: '5.0 %', value: '8.5', comment: ''},
+//                            {gradeCategory: 'Exercise', gradeItem: 'Exercise 2', weight: '5.0 %', value: '7.5', comment: ''},
+//                            {gradeCategory: 'Presentation', gradeItem: 'Presentation', weight: '10.0 %', value: '8.5', comment: ''},
+//                            {gradeCategory: 'Project', gradeItem: 'Project', weight: '30.0 %', value: '7', comment: ''},
+//                            {gradeCategory: 'Final Exam', gradeItem: 'Final Exam', weight: '40.0 %', value: '', comment: ''},
+//                            {gradeCategory: 'Final Exam Resit', gradeItem: 'Final Exam Resit', weight: '40.0 %', value: '', comment: ''},
+//                            {gradeCategory: 'COURSE TOTAL', gradeItem: 'AVERAGE', weight: '0.0', value: '', comment: ''},
+//                            {gradeCategory: 'COURSE TOTAL', gradeItem: 'STATUS', weight: '', value: '', comment: 'NOT PASSED'}
+//                        ];
+//
+//                        // Sample data for English
+//                        var englishData = [
+//                            {gradeCategory: 'Active Learning', gradeItem: 'Active Learning', weight: '10.0 %', value: '9.5', comment: ''},
+//                            {gradeCategory: 'Homework', gradeItem: 'Homework 1', weight: '10.0 %', value: '8.0', comment: ''},
+//                            {gradeCategory: 'Homework', gradeItem: 'Homework 2', weight: '10.0 %', value: '7.5', comment: ''},
+//                            {gradeCategory: 'Quiz', gradeItem: 'Quiz 1', weight: '20.0 %', value: '8.5', comment: ''},
+//                            {gradeCategory: 'Quiz', gradeItem: 'Quiz 2', weight: '20.0 %', value: '9.0', comment: ''},
+//                            {gradeCategory: 'Final Exam', gradeItem: 'Final Exam', weight: '30.0 %', value: '', comment: ''},
+//                            {gradeCategory: 'Final Exam Resit', gradeItem: 'Final Exam Resit', weight: '30.0 %', value: '', comment: ''},
+//                            {gradeCategory: 'COURSE TOTAL', gradeItem: 'AVERAGE', weight: '0.0', value: '', comment: ''},
+//                            {gradeCategory: 'COURSE TOTAL', gradeItem: 'STATUS', weight: '', value: '', comment: 'PASSED'}
+//                        ];
+//
+//                        // Sample data for Science
+//                        var scienceData = [
+//                            {gradeCategory: 'Lab Work', gradeItem: 'Lab Report 1', weight: '20.0 %', value: '9.0', comment: ''},
+//                            {gradeCategory: 'Lab Work', gradeItem: 'Lab Report 2', weight: '20.0 %', value: '8.5', comment: ''},
+//                            {gradeCategory: 'Midterm Exam', gradeItem: 'Midterm Exam', weight: '30.0 %', value: '8.0', comment: ''},
+//                            {gradeCategory: 'Final Exam', gradeItem: 'Final Exam', weight: '30.0 %', value: '', comment: ''},
+//                            {gradeCategory: 'COURSE TOTAL', gradeItem: 'AVERAGE', weight: '0.0', value: '', comment: ''},
+//                            {gradeCategory: 'COURSE TOTAL', gradeItem: 'STATUS', weight: '', value: '', comment: 'PASSED'}
+//                        ];
 
                         // Function to generate table rows
                         function generateRows(subjectData) {
