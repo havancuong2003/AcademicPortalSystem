@@ -1,4 +1,4 @@
-
+﻿
 
 insert into student values
 (1,'Ha Van Cuong'),
@@ -545,102 +545,56 @@ insert into Attendance values
 ('true','good',59,16),
 ('true','good',60,16)
 
-insert into grade_category values
-(1,1,'Computer Project'),
-(2,1,'Assignment'),
-(3,1,'Progress Test'),
-(4,1,'Final Exam'),
-(5,1,'Finam Exam Resit'),
-(6,2,'Progress Test 1'),
-(7,2,'Progress Test 2'),
-(8,2,'Workshop 1'),
-(9,2,'Workshop 2'),
-(10,2,'Practical Exam'),
-(11,2,'Assignment'),
-(12,2,'Final Exam'),
-(13,2,'Final Exam Resit')
+-- Thêm dữ liệu cho sinh viên 1, khóa học 1
+INSERT INTO mark (studentid, courseid, grade_category, grade_item, [weight], [value], comment)
+VALUES
+(1, 1, 'Computer Project', 'Computer Project', 0.15, 9.8, ''),
+(1, 1, 'Assignment', 'Assignment 1', 0.1, 8.5, ''),
+(1, 1, 'Assignment', 'Assignment 2', 0.1, 7.5, ''),
+(1, 1, 'Progress Test', 'Progress Test 1', 0.1, 8.0, ''),
+(1, 1, 'Progress Test', 'Progress Test 2', 0.1, 7.5, ''),
+(1, 1, 'Progress Test', 'Progress Test 3', 0.1, 7.0, ''),
+(1, 1, 'Final Exam', 'Final Exam', 0.35, NULL, ''),
+(1, 1, 'Final Exam Resit', 'Final Exam Resit', 0.35, NULL, 'Did not take Final Exam Resit'),
 
-insert into grade_item values 
-(1,'Computer Project',0.15,1),
-(2,'Assignment 1',0.1,2),
-(3,'Assignment 2',0.1,2),
-(4,'Progress Test 1',0.1,3),
-(5,'Progress Test 2',0.1,3),
-(6,'Progress Test 3',0.1,3),
-(7,'Final Exam',0.35,4),
-(8,'Final Exam Resit',0.35,5),
-(9,'Progress test 1',0.05,6),
-(10,'Progress test 2',0.05,7),
-(11,'Workshop 1',0.05,8),
-(12,'Workshop 2',0.05,9),
-(13,'Practical Exam',0.2,10),
-(14,'Assignment',0.4,11),
-(15,'Final Exam',0.2,12),
-(16,'Final Exam Resit',0.2,13)
+(2, 1, 'Computer Project', 'Computer Project', 0.15, 9.0, ''),
+(2, 1, 'Assignment', 'Assignment 1', 0.1, 8.0, ''),
+(2, 1, 'Assignment', 'Assignment 2', 0.1, 8.5, ''),
+(2, 1, 'Progress Test', 'Progress Test 1', 0.1, 7.8, ''),
+(2, 1, 'Progress Test', 'Progress Test 2', 0.1, 8.2, ''),
+(2, 1, 'Progress Test', 'Progress Test 3', 0.1, 8.5, ''),
+(2, 1, 'Final Exam', 'Final Exam', 0.35, 80.0, ''),
+(2, 1, 'Final Exam Resit', 'Final Exam Resit', 0.35, NULL, 'Did not take Final Exam Resit'),
 
-insert into student_mark values 
-(8.5, 'Good job on Computer Project', 1, 1),  -- Computer Project
-(7.8, 'Well done on Assignment 1', 2, 1),     -- Assignment 1
-(6.5, 'Satisfactory performance on Assignment 2', 3, 1),  -- Assignment 2
-(8.0, 'Passed Progress Test 1', 4, 1),       -- Progress Test 1
-(7.5, 'Progress Test 2 result', 5, 1),       -- Progress Test 2
-(7.0, 'Progress Test 3 result', 6, 1),       -- Progress Test 3
-(7.0, 'Final Exam score', 7, 1),            -- Final Exam
-(0.0, 'Did not take Final Exam Resit', 8, 1),  -- Final Exam Resit
 
-(9.0, 'Excellent Computer Project', 1, 2),  -- Computer Project
-(8.0, 'Good performance on Assignment 1', 2, 2),     -- Assignment 1
-(8.5, 'Well done on Assignment 2', 3, 2),  -- Assignment 2
-(7.8, 'Progress Test 1 result', 4, 2),       -- Progress Test 1
-(8.2, 'Passed Progress Test 2', 5, 2),       -- Progress Test 2
-(8.5, 'Progress Test 3 result', 6, 2),       -- Progress Test 3
-(8.0, 'Final Exam score', 7, 2),            -- Final Exam
-(0.0, 'Did not take Final Exam Resit', 8, 2),  -- Final Exam Resit
+(3, 1, 'Computer Project', 'Computer Project', 0.15, 7.0, ''),
+(3, 1, 'Assignment', 'Assignment 1', 0.1, 6.5, ''),
+(3, 1, 'Assignment', 'Assignment 2', 0.1, 7.0, ''),
+(3, 1, 'Progress Test', 'Progress Test 1', 0.1, 6.0, ''),
+(3, 1, 'Progress Test', 'Progress Test 2', 0.1, 6.8, ''),
+(3, 1, 'Progress Test', 'Progress Test 3', 0.1, 6.5, ''),
+(3, 1, 'Final Exam', 'Final Exam', 0.35, 70.0, ''),
+(3, 1, 'Final Exam Resit', 'Final Exam Resit', 0.35, NULL, 'Did not take Final Exam Resit'),
 
-(7.0, 'Average Computer Project', 1, 3),  -- Computer Project
-(6.5, 'Could improve Assignment 1', 2, 3),     -- Assignment 1
-(7.0, 'Satisfactory performance on Assignment 2', 3, 3),  -- Assignment 2
-(6.0, 'Failed Progress Test 1', 4, 3),       -- Progress Test 1
-(6.8, 'Progress Test 2 result', 5, 3),       -- Progress Test 2
-(6.5, 'Progress Test 3 result', 6, 3),       -- Progress Test 3
-(7.0, 'Final Exam score', 7, 3),            -- Final Exam
-(0.0, 'Did not take Final Exam Resit', 8, 3),  -- Final Exam Resit
+(1, 2, 'Progress Test', 'Progress Test 1', 0.05, 9.0, ''),
+(1, 2, 'Progress Test', 'Progress Test 2', 0.05, 8.0, ''),
+(1, 2, 'Workshop', 'Workshop 1', 0.05, 7.0, ''),
+(1, 2, 'Workshop', 'Workshop 2', 0.05, 8.5, ''),
+(1, 2, 'Practical Exam', 'Practical Exam', 0.2, 70.0, ''),
+(1, 2, 'Assignment', 'Assignment', 0.4, 8.0, ''),
+(1, 2, 'Final Exam', 'Final Exam', 0.2, NULL, ''),
+(1, 2, 'Final Exam Resit', 'Final Exam Resit', 0.2, NULL, 'Did not take Final Exam Resit'),
 
-(8.5, 'Good Computer Project', 1, 4),  -- Computer Project
-(8.0, 'Well done on Assignment 1', 2, 4),     -- Assignment 1
-(7.5, 'Satisfactory performance on Assignment 2', 3, 4),  -- Assignment 2
-(7.0, 'Passed Progress Test 1', 4, 4),       -- Progress Test 1
-(7.8, 'Progress Test 2 result', 5, 4),       -- Progress Test 2
-(7.5, 'Progress Test 3 result', 6, 4),       -- Progress Test 3
-(7.0, 'Final Exam score', 7, 4),            -- Final Exam
-(0.0, 'Did not take Final Exam Resit', 8, 4),  -- Final Exam Resit
 
-(9.0, 'Excellent Computer Project', 1, 5),  -- Computer Project
-(9.0, 'Excellent Assignment 1', 2, 5),     -- Assignment 1
-(8.5, 'Well done on Assignment 2', 3, 5),  -- Assignment 2
-(8.0, 'Passed Progress Test 1', 4, 5),       -- Progress Test 1
-(8.2, 'Passed Progress Test 2', 5, 5),       -- Progress Test 2
-(8.5, 'Progress Test 3 result', 6, 5),       -- Progress Test 3
-(8.0, 'Final Exam score', 7, 5),            -- Final Exam
-(0.0, 'Did not take Final Exam Resit', 8, 5),  -- Final Exam Resit
+(2, 2, 'Progress Test', 'Progress Test 1', 0.05, 8.0, ''),
+(2, 2, 'Progress Test', 'Progress Test 2', 0.05, 8.5, ''),
+(2, 2, 'Workshop', 'Workshop 1', 0.05, 7.8, ''),
+(2, 2, 'Workshop', 'Workshop 2', 0.05, 8.0, ''),
+(2, 2, 'Practical Exam', 'Practical Exam', 0.2, 75.0, ''),
+(2, 2, 'Assignment', 'Assignment', 0.4, 8.0, ''),
+(2, 2, 'Final Exam', 'Final Exam', 0.2, 80.0, ''),
+(2, 2, 'Final Exam Resit', 'Final Exam Resit', 0.2, NULL, 'Did not take Final Exam Resit');
 
-(7.5, 'Progress test 1 result', 9, 4),       -- Progress test 1
-(8.0, 'Progress test 2 result', 10, 4),      -- Progress test 2
-(7.0, 'Workshop 1 result', 11, 4),           -- Workshop 1
-(8.5, 'Workshop 2 result', 12, 4),           -- Workshop 2
-(70.0, 'Practical Exam score', 13, 4),       -- Practical Exam
-(8.0, 'Assignment score', 14, 4),            -- Assignment
-(7.8, 'Final Exam score', 15, 4),           -- Final Exam
-(0.0, 'Did not take Final Exam Resit', 16, 4),  -- Final Exam Resit
-
-(8.0, 'Progress test 1 result', 9, 5),       -- Progress test 1
-(8.5, 'Progress test 2 result', 10, 5),      -- Progress test 2
-(7.8, 'Workshop 1 result', 11, 5),           -- Workshop 1
-(8.0, 'Workshop 2 result', 12, 5),           -- Workshop 2
-(75.0, 'Practical Exam score', 13, 5),       -- Practical Exam
-(8.0, 'Assignment score', 14, 5),            -- Assignment
-(80.0, 'Final Exam score', 15, 5),           -- Final Exam
-(0.0, 'Did not take Final Exam Resit', 16, 5)  -- Final Exam Resit
 
 
 
