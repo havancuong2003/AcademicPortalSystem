@@ -5,29 +5,34 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
  * @author -MSI-
  */
-public class Teacher implements  IEntity{
-    private int id;
-    private String name ;
-    private ArrayList<Session> sessions =new ArrayList<>();
+public class Teacher implements IEntity {
+
+    private String id;
+    private String name;
+    private Date dob;
+    private String email;
 
     public Teacher() {
     }
 
-    public Teacher(int id, String name) {
+    public Teacher(String id, String name, Date dob, String email) {
         this.id = id;
         this.name = name;
+        this.dob = dob;
+        this.email = email;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -39,12 +44,20 @@ public class Teacher implements  IEntity{
         this.name = name;
     }
 
-    public ArrayList<Session> getSessions() {
-        return sessions;
+    public Date getDob() {
+        return dob;
     }
 
-    public void setSessions(ArrayList<Session> sessions) {
-        this.sessions = sessions;
+    public void setDob(Date dob) {
+        this.dob = dob;
     }
-    
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }

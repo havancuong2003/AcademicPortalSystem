@@ -10,17 +10,19 @@ import java.util.ArrayList;
  *
  * @author -MSI-
  */
-public class Course implements IEntity{
+public class Course implements IEntity {
+
     private int id;
-    private String name;
-    private  ArrayList<Group> groups =new ArrayList<>();
+    private String code;
+    private String description;
 
     public Course() {
     }
 
-    public Course(int id, String name) {
+    public Course(int id, String code, String description) {
         this.id = id;
-        this.name = name;
+        this.code = code;
+        this.description = description;
     }
 
     public int getId() {
@@ -31,20 +33,20 @@ public class Course implements IEntity{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCode() {
+        return code;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public ArrayList<Group> getGroups() {
-        return groups;
+    public String getDescription() {
+        return description;
     }
 
-    public void setGroups(ArrayList<Group> groups) {
-        this.groups = groups;
+    public void setDescription(String description) {
+        this.description = description;
     }
-    
+
 }

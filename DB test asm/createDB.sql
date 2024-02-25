@@ -4,7 +4,8 @@ CREATE TABLE Student (
     id  nvarchar(50) primary key,
     [name] NVARCHAR(255),
 	dob date,
-	email nvarchar(50)
+	email nvarchar(50),
+	imgUrl varchar(MAX)
 );
 
 CREATE TABLE Lecture (

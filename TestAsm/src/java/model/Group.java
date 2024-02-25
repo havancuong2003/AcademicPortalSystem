@@ -5,24 +5,41 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
  * @author -MSI-
  */
-public class Group implements IEntity{
-     private int id;
+public class Group implements IEntity {
+
+    private int id;
     private String name;
     private Course course;
-    private ArrayList<Session> sessions=new ArrayList<>();
+    private Term term;
+    private Room room;
+    private TimeSlot timeslot;
+    private Teacher teacher;
+    private Date timeStart;
+    private Date timeEnd;
+    private Date firstDay;
+    private Date secondDay;
 
     public Group() {
     }
 
-    public Group(int id, String name, Course course) {
+    public Group(int id, String name, Course course, Term term, Room room, TimeSlot timeslot, Teacher teacher, Date timeStart, Date timeEnd, Date firstDay, Date secondDay) {
         this.id = id;
         this.name = name;
         this.course = course;
+        this.term = term;
+        this.room = room;
+        this.timeslot = timeslot;
+        this.teacher = teacher;
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
+        this.firstDay = firstDay;
+        this.secondDay = secondDay;
     }
 
     public int getId() {
@@ -49,12 +66,68 @@ public class Group implements IEntity{
         this.course = course;
     }
 
-    public ArrayList<Session> getSessions() {
-        return sessions;
+    public Term getTerm() {
+        return term;
     }
 
-    public void setSessions(ArrayList<Session> sessions) {
-        this.sessions = sessions;
+    public void setTerm(Term term) {
+        this.term = term;
     }
-    
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public TimeSlot getTimeslot() {
+        return timeslot;
+    }
+
+    public void setTimeslot(TimeSlot timeslot) {
+        this.timeslot = timeslot;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public Date getTimeStart() {
+        return timeStart;
+    }
+
+    public void setTimeStart(Date timeStart) {
+        this.timeStart = timeStart;
+    }
+
+    public Date getTimeEnd() {
+        return timeEnd;
+    }
+
+    public void setTimeEnd(Date timeEnd) {
+        this.timeEnd = timeEnd;
+    }
+
+    public Date getFirstDay() {
+        return firstDay;
+    }
+
+    public void setFirstDay(Date firstDay) {
+        this.firstDay = firstDay;
+    }
+
+    public Date getSecondDay() {
+        return secondDay;
+    }
+
+    public void setSecondDay(Date secondDay) {
+        this.secondDay = secondDay;
+    }
+
 }

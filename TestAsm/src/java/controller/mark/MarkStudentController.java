@@ -57,8 +57,8 @@ public class MarkStudentController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         MarkDBContext mdb  = new MarkDBContext();
-        ArrayList<Mark> markStudent = mdb.getMarkStudent();
-        request.setAttribute("list", markStudent);
+    //    ArrayList<Mark> markStudent = mdb.getMarkStudent();
+       // request.setAttribute("list", markStudent);
         request.getRequestDispatcher("../view/mark/student.jsp").forward(request, response);
     } 
 

@@ -14,7 +14,6 @@ public class Room implements IEntity {
 
     private int id;
     private String description;
-    private ArrayList<Session> sessions = new ArrayList<>();
 
     public Room() {
     }
@@ -40,12 +39,5 @@ public class Room implements IEntity {
         this.description = desription;
     }
 
-    public ArrayList<Session> getSessions() {
-        return sessions;
-    }
-
-    public void setSessions(ArrayList<Session> sessions) {
-        this.sessions = sessions;
-    }
         
 }

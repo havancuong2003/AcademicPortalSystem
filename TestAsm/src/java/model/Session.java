@@ -15,21 +15,16 @@ public class Session implements IEntity {
     private int id;
     private String status;
     private Group group;
-    private Room room;
-    private TimeSlot timeSlot;
-    private Teacher teacher;
     private Date date;
 
     public Session() {
     }
 
-    public Session(int id, String status, Group group, Room room, TimeSlot timeSlot, Teacher teacher, Date date) {
+    public Session(int id, String status, Group group, Date date) {
         this.id = id;
         this.status = status;
         this.group = group;
-        this.room = room;
-        this.timeSlot = timeSlot;
-        this.teacher = teacher;
+
         this.date = date;
     }
 
@@ -55,30 +50,6 @@ public class Session implements IEntity {
 
     public void setGroup(Group group) {
         this.group = group;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-    public TimeSlot getTimeSlot() {
-        return timeSlot;
-    }
-
-    public void setTimeSlot(TimeSlot timeSlot) {
-        this.timeSlot = timeSlot;
-    }
-
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
     }
 
     public Date getDate() {

@@ -4,39 +4,36 @@
  */
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author -MSI-
  */
 public class Student implements IEntity {
 
-    private int id;
+    private String id;
     private String name;
-   // private ArrayList<Group> groups = new ArrayList<>();
+    private Date dob;
+    private String email;
     private String imgUrl;
+
+    public Student(String id, String name, Date dob, String email, String imgUrl) {
+        this.id = id;
+        this.name = name;
+        this.dob = dob;
+        this.email = email;
+        this.imgUrl = imgUrl;
+    }
 
     public Student() {
     }
 
-    public Student(int id, String name, String imgUrl) {
-        this.id = id;
-        this.name = name;
-        this.imgUrl = imgUrl;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -48,12 +45,28 @@ public class Student implements IEntity {
         this.name = name;
     }
 
-//    public ArrayList<Group> getGroups() {
-//        return groups;
-//    }
-//
-//    public void setGroups(ArrayList<Group> groups) {
-//        this.groups = groups;
-//    }
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
 
 }

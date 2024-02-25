@@ -11,6 +11,5 @@ package dal;
 public class Main {
     public static void main(String[] args) {
         MarkDBContext mdb=new MarkDBContext();
-        System.out.println(mdb.getMarkStudent().size());
     }
 }

@@ -14,7 +14,6 @@ public class TimeSlot implements IEntity {
 
     private int id;
     private String description;
-    private ArrayList<Session> sessions = new ArrayList<>();
 
     public TimeSlot() {
     }
@@ -38,14 +37,6 @@ public class TimeSlot implements IEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public ArrayList<Session> getSessions() {
-        return sessions;
-    }
-
-    public void setSessions(ArrayList<Session> sessions) {
-        this.sessions = sessions;
     }
 
 }
