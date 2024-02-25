@@ -1,85 +1,101 @@
-﻿CREATE TABLE Student (
-    id INT PRIMARY KEY,
-    name NVARCHAR(255)
+﻿
+
+CREATE TABLE Student (
+    id  nvarchar(50) primary key,
+    [name] NVARCHAR(255),
+	dob date,
+	email nvarchar(50)
 );
 
-CREATE TABLE Teacher (
-    id INT PRIMARY KEY,
-    name NVARCHAR(255)
+CREATE TABLE Lecture (
+    id  nvarchar(50) primary key,
+    [name] NVARCHAR(255),
+	dob date,
+	email nvarchar(50)
 );
 
 CREATE TABLE Course (
-    id INT PRIMARY KEY,
-    name NVARCHAR(255)
+    id INT identity(1,1) PRIMARY KEY,
+    code NVARCHAR(255),
+	 [description] NVARCHAR(255)
 );
 
-CREATE TABLE Department (
-    id INT PRIMARY KEY,
-    name NVARCHAR(255)
-);
 
-CREATE TABLE [Group] (
-    id INT PRIMARY KEY,
-    name NVARCHAR(255),
-    course_id INT,
-    FOREIGN KEY (course_id) REFERENCES Course(id)
+Create table Term (
+id varchar(50) primary key,
+[description] nvarchar(255),
+timeStart date,
+timeEnd date
 );
-
 CREATE TABLE TimeSlot (
-    id INT PRIMARY KEY,
-    description NVARCHAR(255)
+     id INT identity(1,1) PRIMARY KEY,
+    [description] NVARCHAR(255)
 );
 
 CREATE TABLE Room (
-    id INT PRIMARY KEY,
-    name NVARCHAR(255)
+     id INT identity(1,1) PRIMARY KEY,
+    [name] NVARCHAR(255)
+);
+CREATE TABLE [Group] (
+    id INT identity(1,1) PRIMARY KEY,
+    [name] NVARCHAR(255),
+    courseId INT,
+	termID varchar(50) ,
+	roomID int,
+	timeSlotID int,
+	lectureid nvarchar(50),
+    FOREIGN KEY (courseId) REFERENCES Course(id),
+	FOREIGN KEY (termId) REFERENCES Term(id),
+	FOREIGN KEY (roomid) REFERENCES Room(id),
+	FOREIGN KEY (timeSlotID) REFERENCES TimeSlot(id),
+	FOREIGN KEY (lectureid) REFERENCES lecture(id),
+	timeStart date,
+	timeEnd date,
+	firstday date,
+	secondday date
 );
 
-CREATE TABLE Term (
-    id INT PRIMARY KEY,
-    name NVARCHAR(255)
+
+create table student_group(
+	id int identity(1,1) primary key,
+	Studentid nvarchar(50),
+	groupid int,
+    FOREIGN KEY (Studentid) REFERENCES Student(id),
+	FOREIGN KEY (groupid) REFERENCES [group](id)
+
 );
 
-CREATE TABLE Session (
-    id INT PRIMARY KEY,
-    status NVARCHAR(255),
+
+CREATE TABLE [Session] (
+    id INT identity(1,1) PRIMARY KEY,
+    [status] bit,
     group_id INT,
-    room_id INT,
-    timeSlot_id INT,
-    lecture_id INT,
-    date DATE,
+    [date] DATE,
     FOREIGN KEY (group_id) REFERENCES [Group](id),
-    FOREIGN KEY (room_id) REFERENCES Room(id),
-    FOREIGN KEY (timeSlot_id) REFERENCES TimeSlot(id),
-    FOREIGN KEY (lecture_id) REFERENCES Teacher(id)
+
 );
 
 CREATE TABLE Attendance (
     id INT identity(1,1) PRIMARY KEY,
-    status NVARCHAR(255),
-    description NVARCHAR(255),
-    student_id INT,
+    [status] NVARCHAR(255),
+    [description] NVARCHAR(255),
+    student_id nvarchar(50),
     session_id INT,
     FOREIGN KEY (student_id) REFERENCES Student(id),
-    FOREIGN KEY (session_id) REFERENCES Session(id)
+    FOREIGN KEY (session_id) REFERENCES [Session](id)
 );
 
-create table Student_course(
-̣studentid int,
-courseid int,
-FOREIGN KEY (studentid) REFERENCES Student(id),
-FOREIGN KEY (courseid) REFERENCES course(id)
-);
-create table mark(
+/*create table mark(
 id int identity(1,1) primary key,
 studentid int,
-courseid int,
+groupId int,
 FOREIGN KEY (studentid) REFERENCES Student(id),
-FOREIGN KEY (courseid) REFERENCES course(id),
+FOREIGN KEY (groupId) REFERENCES [group](id),
 grade_category nvarchar(255),
 grade_item nvarchar(255),
 [weight] float,
 [value] float,
 comment text
-);
+);*/
+
 
