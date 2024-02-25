@@ -15,6 +15,7 @@ import model.Room;
 import model.Session;
 import model.Student;
 import model.Teacher;
+import model.Term;
 import model.TimeSlot;
 
 /**
@@ -22,16 +23,16 @@ import model.TimeSlot;
  * @author -MSI-
  */
 public class AttendanceDBContext extends DBContext<Attendance> {
-
+    
     @Override
     public ArrayList<Attendance> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    
     public Course getCourseByID(int id) {
         Course c = null;
         try {
-            String sql = "select * from [course] where id = ?";
+            String sql = "select * from course where id = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
@@ -45,7 +46,27 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return c;
     }
-
+    
+    public Term getTermByID(String id) {
+        Term t = null;
+        try {
+            String sql = "select * from term where id like ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, id);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                t=new  Term();
+                t.setId(rs.getString("id"));
+                t.setDescription(rs.getString("description"));
+                t.setTimeStart(rs.getDate("timeStart"));
+                t.setTimeEnd(rs.getDate("timeEnd"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return t;
+    }
+    
     public Group getGroupByID(int id) {
         Group g = null;
         try {
@@ -57,13 +78,21 @@ public class AttendanceDBContext extends DBContext<Attendance> {
                 g = new Group();
                 g.setId(rs.getInt("id"));
                 g.setName(rs.getString("name"));
-                g.setCourse(getCourseByID(rs.getInt("course_id")));
+                g.setCourse(getCourseByID(rs.getInt("courseid")));
+                g.setTerm(getTermByID(rs.getString("termID")));
+                g.setRoom(getRoomByID(rs.getInt("roomID")));
+                g.setTimeslot(getTimeSlotByID(rs.getInt("timeSlotID")));
+                g.setTeacher(getLectureByID(rs.getString("lectureid")));
+                g.setTimeStart(rs.getDate("timeStart"));
+                g.setTimeEnd(rs.getDate("timeEnd"));
+                g.setFirstDay(rs.getDate("firstday"));
+                g.setSecondDay(rs.getDate("secondday"));
             }
         } catch (SQLException e) {
         }
         return g;
     }
-
+    
     public Room getRoomByID(int id) {
         Room r = null;
         try {
@@ -75,13 +104,13 @@ public class AttendanceDBContext extends DBContext<Attendance> {
                 r = new Room();
                 r.setId(rs.getInt("id"));
                 r.setDescription(rs.getString("name"));
-
+                
             }
         } catch (SQLException e) {
         }
         return r;
     }
-
+    
     public TimeSlot getTimeSlotByID(int id) {
         TimeSlot ts = null;
         try {
@@ -98,11 +127,11 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return ts;
     }
-
+    
     public Teacher getLectureByID(String id) {
         Teacher t = null;
         try {
-            String sql = "select * from teacher where id = ?";
+            String sql = "select * from lecture where id = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, id);
             ResultSet rs = stm.executeQuery();
@@ -117,7 +146,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return t;
     }
-
+    
     public Session getSessionByID(int id) {
         Session s = null; // Khởi tạo đối tượng Session là null
         try {
@@ -137,7 +166,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return s;
     }
-
+    
     public ArrayList<Attendance> getStudentsBySessionID(int id) {
         ArrayList<Attendance> students = new ArrayList<>();
         try {
@@ -148,7 +177,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Attendance a = new Attendance();
-                a.setStudent(getStudentByID(rs.getInt("student_id")));
+                a.setStudent(getStudentByID(rs.getString("student_id")));
                 a.setStatus(rs.getString("status"));
                 a.setSession(getSessionByID(rs.getInt("session_id")));
                 a.setId(rs.getInt("id"));
@@ -159,13 +188,13 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return students;
     }
-
-    public Student getStudentByID(int id) {
+    
+    public Student getStudentByID(String id) {
         Student s = null;
         try {
             String sql = "select * from student where id = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, id);
+            stm.setString(1, id);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 s = new Student();
@@ -179,21 +208,21 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return s;
     }
-
+    
     public ArrayList<Attendance> listInfoStudent() {
         ArrayList<Attendance> attendances = new ArrayList<>();
-
+        
         try {
             String sql = "select * from attendance";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-
+            
             while (rs.next()) {
-
+                
                 Attendance a = new Attendance();
                 a.setId(rs.getInt("id"));
                 a.setDescription(rs.getString("description"));
-
+                
                 if ("true".equals(rs.getString("status"))) {
                     a.setStatus("Present");
                 } else if ("false".equals(rs.getString("status"))) {
@@ -201,8 +230,8 @@ public class AttendanceDBContext extends DBContext<Attendance> {
                 } else {
                     a.setStatus("not yet");
                 }
-
-                a.setStudent(getStudentByID(rs.getInt("student_id")));
+                
+                a.setStudent(getStudentByID(rs.getString("student_id")));
                 a.setSession(getSessionByID(rs.getInt("session_id")));
                 attendances.add(a);
             }
@@ -210,7 +239,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return attendances;
     }
-
+    
     public ArrayList<Session> listInfoLecture() {
         ArrayList<Session> sessions = new ArrayList<>();
         try {
@@ -223,30 +252,30 @@ public class AttendanceDBContext extends DBContext<Attendance> {
                 s.setDate(rs.getDate("date"));
                 s.setGroup(getGroupByID(rs.getInt("group_id")));
                 
-                if ("true".equals(rs.getString("status"))) {
+                if ("1".equals(rs.getString("status"))) {
                     s.setStatus("attendanced");
                 } else {
                     s.setStatus("Take attendance");
                 }
-            
+                
                 sessions.add(s);
             }
         } catch (SQLException e) {
         }
         return sessions;
     }
-
+    
     public void updateAttendanceStatus(ArrayList<Attendance> attendances, int id) {
         try {
             for (Attendance a : attendances) {
                 String sql = "update Attendance "
                         + "set status = ? ,description = ? "
                         + "where session_id = ? and student_id = ?; "
-                        + "update Session "
+                        + "update [Session] "
                         + "set status = ? "
                         + "where id = ?;";
                 PreparedStatement stm = connection.prepareStatement(sql);
-
+                
                 stm.setString(1, a.getStatus());
                 stm.setString(2, a.getDescription());
                 stm.setInt(3, id);
@@ -259,27 +288,25 @@ public class AttendanceDBContext extends DBContext<Attendance> {
             // Xử lý ngoại lệ SQL
         }
     }
-
- 
-
+    
     @Override
     public void insert(Attendance entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    
     @Override
     public void update(Attendance entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    
     @Override
     public void delete(Attendance entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    
     @Override
     public Attendance get(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    
 }

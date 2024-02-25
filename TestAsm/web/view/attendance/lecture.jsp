@@ -102,12 +102,12 @@
 
                                 <td><img src="../img/${s.student.imgUrl}" alt="Student image"></td>
                                 <td>
-                                    <c:if test="${s.session.status eq 'true'}">
+                                    <c:if test="${s.session.status eq 1}">
                                         <label><input type="radio" name="attendance${s.student.id}" value="present" ${s.status eq 'true' ? 'checked' : ''}> Present</label>
                                         <label><input type="radio" name="attendance${s.student.id}" value="absent" ${s.status eq 'false' ? 'checked' : ''}> Absent</label>
                                         </c:if>
 
-                                    <c:if test="${s.session.status eq 'false'}">
+                                    <c:if test="${s.session.status eq 0}">
                                         <label><input type="radio" name="attendance${s.student.id}" value="present"> Present</label>
                                         <label><input type="radio" name="attendance${s.student.id}" value="absent"> Absent</label>
                                         </c:if>

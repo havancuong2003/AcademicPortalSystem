@@ -63,7 +63,6 @@ create table student_group(
 	groupid int,
     FOREIGN KEY (Studentid) REFERENCES Student(id),
 	FOREIGN KEY (groupid) REFERENCES [group](id)
-
 );
 
 
@@ -73,7 +72,6 @@ CREATE TABLE [Session] (
     group_id INT,
     [date] DATE,
     FOREIGN KEY (group_id) REFERENCES [Group](id),
-
 );
 
 CREATE TABLE Attendance (

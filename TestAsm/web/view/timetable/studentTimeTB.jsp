@@ -65,8 +65,8 @@
             <label for="year">Select Year:</label>
             <select id="year">
                 <option value="2022">2022</option>
-                <option value="2023" selected>2023</option>
-                <option value="2024">2024</option>
+                <option value="2023" >2023</option>
+                <option value="2024" selected>2024</option>
                 <option value="2025">2025</option>
             </select>
             <label for="week">Select Week:</label>
@@ -207,11 +207,11 @@
             <c:forEach items="${requestScope.list}" var="a">
                 var timetable = {
                     date: "${a.session.date}",
-                    timeSlot: "${a.session.timeSlot.description}",
-                    lecture: "${a.session.teacher.name}",
-                    course: "${a.session.group.course.name}",
+                    timeSlot: "${a.session.group.timeslot.description}",
+                    lecture: "${a.session.group.teacher.name}",
+                    course: "${a.session.group.course.code}",
                     group: "${a.session.group.name}",
-                    room: "${a.session.room.description}",
+                    room: "${a.session.group.room.description}",
                     attendanceStatus: "${a.status}"
 
                 };
