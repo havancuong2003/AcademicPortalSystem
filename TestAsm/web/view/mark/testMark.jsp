@@ -18,40 +18,82 @@
                 color: blue;
                 text-decoration: underline;
             }
+
+            .terms {
+                display: inline-block;
+                vertical-align: top;
+                width: 20%;
+            }
+
+            .courses {
+                display: inline-block;
+                vertical-align: top;
+                width: 30%;
+            }
+
+            .grades {
+                display: none; /* Ẩn bảng điểm ban đầu */
+                vertical-align: top;
+                width: 40%;
+            }
+            .home a {
+                color: rgb(13, 90, 235);
+                font-size: 25px;
+                padding: 5px 10px;
+            }
+            .home {
+                padding: 10px;
+                border-radius: 5px;
+                margin: 25px 0;
+            }
         </style>
     </head>
     <body>
 
-        <c:forEach items="${requestScope.termMark}" var="mark">
-            <h1>${mark.term.id}</h1>
-            
-        </c:forEach>
-        
-        <h2>${requestScope.test}</h2>
-        <h2>Subject Selection</h2>
-        <div>
-            <c:forEach items="${requestScope.listGroup}" var="group">
-                <a href="#" onclick="showMarks('${group.course.code}')">${group.course.code} </a> |
-
-            </c:forEach>
-
+        <div class="home">
+            <a href="home">Home</a>
         </div>
 
-        <h2>Grade Information</h2>
-        <table id="gradeTable">
-            <thead>
-                <tr>
-                    <th>GRADE CATEGORY</th>
-                    <th>GRADE ITEM</th>
-                    <th>WEIGHT</th>
-                    <th>VALUE</th>
-                    <th>COMMENT</th>
-                </tr>
-            </thead>
-            <tbody id="gradeTableBody">
-                <!-- Grades will be displayed here -->
-            </tbody>
-        </table>
+        <h2>Subject Selection</h2>
+        <div class="terms">
+            <h3>Terms</h3>
+            <ul>
+                <c:forEach items="${requestScope.termMark}" var="group">
+                    <li><a href="mark?termid=${group.term.id}" >${group.term.description}</a></li>
+                    </c:forEach>
+            </ul>
+        </div>
+
+        <div class="courses">
+            <h3>Courses</h3>
+            <ul id="courseList">
+                <c:forEach items="${requestScope.courseByTerm}" var="g">
+                    <li><a href="#" onclick="showMarks('${g.course.code}')">${g.course.description}</a></li>
+                    </c:forEach>
+
+                <c:forEach items="${requestScope.courseByTerm1}" var="g">
+                    <li><a href="#" onclick="showMarks('${g.course.code}')">${g.course.description}</a></li>
+                    </c:forEach>
+            </ul>
+        </div>
+
+        <div class="grades" id="gradeInfo">
+            <h2>Grade Information</h2>
+            <table id="gradeTable">
+                <thead>
+                    <tr>
+                        <th>GRADE CATEGORY</th>
+                        <th>GRADE ITEM</th>
+                        <th>WEIGHT</th>
+                        <th>VALUE</th>
+                        <th>COMMENT</th>
+                    </tr>
+                </thead>
+                <tbody id="gradeTableBody">
+                    <!-- Grades will be displayed here -->
+                </tbody>
+            </table>
+        </div>
 
         <script>
 
@@ -77,17 +119,7 @@
                         });
             </c:forEach>
 
-//                var mathData = [
-//                    {gradeCategory: 'Active Learning', gradeItem: 'Active Learning', weight: '10.0 %', value: '9.8', comment: ''},
-//                    {gradeCategory: 'Exercise', gradeItem: 'Exercise 1', weight: '5.0 %', value: '8.5', comment: ''},
-//                    {gradeCategory: 'Exercise', gradeItem: 'Exercise 2', weight: '5.0 %', value: '7.5', comment: ''},
-//                    {gradeCategory: 'Presentation', gradeItem: 'Presentation', weight: '10.0 %', value: '8.5', comment: ''},
-//                    {gradeCategory: 'Project', gradeItem: 'Project', weight: '30.0 %', value: '7', comment: ''},
-//                    {gradeCategory: 'Final Exam', gradeItem: 'Final Exam', weight: '40.0 %', value: '', comment: ''},
-//                    {gradeCategory: 'Final Exam Resit', gradeItem: 'Final Exam Resit', weight: '40.0 %', value: '', comment: ''},
-//                    {gradeCategory: 'COURSE TOTAL', gradeItem: 'AVERAGE', weight: '0.0', value: '', comment: ''},
-//                    {gradeCategory: 'COURSE TOTAL', gradeItem: 'STATUS', weight: '', value: '', comment: 'NOT PASSED'}
-//                ];
+
 
 
                         // Function to generate table rows
@@ -127,21 +159,19 @@
                             return count;
                         }
 
-                        // Function to show marks based on selected subject
                         // Function to show marks based on selected course code
                         function showMarks(courseCode) {
+
                             var courseData = coursesData.find(course => course.courseName === courseCode);
                             if (courseData) {
                                 generateRows(courseData.data);
+                                document.getElementById('gradeInfo').style.display = 'block'; // Hiển thị bảng điểm khi chọn môn học
                             } else {
                                 // Handle case when course data is not found
                                 console.error("Course data not found for course code: " + courseCode);
                             }
                         }
 
-
-                        // Generate table rows for initial display
-                        generateRows(coursesData[0].data); // Display courseData0 data by default
         </script>
 
     </body>

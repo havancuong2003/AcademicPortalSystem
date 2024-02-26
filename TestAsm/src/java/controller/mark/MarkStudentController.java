@@ -15,7 +15,6 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import model.Account;
 import model.Group;
-import model.Mark;
 
 /**
  *
@@ -70,10 +69,22 @@ public class MarkStudentController extends HttpServlet {
         for (Group group : groupIdToTakeCourse) {
             request.setAttribute("list" + group.getId(), mdb.getMarkStudent(group.getId(), a.getUsername()));
         }
-        // request.setAttribute("list", mdb.getMarkStudent(6, a.getUsername()));
+
+        ArrayList<Group> getTermOfStudentLearned = mdb.getTermOfStudentLearned(a.getUsername());
+        request.setAttribute("termMark", getTermOfStudentLearned);
+        
+        
+        String getTermID = request.getParameter("termid");
+        
+        ArrayList<Group> selectTermToSeeMark = mdb.getSelectTermToSeeMark(a.getUsername(),getTermID);
+        request.setAttribute("courseByTerm", selectTermToSeeMark);
+        
+        
+        
+        
         request.setAttribute("listGroup", mdb.getGroupIdToTakeCourse());
-      //  request.setAttribute("test", mdb.getMarkStudent(6, a.getUsername()).get(0).getGroup().getCourse().getCode());
-        request.getRequestDispatcher("../view/mark/student.jsp").forward(request, response);
+
+        request.getRequestDispatcher("../view/mark/testMark.jsp").forward(request, response);
     }
 
     /**

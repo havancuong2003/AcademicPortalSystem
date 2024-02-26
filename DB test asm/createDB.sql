@@ -114,17 +114,15 @@ CREATE TABLE Attendance (
     FOREIGN KEY (session_id) REFERENCES [Session](id)
 );
 
-/*create table mark(
+create table mark(
 id int identity(1,1) primary key,
-studentid int,
-groupId int,
-FOREIGN KEY (studentid) REFERENCES Student(id),
-FOREIGN KEY (groupId) REFERENCES [group](id),
+student_group_id int,
+FOREIGN KEY (student_group_id) REFERENCES student_group(id),
 grade_category nvarchar(255),
 grade_item nvarchar(255),
 [weight] float,
 [value] float,
 comment text
-);*/
+);
 
 
