@@ -70,7 +70,7 @@ VALUES
 
 
 
-INSERT INTO Lecture (id, name, dob, email) VALUES
+INSERT INTO Lecture (id, name, dob, email,userName) VALUES
 (1, 'Ngo Tung Son', '1970-01-01', 'sonnt@example.com'),
 (2, 'Nguyen Ngoc Anh', '1975-02-02', 'anhnn@example.com'),
 (3, 'Vu Tien Dung', '1980-03-03', 'dungvt@example.com'),

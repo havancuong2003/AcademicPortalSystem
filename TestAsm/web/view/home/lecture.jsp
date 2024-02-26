@@ -81,7 +81,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 font-weight: bold;
                 position: absolute;
                 bottom: 0;
-               font-size: 20px;
+                font-size: 20px;
                 width: 100%;
                 height: 100px;
                 text-align: center;
@@ -122,6 +122,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         width="35"
                         height="35"
                         fill="#808080"
+                        onclick="logout()"
                         >
                     <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                     <path
@@ -142,6 +143,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <p>FPT UNIVERSITY</p>
             <span>DAI HOC FPT HA NOI</span>
         </div>
+        <script>
+
+            function logout() {
+                window.location.href = '/testasm/logout';
+            }
+        </script>
     </body>
 </html>
-    
