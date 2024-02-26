@@ -4,7 +4,6 @@
  */
 package model;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -17,15 +16,17 @@ public class Teacher implements IEntity {
     private String name;
     private Date dob;
     private String email;
+    private String username;
 
     public Teacher() {
     }
 
-    public Teacher(String id, String name, Date dob, String email) {
+    public Teacher(String id, String name, Date dob, String email, String username) {
         this.id = id;
         this.name = name;
         this.dob = dob;
         this.email = email;
+        this.username = username;
     }
 
     public String getId() {
@@ -60,4 +61,13 @@ public class Teacher implements IEntity {
         this.email = email;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    
+    
 }

@@ -12,7 +12,7 @@ public class Mark implements IEntity {
 
     private int id;
     private Student student;
-    private Course course;
+    private Group group;
     private String gradeCategory;
     private String gradeItem;
     private float weight;
@@ -22,10 +22,10 @@ public class Mark implements IEntity {
     public Mark() {
     }
 
-    public Mark(int id, Student student, Course course, String gradeCategory, String gradeItem, float weight, float value, String comment) {
+    public Mark(int id, Student student, Group group, String gradeCategory, String gradeItem, float weight, float value, String comment) {
         this.id = id;
         this.student = student;
-        this.course = course;
+        this.group = group;
         this.gradeCategory = gradeCategory;
         this.gradeItem = gradeItem;
         this.weight = weight;
@@ -49,12 +49,12 @@ public class Mark implements IEntity {
         this.student = student;
     }
 
-    public Course getCourse() {
-        return course;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public String getGradeCategory() {

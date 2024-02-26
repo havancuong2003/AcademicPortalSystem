@@ -5,11 +5,6 @@
 package controller.timetable;
 
 import dal.AttendanceDBContext;
-import java.util.ArrayList;
-import model.Attendance;
-import model.Course;
-import model.Session;
-import model.TimeSlot;
 
 /**
  *

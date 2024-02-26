@@ -193,7 +193,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
     public Student getStudentByID(String id) {
         Student s = null;
         try {
-            String sql = "select * from student where id = ?";
+            String sql = "select * from student where id like ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, id);
             ResultSet rs = stm.executeQuery();
@@ -204,6 +204,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
                 s.setDob(rs.getDate("dob"));
                 s.setEmail(rs.getString("email"));
                 s.setImgUrl(rs.getString("imgUrl"));
+                
             }
         } catch (SQLException e) {
         }

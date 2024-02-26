@@ -4,6 +4,9 @@
  */
 package dal;
 
+import java.util.ArrayList;
+import model.Mark;
+
 /**
  *
  * @author -MSI-
@@ -11,5 +14,8 @@ package dal;
 public class Main {
     public static void main(String[] args) {
         MarkDBContext mdb=new MarkDBContext();
+        ArrayList<Mark> markStudent = mdb.getMarkStudent(5, "cuonghv");
+        System.out.println(mdb.getGroupIdToTakeCourse().size());
+        
     }
 }

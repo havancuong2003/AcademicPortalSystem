@@ -17,16 +17,18 @@ public class Student implements IEntity {
     private Date dob;
     private String email;
     private String imgUrl;
+    private String username;
 
-    public Student(String id, String name, Date dob, String email, String imgUrl) {
+    public Student() {
+    }
+
+    public Student(String id, String name, Date dob, String email, String imgUrl, String username) {
         this.id = id;
         this.name = name;
         this.dob = dob;
         this.email = email;
         this.imgUrl = imgUrl;
-    }
-
-    public Student() {
+        this.username = username;
     }
 
     public String getId() {
@@ -67,6 +69,14 @@ public class Student implements IEntity {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 }
