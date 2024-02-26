@@ -84,7 +84,7 @@ public class MarkStudentController extends HttpServlet {
         
         request.setAttribute("listGroup", mdb.getGroupIdToTakeCourse());
 
-        request.getRequestDispatcher("../view/mark/testMark.jsp").forward(request, response);
+        request.getRequestDispatcher("../view/mark/student.jsp").forward(request, response);
     }
 
     /**
