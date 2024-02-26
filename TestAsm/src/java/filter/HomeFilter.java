@@ -111,17 +111,22 @@ public class HomeFilter implements Filter {
 
         HttpSession session = httpRequest.getSession();
         Account a = (Account) session.getAttribute("account");
-        String role = a.getRole();
-        String urlPattern = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
-
-        if (role.equals("2") && urlPattern.startsWith("/lecture")) {
-            chain.doFilter(request, response);
-        } else if ((role.equals("3") && urlPattern.startsWith("/student"))) {
-            chain.doFilter(request, response);
+        if (a == null) {
+            httpResponse.sendRedirect("../login");
         } else {
-            // Nếu không phù hợp với vai trò hoặc URL pattern, trả về lỗi 403 (Forbidden)
-            httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied.");
+            String role = a.getRole();
+            String urlPattern = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
+
+            if (role.equals("2") && urlPattern.startsWith("/lecture")) {
+                chain.doFilter(request, response);
+            } else if ((role.equals("3") && urlPattern.startsWith("/student"))) {
+                chain.doFilter(request, response);
+            } else {
+                // Nếu không phù hợp với vai trò hoặc URL pattern, trả về lỗi 403 (Forbidden)
+                httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied.");
+            }
         }
+
         Throwable problem = null;
         try {
             chain.doFilter(request, response);

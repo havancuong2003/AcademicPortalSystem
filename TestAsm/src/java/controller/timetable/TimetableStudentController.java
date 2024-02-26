@@ -12,6 +12,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.Account;
 
 /**
  *
@@ -29,7 +31,6 @@ public class TimetableStudentController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -43,14 +44,11 @@ public class TimetableStudentController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AttendanceDBContext adb = new AttendanceDBContext();
-        request.setAttribute("list", adb.listInfoStudent());
-        String a = "testtt";
-        if(adb.listInfoStudent().get(3).getStatus() ==null){
-            a="null goi";
-        }else{
-            a=adb.listInfoStudent().get(3).getStatus()+"";
-        }
-        request.setAttribute("test",a );
+        HttpSession session = request.getSession();
+        Account a = (Account) session.getAttribute("account");
+        String username = a.getUsername();
+        request.setAttribute("list", adb.listInfoStudent(username));
+
         request.getRequestDispatcher("../view/timetable/studentTimeTB.jsp").forward(request, response);
     }
 
