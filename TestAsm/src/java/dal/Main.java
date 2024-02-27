@@ -16,7 +16,7 @@ public class Main {
         MarkDBContext mdb=new MarkDBContext();
         ArrayList<Mark> markStudent = mdb.getMarkStudent(5, "cuonghv");
         ArrayList<Mark> markByTermAndCourse = mdb.getMarkByTermAndCourse("cuonghv","sp24", 19);
-        System.out.println(markByTermAndCourse.get(0).getValue());
+        System.out.println(markByTermAndCourse);
                 
         
     }

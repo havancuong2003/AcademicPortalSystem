@@ -106,6 +106,7 @@
             var courseData = [
             <c:forEach items="${requestScope.markOfCourse}" var="m">
                 {
+                    coursename: '${m.group.course.code}',
                     gradeCategory: '${m.gradeCategory}',
                     gradeItem: '${m.gradeItem}',
                     weight: '${m.weight}',
@@ -119,24 +120,30 @@
             function generateRows(subjectData) {
                 var html = '';
                 var rowspanCount = 1;
-                for (var i = 0; i < subjectData.length; i++) {
-                    if (i > 0 && subjectData[i].gradeCategory === subjectData[i - 1].gradeCategory) {
-                        rowspanCount++;
-                    } else {
-                        rowspanCount = 1;
+                if (subjectData.length < 2) {
+                    html += "<tr><td colspan='5'>No information about " + courseData[0].coursename + "</td></tr>";
+                } else {
+                    for (var i = 0; i < subjectData.length; i++) {
+                        if (i > 0 && subjectData[i].gradeCategory === subjectData[i - 1].gradeCategory) {
+                            rowspanCount++;
+                        } else {
+                            rowspanCount = 1;
+                        }
+                        html += "<tr>";
+                        if (rowspanCount === 1) {
+                            html += "<td rowspan='" + getRowCount(subjectData, i) + "'>" + subjectData[i].gradeCategory + "</td>";
+                        }
+                        html += "<td>" + subjectData[i].gradeItem + "</td>";
+                        html += "<td>" + subjectData[i].weight + "</td>";
+                        html += "<td>" + subjectData[i].value + "</td>";
+                        html += "<td>" + subjectData[i].comment + "</td>";
+                        html += "</tr>";
                     }
-                    html += "<tr>";
-                    if (rowspanCount === 1) {
-                        html += "<td rowspan='" + getRowCount(subjectData, i) + "'>" + subjectData[i].gradeCategory + "</td>";
-                    }
-                    html += "<td>" + subjectData[i].gradeItem + "</td>";
-                    html += "<td>" + subjectData[i].weight + "</td>";
-                    html += "<td>" + subjectData[i].value + "</td>";
-                    html += "<td>" + subjectData[i].comment + "</td>";
-                    html += "</tr>";
                 }
                 document.getElementById("gradeTableBody").innerHTML = html;
             }
+
+
             // Function to calculate the number of rows for rowspan
             function getRowCount(data, currentIndex) {
                 var count = 1;
@@ -151,7 +158,7 @@
                 return count;
             }
             generateRows(courseData);
-          
+
 
 
 
