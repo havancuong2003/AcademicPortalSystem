@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import model.Account;
 import model.Group;
+import model.Mark;
 
 /**
  *
@@ -65,26 +66,30 @@ public class MarkStudentController extends HttpServlet {
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("account");
 
-        ArrayList<Group> groupIdToTakeCourse = mdb.getGroupIdToTakeCourse();
-        for (Group group : groupIdToTakeCourse) {
-            request.setAttribute("list" + group.getId(), mdb.getMarkStudent(group.getId(), a.getUsername()));
-        }
-
         ArrayList<Group> getTermOfStudentLearned = mdb.getTermOfStudentLearned(a.getUsername());
         request.setAttribute("termMark", getTermOfStudentLearned);
-        
-        
         String getTermID = request.getParameter("termid");
-        
-        ArrayList<Group> selectTermToSeeMark = mdb.getSelectTermToSeeMark(a.getUsername(),getTermID);
+        ArrayList<Group> selectTermToSeeMark = mdb.getSelectTermToSeeMark(a.getUsername(), getTermID);
         request.setAttribute("courseByTerm", selectTermToSeeMark);
-        
-        
-        
-        
-        request.setAttribute("listGroup", mdb.getGroupIdToTakeCourse());
 
-        request.getRequestDispatcher("../view/mark/student.jsp").forward(request, response);
+        // neu nhu lay tu url xuong ma chua click vao course thi trang web se tra thi loi can not parse null
+        String getCourseid = request.getParameter("courseid");
+        if (getCourseid != null) {
+            ArrayList<Mark> m = mdb.getMarkByTermAndCourse(a.getUsername(), getTermID, Integer.parseInt(getCourseid));
+            request.setAttribute("markOfCourse", m);
+        }
+
+        // neu chua click vao course thi se an bang diem di, con roi thi show bang diem ra
+        if (getCourseid != null) {
+
+            request.setAttribute("checkClick", "show");
+        } else {
+            request.setAttribute("checkClick", "hidden");
+        }
+        // request.setAttribute("markOfCourse", mdb.getMarkByTermAndCourse(a.getUsername(), "sp24", 19));
+        //  request.setAttribute("listGroup", mdb.getGroupIdToTakeCourse());
+
+        request.getRequestDispatcher("../view/mark/markPart2.jsp").forward(request, response);
     }
 
     /**

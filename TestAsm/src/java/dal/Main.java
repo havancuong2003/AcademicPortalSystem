@@ -15,9 +15,9 @@ public class Main {
     public static void main(String[] args) {
         MarkDBContext mdb=new MarkDBContext();
         ArrayList<Mark> markStudent = mdb.getMarkStudent(5, "cuonghv");
-        System.out.println(mdb.getGroupIdToTakeCourse().size());
-        System.out.println(markStudent.get(1).getValue());
-        //System.out.println(mdb.getSelectTermToSeeMark("cuonghv").size());
+        ArrayList<Mark> markByTermAndCourse = mdb.getMarkByTermAndCourse("cuonghv","sp24", 19);
+        System.out.println(markByTermAndCourse.get(0).getValue());
+                
         
     }
 }

@@ -20,6 +20,33 @@ import model.Term;
  */
 public class MarkDBContext extends DBContext<Mark> {
 
+    public ArrayList<Mark> getMarkByTermAndCourse(String username, String termid, int courseid) {
+         ArrayList<Mark> marks =new ArrayList<>();
+        try {
+            String sql = "select m.grade_category,m.grade_item,m.[weight],m.[value],m.comment,g.courseId,g.id as gid from mark m join student_group sg on m.student_group_id = sg.id\n" +
+" join Student s on s.id=sg.Studentid join [group] g on g.id=sg.groupid\n" +
+" where s.userName like ? and g.courseId = ? and g.termID like ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            stm.setString(3, termid);
+            stm.setInt(2, courseid);
+            ResultSet rs =stm.executeQuery();
+            while(rs.next()){
+               Mark m= new Mark();
+                m.setGradeCategory(rs.getString("grade_category"));
+                m.setGradeItem(rs.getString("grade_item"));
+                m.setWeight(rs.getFloat("weight"));
+                m.setValue(rs.getFloat("value"));
+                m.setComment(rs.getString("comment"));
+                m.setGroup(getGroupByID(rs.getInt("gid")));
+                marks.add(m);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MarkDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return marks;
+    }
+
     public ArrayList<Mark> getMarkStudent(int gid, String username) {
         ArrayList<Mark> marks = new ArrayList<>();
         try {
@@ -69,7 +96,7 @@ public class MarkDBContext extends DBContext<Mark> {
 
     }
 
-    public ArrayList<Group> getSelectTermToSeeMark(String username,String termId) {
+    public ArrayList<Group> getSelectTermToSeeMark(String username, String termId) {
         ArrayList<Group> groups = new ArrayList<>();
         try {
             String sql = "select g.termID,g.courseId,g.[name],g.timeStart,g.timeEnd from [group] g \n"
@@ -78,7 +105,7 @@ public class MarkDBContext extends DBContext<Mark> {
                     + "	where s.userName like ? and g.termId like ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);
-            stm.setString(2,termId);
+            stm.setString(2, termId);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Group g = new Group();
@@ -95,28 +122,28 @@ public class MarkDBContext extends DBContext<Mark> {
         return groups;
     }
 
-    public ArrayList<Group> getGroupIdToTakeCourse() {
-        ArrayList<Group> groups = new ArrayList<>();
-        try {
-            String sql = "select distinct sg.groupid,g.courseId  \n"
-                    + "from mark m join student_group sg  on m.student_group_id=sg.id\n"
-                    + "                   join [group] g on sg.groupid=g.id\n"
-                    + "                   join student st on st.id=sg.Studentid\n"
-                    + "                   where st.userName like 'cuonghv' ";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                Group g = new Group();
-                g.setId(rs.getInt("groupid"));
-                g.setCourse(getCourseByID(rs.getInt("courseId")));
-                groups.add(g);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(MarkDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return groups;
-    }
+//    public ArrayList<Group> getGroupIdToTakeCourse() {
+//        ArrayList<Group> groups = new ArrayList<>();
+//        try {
+//            String sql = "select distinct sg.groupid,g.courseId  \n"
+//                    + "from mark m join student_group sg  on m.student_group_id=sg.id\n"
+//                    + "                   join [group] g on sg.groupid=g.id\n"
+//                    + "                   join student st on st.id=sg.Studentid\n"
+//                    + "                   where st.userName like 'cuonghv' ";
+//            PreparedStatement stm = connection.prepareStatement(sql);
+//            ResultSet rs = stm.executeQuery();
+//            while (rs.next()) {
+//                Group g = new Group();
+//                g.setId(rs.getInt("groupid"));
+//                g.setCourse(getCourseByID(rs.getInt("courseId")));
+//                groups.add(g);
+//            }
+//
+//        } catch (SQLException ex) {
+//            Logger.getLogger(MarkDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return groups;
+//    }
 
     public Course getCourseByID(int id) {
         Course c = null;
