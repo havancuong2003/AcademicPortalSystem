@@ -29,7 +29,7 @@ public class TimetableLectureController extends HttpServlet {
         Account a = (Account) session.getAttribute("account");
         String username = a.getUsername();
         ArrayList<Session> listInfoLecture = adb.listInfoLecture(username);
-        request.setAttribute("test", listInfoLecture.get(2).getStatus());
+  
         request.setAttribute("list", listInfoLecture);
         request.getRequestDispatcher("../view/timetable/lecture.jsp").forward(request, response);
     }
