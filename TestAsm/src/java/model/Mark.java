@@ -16,13 +16,13 @@ public class Mark implements IEntity {
     private String gradeCategory;
     private String gradeItem;
     private float weight;
-    private float value;
+    private String value;
     private String comment;
 
     public Mark() {
     }
 
-    public Mark(int id, Student student, Group group, String gradeCategory, String gradeItem, float weight, float value, String comment) {
+    public Mark(int id, Student student, Group group, String gradeCategory, String gradeItem, float weight, String value, String comment) {
         this.id = id;
         this.student = student;
         this.group = group;
@@ -81,11 +81,11 @@ public class Mark implements IEntity {
         this.weight = weight;
     }
 
-    public float getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(float value) {
+    public void setValue(String value) {
         this.value = value;
     }
 

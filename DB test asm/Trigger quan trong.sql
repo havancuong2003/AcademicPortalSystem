@@ -118,3 +118,85 @@ END;
 
 
 
+-- trigger add data mark follow course
+CREATE TRIGGER trg_InsertStudentGroup
+ON student_group
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @UserName NVARCHAR(50)
+    DECLARE @GroupId INT
+    DECLARE @TermId NVARCHAR(50)
+    DECLARE @CourseId INT
+
+    SELECT @UserName = (select s.userName from student_group sg
+join student s on sg.Studentid=s.id
+where sg.id =inserted.id), 
+						@GroupId = inserted.groupid
+						 FROM inserted
+
+    SELECT @TermId = g.termID, @CourseId = g.courseId
+    FROM [group] g
+    WHERE g.id = @GroupId
+
+    INSERT INTO mark_student (student_group_id, mark_course_id, [value], comment)
+    select sg.id as student_group_id,mc.id as mark_course_id,NULL AS [value], NULL AS comment from student_group sg join [group] g on sg.groupid=g.id
+	join student s on s.id=sg.Studentid
+	join mark_course mc on mc.courseId=g.courseId
+   
+    WHERE s.userName LIKE @UserName AND g.termID = @TermId AND g.courseId = @CourseId 
+END;
+
+
+
+--- trigger nay  cua cai tren, dang test
+CREATE TRIGGER trg_InsertStudentGroup
+ON student_group
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @UserName NVARCHAR(50)
+    DECLARE @GroupId INT
+    DECLARE @TermId NVARCHAR(50)
+    DECLARE @CourseId INT
+
+    -- Khai báo con trỏ để duyệt qua các dòng được chèn
+    DECLARE @InsertedCursor CURSOR
+    SET @InsertedCursor = CURSOR FOR
+        SELECT s.userName, sg.groupid
+        FROM inserted i
+        JOIN student_group sg ON i.id = sg.id
+        JOIN student s ON sg.Studentid = s.id
+
+    -- Mở con trỏ
+    OPEN @InsertedCursor
+    FETCH NEXT FROM @InsertedCursor INTO @UserName, @GroupId
+
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        -- Lấy TermID và CourseID từ bảng [group]
+        SELECT @TermId = g.termID, @CourseId = g.courseId
+        FROM [group] g
+        WHERE g.id = @GroupId
+
+        -- Chèn dữ liệu vào bảng mark_student
+        INSERT INTO mark_student (student_group_id, mark_course_id, [value], comment)
+        SELECT sg.id AS student_group_id, mc.id AS mark_course_id, NULL AS [value], NULL AS comment
+        FROM student_group sg
+        INNER JOIN [group] g ON sg.groupid = g.id
+        INNER JOIN student s ON sg.Studentid = s.id
+        INNER JOIN mark_course mc ON mc.courseId = g.courseId
+        WHERE s.userName LIKE @UserName AND g.termID = @TermId AND g.courseId = @CourseId
+
+        FETCH NEXT FROM @InsertedCursor INTO @UserName, @GroupId
+    END
+
+    -- Đóng con trỏ
+    CLOSE @InsertedCursor
+    DEALLOCATE @InsertedCursor
+END;
+

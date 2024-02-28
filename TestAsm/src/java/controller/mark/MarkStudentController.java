@@ -74,9 +74,14 @@ public class MarkStudentController extends HttpServlet {
 
         // neu nhu lay tu url xuong ma chua click vao course thi trang web se tra thi loi can not parse null
         String getCourseid = request.getParameter("courseid");
+
+        request.setAttribute("activeTerm", getTermID);
+        request.setAttribute("activeCourse", getCourseid);
+        
         if (getCourseid != null) {
             ArrayList<Mark> m = mdb.getMarkByTermAndCourse(a.getUsername(), getTermID, Integer.parseInt(getCourseid));
             request.setAttribute("markOfCourse", m);
+
         }
 
         // neu chua click vao course thi se an bang diem di, con roi thi show bang diem ra

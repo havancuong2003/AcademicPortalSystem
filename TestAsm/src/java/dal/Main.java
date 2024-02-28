@@ -14,8 +14,8 @@ import model.Mark;
 public class Main {
     public static void main(String[] args) {
         MarkDBContext mdb=new MarkDBContext();
-        ArrayList<Mark> markStudent = mdb.getMarkStudent(5, "cuonghv");
-        ArrayList<Mark> markByTermAndCourse = mdb.getMarkByTermAndCourse("cuonghv","sp24", 19);
+      //  ArrayList<Mark> markStudent = mdb.getMarkStudent(5, "cuonghv");
+        ArrayList<Mark> markByTermAndCourse = mdb.getMarkByTermAndCourse("cuonghv","fa23", 12);
         System.out.println(markByTermAndCourse);
                 
         

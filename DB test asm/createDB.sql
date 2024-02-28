@@ -17,22 +17,10 @@ CREATE TABLE Student (
     [name] NVARCHAR(255),
 	dob date,
 	email nvarchar(50),
-	imgUrl varchar(MAX),
-	userName nvarchar(50),
-Foreign key (userName) references account(username)
+	imgUrl varchar(MAX)
+	--userName nvarchar(50),
+--Foreign key (userName) references account(username)
 );
-ALTER TABLE Student
-ADD userName nvarchar(50);
-
-ALTER TABLE Student
-ADD CONSTRAINT FK_Student_Account FOREIGN KEY (userName) REFERENCES account(userName);
-
-
-ALTER TABLE Lecture
-ADD userName nvarchar(50);
-
-ALTER TABLE Lecture
-ADD CONSTRAINT FK_Teacher_Account FOREIGN KEY (userName) REFERENCES account(userName);
 
 
 
@@ -40,10 +28,11 @@ CREATE TABLE Lecture (
     id  nvarchar(50) primary key,
     [name] NVARCHAR(255),
 	dob date,
-	email nvarchar(50),
-	userName nvarchar(50),
-Foreign key (userName) references account(username)
+	email nvarchar(50)
+	--userName nvarchar(50),
+--Foreign key (userName) references account(username)
 );
+
 
 CREATE TABLE Course (
     id INT identity(1,1) PRIMARY KEY,
