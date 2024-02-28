@@ -118,36 +118,7 @@ END;
 
 
 
--- trigger add data mark follow course
-CREATE TRIGGER trg_InsertStudentGroup
-ON student_group
-AFTER INSERT
-AS
-BEGIN
-    SET NOCOUNT ON;
 
-    DECLARE @UserName NVARCHAR(50)
-    DECLARE @GroupId INT
-    DECLARE @TermId NVARCHAR(50)
-    DECLARE @CourseId INT
-
-    SELECT @UserName = (select s.userName from student_group sg
-join student s on sg.Studentid=s.id
-where sg.id =inserted.id), 
-						@GroupId = inserted.groupid
-						 FROM inserted
-
-    SELECT @TermId = g.termID, @CourseId = g.courseId
-    FROM [group] g
-    WHERE g.id = @GroupId
-
-    INSERT INTO mark_student (student_group_id, mark_course_id, [value], comment)
-    select sg.id as student_group_id,mc.id as mark_course_id,NULL AS [value], NULL AS comment from student_group sg join [group] g on sg.groupid=g.id
-	join student s on s.id=sg.Studentid
-	join mark_course mc on mc.courseId=g.courseId
-   
-    WHERE s.userName LIKE @UserName AND g.termID = @TermId AND g.courseId = @CourseId 
-END;
 
 
 

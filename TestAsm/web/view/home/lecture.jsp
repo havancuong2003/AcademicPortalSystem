@@ -135,6 +135,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <ul>
                     <li><a href="timetable">Weekly Timetable</a></li>
                     <li><a href="lecture_info.jsp">Thông Tin Lecture</a></li>
+                    <li><a href="mark" >Mark report</a></li>
                     
                 </ul>
             </nav>

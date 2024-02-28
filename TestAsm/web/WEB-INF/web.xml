@@ -52,6 +52,18 @@
         <servlet-name>LogoutController</servlet-name>
         <servlet-class>controller.authentication.LogoutController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MarkLectureController</servlet-name>
+        <servlet-class>controller.mark.MarkLectureController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateMarkByLecture</servlet-name>
+        <servlet-class>controller.mark.UpdateMarkByLecture</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateMarkOfCourse</servlet-name>
+        <servlet-class>controller.mark.UpdateMarkOfCourse</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AttendanceStudentController</servlet-name>
         <url-pattern>/student/timetable</url-pattern>
@@ -83,6 +95,18 @@
     <servlet-mapping>
         <servlet-name>LogoutController</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MarkLectureController</servlet-name>
+        <url-pattern>/lecture/mark</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateMarkByLecture</servlet-name>
+        <url-pattern>/lecture/updatemark</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateMarkOfCourse</servlet-name>
+        <url-pattern>/lecture/updatemarkofcourse</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>

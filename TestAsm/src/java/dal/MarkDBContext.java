@@ -19,7 +19,41 @@ import model.Term;
  * @author -MSI-
  */
 public class MarkDBContext extends DBContext<Mark> {
-
+    
+    public ArrayList<Mark> getMarksForTeacher(String username, int courseId, String gradeCategory, String gradeItem) {
+        ArrayList<Mark> marks = new ArrayList<>();
+        try {
+            String sql = "select s.id as studentID,s.[name] as studentName,mc.gradeCategory,mc.gradeItem,mc.[weight],ms.[value],ms.[comment] from student_group sg join [Group] g on sg.groupid=g.id\n"
+                    + "join student s on s.id=sg.Studentid\n"
+                    + "join Lecture l on l.id=g.lectureid\n"
+                    + "join mark_student ms on ms.student_group_id=sg.id\n"
+                    + "join mark_course mc on mc.id=ms.mark_course_id\n"
+                    + "where l.userName = ?  and g.courseId=  ? and mc.gradeCategory = ?  and mc.gradeItem = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            stm.setInt(2, courseId);
+            stm.setString(3, gradeCategory);
+            stm.setString(4, gradeItem);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Mark m = new Mark();
+                m.setStudent(getStudentByID(rs.getString("studentID")));
+                m.setGradeCategory(rs.getString("gradeCategory"));
+                m.setGradeItem(rs.getString("gradeItem"));
+                m.setWeight(Float.parseFloat(rs.getString("weight")));
+                m.setValue(rs.getString("value"));
+                m.setComment(rs.getString("comment"));
+                marks.add(m);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MarkDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return marks;
+    }
+    
+    
+   
+    
     public ArrayList<Mark> getMarkByTermAndCourse(String username, String termid, int courseid) {
         ArrayList<Mark> marks = new ArrayList<>();
         try {
@@ -97,9 +131,9 @@ public class MarkDBContext extends DBContext<Mark> {
             Logger.getLogger(MarkDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return groups;
-
+        
     }
-
+    
     public ArrayList<Group> getSelectTermToSeeMark(String username, String termId) {
         ArrayList<Group> groups = new ArrayList<>();
         try {
@@ -165,7 +199,7 @@ public class MarkDBContext extends DBContext<Mark> {
         }
         return c;
     }
-
+    
     public Term getTermByID(String id) {
         Term t = null;
         try {
@@ -185,7 +219,7 @@ public class MarkDBContext extends DBContext<Mark> {
         }
         return t;
     }
-
+    
     public Group getGroupByID(int id) {
         Group g = null;
         try {
@@ -211,7 +245,7 @@ public class MarkDBContext extends DBContext<Mark> {
         }
         return g;
     }
-
+    
     public Student getStudentByID(String id) {
         Student s = null;
         try {
@@ -232,30 +266,30 @@ public class MarkDBContext extends DBContext<Mark> {
         }
         return s;
     }
-
+    
     @Override
     public ArrayList<Mark> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    
     @Override
     public void insert(Mark entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    
     @Override
     public void update(Mark entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    
     @Override
     public void delete(Mark entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    
     @Override
     public Mark get(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    
 }

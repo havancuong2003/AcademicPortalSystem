@@ -16,8 +16,12 @@ public class Main {
         MarkDBContext mdb=new MarkDBContext();
       //  ArrayList<Mark> markStudent = mdb.getMarkStudent(5, "cuonghv");
         ArrayList<Mark> markByTermAndCourse = mdb.getMarkByTermAndCourse("cuonghv","fa23", 12);
-        System.out.println(markByTermAndCourse);
-                
+        
+        ArrayList<Mark> marksForTeacher = mdb.getMarksForTeacher("sonnt", 12, "assignment", "assignment 1");
+        
+       GroupDBContext gdbc =new GroupDBContext();
+        System.out.println(gdbc.getAllGroupOfLecture("sonnt").size());
+                System.out.println(gdbc.getGradeTableForTeacher("sonnt", 12).size());
         
     }
 }
