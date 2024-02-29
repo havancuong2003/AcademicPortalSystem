@@ -5,6 +5,7 @@
 package controller.timetable;
 
 import dal.AttendanceDBContext;
+import dal.SlotDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -44,11 +45,23 @@ public class TimetableStudentController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AttendanceDBContext adb = new AttendanceDBContext();
+        SlotDBContext sdbc = new SlotDBContext();
+
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("account");
-        String username = a.getUsername();
-        request.setAttribute("list", adb.listInfoStudent(username));
 
+        String username = a.getUsername();
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+
+        // Xử lý logic để tạo danh sách chứa tất cả các ngày giữa startDate và endDate
+        // Ví dụ: bạn có thể sử dụng một phương thức trong lớp utiliy hoặc thư viện thời gian để làm điều này
+        // In ra để kiểm tra
+        request.setAttribute("t1", startDate + "a");
+        request.setAttribute("t2", endDate);
+
+        request.setAttribute("list", adb.listInfoStudent(username));
+        request.setAttribute("slots", sdbc.list());
         request.getRequestDispatcher("../view/timetable/studentTimeTB.jsp").forward(request, response);
     }
 
@@ -63,6 +76,27 @@ public class TimetableStudentController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String dropDownYear = request.getParameter("dropdownYear");
+        String dropDownWeek = request.getParameter("dropdownWeek");
+        HttpSession session = request.getSession();
+        session.setAttribute("dropDownYear", dropDownYear);
+
+        if (dropDownWeek == null) {
+
+            session.setAttribute("dropDownWeek", 1);
+        } else {
+            session.setAttribute("dropDownWeek", dropDownWeek);
+        }
+
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+
+        
+        
+        session.setAttribute("startDate", startDate);
+        session.setAttribute("endDate", endDate);
+        response.sendRedirect("timetable");
+        
     }
 
     /**

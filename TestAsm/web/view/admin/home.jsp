@@ -162,6 +162,7 @@
                         width="35"
                         height="35"
                         fill="#808080"
+                        onclick="logout()"
                         >
                     <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                     <path
@@ -239,7 +240,11 @@
             </div>
         </div>
 
-        <script src="../js/script.js"></script>
+        <script>
+           function logout(){
+                window.location.href = '/testasm/logout';
+           }
+        </script>
     </body>
 </html>
 
