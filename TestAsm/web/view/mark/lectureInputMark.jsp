@@ -60,42 +60,58 @@
             form button:hover {
                 background-color: #45a049;
             }
+            a:hover {
+                background-color: #45a049;
+            }
+            .home a {
+                color: black;
+                font-size: 25px;
+                padding: 5px 10px;
+                text-decoration: none;
+                background-color: #ccc;
+            }
+            .home {
+                padding: 10px;
+                border-radius: 5px;
+                margin: 25px 0;
+            }
         </style>
     </head>
     <body>
+        <div class="home">
+            <a href="mark">Back</a>
+        </div>
         <div class="container">
 
             <h1>Grade Entry</h1>
-            <h2>Grade Item: Assignment 1</h2>
-            <form action="#" method="post">
+            <h2>Grade Item: ${requestScope.gradeItem}</h2>
+            <form action="updatemarkofcourse" method="post">
                 <table>
                     <thead>
                         <tr>
                             <th>Student ID</th>
                             <th>Student Name</th>
                             <th>Grade</th>
+                            <th>Comment</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Student 1</td>
-                            <td><input type="number" name="grade1" min="0" max="100" required></td>
+                        <c:forEach items="${requestScope.listStudentByCourse}" var="s">
+
+                            <tr>
+                                <td>${s.student.id}</td>
+                                <td>${s.student.name} </td>
+                                <td><input type="number" value="${s.value}" name="value${s.student.id}" min="0" max="100" required></td>
+                                <td><input type="text" value="${s.comment}"/></td>
+                        <input type="hidden" name="gradeitem" value="${s.gradeItem}"/>
+                        <input type="hidden" name="groupid" value="${s.group.id}"/>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Student 2</td>
-                            <td><input type="number" name="grade2" min="0" max="100" required></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Student 3</td>
-                            <td><input type="number" name="grade3" min="0" max="100" required></td>
-                        </tr>
-                        <!-- Add more rows for additional students as needed -->
+                    </c:forEach>
+
+
                     </tbody>
                 </table>
-                <button type="submit">Submit Grades</button>
+                <input type="submit">Submit Grades</input>
             </form>
         </div>
     </body>

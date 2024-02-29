@@ -119,7 +119,7 @@
                         </tr>
                     </thead>
                     <tbody id="gradeTableBody">
-                        <!-- Grades will be displayed here -->
+                      
                     </tbody>
                 </table>
             </div>
@@ -132,6 +132,7 @@
             <c:forEach items="${requestScope.gradeTableMark}" var="m">
 
                 {
+                    groupID: '${m.group.id}',
                     gradeCategory: '${m.gradeCategory}',
                     gradeItem: '${m.gradeItem}'
                 },
@@ -160,7 +161,9 @@
                     html += "<td rowspan='" + categoryCounts[item.gradeCategory] + "'>" + item.gradeCategory + "</td>";
                 }
                 html += "<td>" + item.gradeItem + "</td>";
-                html += "<td><a href='updatemark'>View Grade Item</a></td>";
+                html += "<td><a href='updatemark?groupid=" + item.groupID + "&gradeItem=" + encodeURIComponent(item.gradeItem) + "'>View Grade Item</a></td>";
+
+
                 html += "</tr>";
             });
             document.getElementById("gradeTableBody").innerHTML = html;

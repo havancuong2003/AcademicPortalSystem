@@ -91,6 +91,8 @@ CREATE TABLE [Session] (
     group_id INT,
     [date] DATE,
     FOREIGN KEY (group_id) REFERENCES [Group](id),
+	lectureid nvarchar(50),
+	 FOREIGN KEY (lectureid) REFERENCES Lecture(id),
 );
 
 CREATE TABLE Attendance (

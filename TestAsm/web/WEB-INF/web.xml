@@ -19,6 +19,7 @@
     <filter-mapping>
         <filter-name>HomeFilter</filter-name>
         <url-pattern>/student/*</url-pattern>
+        <url-pattern>/admin/*</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>AttendanceStudentController</servlet-name>
@@ -64,6 +65,10 @@
         <servlet-name>UpdateMarkOfCourse</servlet-name>
         <servlet-class>controller.mark.UpdateMarkOfCourse</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HomeAdmin</servlet-name>
+        <servlet-class>controller.admin.HomeAdmin</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AttendanceStudentController</servlet-name>
         <url-pattern>/student/timetable</url-pattern>
@@ -107,6 +112,10 @@
     <servlet-mapping>
         <servlet-name>UpdateMarkOfCourse</servlet-name>
         <url-pattern>/lecture/updatemarkofcourse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeAdmin</servlet-name>
+        <url-pattern>/admin/home</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>

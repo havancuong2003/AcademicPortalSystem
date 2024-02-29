@@ -11,17 +11,18 @@ BEGIN
     DECLARE @CurrentDate DATE
     DECLARE @FirstDayOfWeek DATE
     DECLARE @SecondDayOfWeek DATE
+	DECLARE @LECTUREID NVARCHAR(50)
 
     -- Con trỏ để lặp qua các bản ghi được chèn vào bảng group
     DECLARE group_cursor CURSOR FOR
-    SELECT id, timeStart, timeEnd, firstday, secondday
-    FROM inserted
+    SELECT lectureid,id, timeStart, timeEnd, firstday, secondday
+    FROM  inserted
 
     -- Mở con trỏ để bắt đầu lặp qua các bản ghi
     OPEN group_cursor
 
     -- Lấy bản ghi đầu tiên từ bảng tạm thời và gán cho các biến tương ứng
-    FETCH NEXT FROM group_cursor INTO @GroupID, @StartDate, @EndDate, @FirstDayOfWeek, @SecondDayOfWeek
+    FETCH NEXT FROM group_cursor INTO @LECTUREID, @GroupID, @StartDate, @EndDate, @FirstDayOfWeek, @SecondDayOfWeek
 
     -- Bắt đầu vòng lặp
     WHILE @@FETCH_STATUS = 0
@@ -33,14 +34,14 @@ BEGIN
             -- Kiểm tra xem ngày hiện tại có phải là firstDate hoặc secondDate của tuần không
             IF DATEPART(WEEKDAY, @CurrentDate) = DATEPART(WEEKDAY, @FirstDayOfWeek) OR DATEPART(WEEKDAY, @CurrentDate) = DATEPART(WEEKDAY, @SecondDayOfWeek)
             BEGIN
-                INSERT INTO [session] ([status],group_id, [date])
-                VALUES (0,@GroupID, @CurrentDate)
+                INSERT INTO [session] ([status],group_id, [date],[lectureid])
+                VALUES (0,@GroupID, @CurrentDate,@LECTUREID)
             END
             SET @CurrentDate = DATEADD(DAY, 1, @CurrentDate)
         END
 
         -- Lấy bản ghi tiếp theo từ bảng tạm thời
-        FETCH NEXT FROM group_cursor INTO @GroupID, @StartDate, @EndDate, @FirstDayOfWeek, @SecondDayOfWeek
+        FETCH NEXT FROM group_cursor INTO @LECTUREID,@GroupID, @StartDate, @EndDate, @FirstDayOfWeek, @SecondDayOfWeek
     END
 
     -- Đóng con trỏ và giải phóng tài nguyên
@@ -122,7 +123,7 @@ END;
 
 
 
---- trigger nay  cua cai tren, dang test
+--- trigger nay  insert diem vao data
 CREATE TRIGGER trg_InsertStudentGroup
 ON student_group
 AFTER INSERT

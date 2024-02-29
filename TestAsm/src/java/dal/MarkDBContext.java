@@ -19,7 +19,7 @@ import model.Term;
  * @author -MSI-
  */
 public class MarkDBContext extends DBContext<Mark> {
-    
+
     public ArrayList<Mark> getMarksForTeacher(String username, int courseId, String gradeCategory, String gradeItem) {
         ArrayList<Mark> marks = new ArrayList<>();
         try {
@@ -50,10 +50,7 @@ public class MarkDBContext extends DBContext<Mark> {
         }
         return marks;
     }
-    
-    
-   
-    
+
     public ArrayList<Mark> getMarkByTermAndCourse(String username, String termid, int courseid) {
         ArrayList<Mark> marks = new ArrayList<>();
         try {
@@ -131,9 +128,9 @@ public class MarkDBContext extends DBContext<Mark> {
             Logger.getLogger(MarkDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return groups;
-        
+
     }
-    
+
     public ArrayList<Group> getSelectTermToSeeMark(String username, String termId) {
         ArrayList<Group> groups = new ArrayList<>();
         try {
@@ -199,7 +196,7 @@ public class MarkDBContext extends DBContext<Mark> {
         }
         return c;
     }
-    
+
     public Term getTermByID(String id) {
         Term t = null;
         try {
@@ -219,7 +216,7 @@ public class MarkDBContext extends DBContext<Mark> {
         }
         return t;
     }
-    
+
     public Group getGroupByID(int id) {
         Group g = null;
         try {
@@ -245,7 +242,7 @@ public class MarkDBContext extends DBContext<Mark> {
         }
         return g;
     }
-    
+
     public Student getStudentByID(String id) {
         Student s = null;
         try {
@@ -266,30 +263,85 @@ public class MarkDBContext extends DBContext<Mark> {
         }
         return s;
     }
-    
+
+    // insert mark for each grade item for each course
+    public ArrayList<Mark> insertMarkForCourse(int gid, String gradeItem) {
+        ArrayList<Mark> marks = new ArrayList<>();
+        try {
+
+            String sql = "select g.id as gid, s.id as studentid,s.[name],ms.[value],ms.comment,mc.gradeItem from [group] g \n"
+                    + "join student_group sg on g.id =sg.groupid\n"
+                    + "join mark_student ms on ms.student_group_id = sg.id\n"
+                    + "join mark_course mc on mc.id=ms.mark_course_id\n"
+                    + "join student s on s.id =sg.studentId\n"
+                    + "where g.id=? and mc.gradeItem = ?";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, gid);
+            stm.setString(2, gradeItem);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Mark m = new Mark();
+              
+                m.setGroup(getGroupByID(rs.getInt("gid")));
+                m.setStudent(getStudentByID(rs.getString("studentid")));
+                m.setValue(rs.getString("value"));
+                m.setComment(rs.getString("comment"));
+                m.setGradeItem(rs.getString("gradeItem"));
+                marks.add(m);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MarkDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return marks;
+    }
+// ham ben tren chi de nhap thoi. xem thoi. ham nay de thuc hien viec insert vao database ne
+
+    public void updateMarkOfStudent(String value, int gid, String gradeItem, String sid) {
+        try {
+            String sql = "update mark_student\n"
+                    + "set [value] = ? \n"
+                    + "where id = (select ms.id as msid from [group] g \n"
+                    + "join student_group sg on g.id =sg.groupid\n"
+                    + "join mark_student ms on ms.student_group_id = sg.id\n"
+                    + "join mark_course mc on mc.id=ms.mark_course_id\n"
+                    + "join student s on s.id =sg.studentId\n"
+                    + "where g.id= ? and mc.gradeItem = ? and s.id = ?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, value);
+            stm.setInt(2, gid);
+            stm.setString(3, gradeItem);
+            stm.setString(4, sid);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(MarkDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     @Override
     public ArrayList<Mark> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public void insert(Mark entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public void update(Mark entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public void delete(Mark entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public Mark get(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
 }

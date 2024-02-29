@@ -14,14 +14,9 @@ import model.Mark;
 public class Main {
     public static void main(String[] args) {
         MarkDBContext mdb=new MarkDBContext();
-      //  ArrayList<Mark> markStudent = mdb.getMarkStudent(5, "cuonghv");
-        ArrayList<Mark> markByTermAndCourse = mdb.getMarkByTermAndCourse("cuonghv","fa23", 12);
-        
-        ArrayList<Mark> marksForTeacher = mdb.getMarksForTeacher("sonnt", 12, "assignment", "assignment 1");
-        
-       GroupDBContext gdbc =new GroupDBContext();
-        System.out.println(gdbc.getAllGroupOfLecture("sonnt").size());
-                System.out.println(gdbc.getGradeTableForTeacher("sonnt", 12).size());
-        
+        ArrayList<Mark> insertMarkForCourse = mdb.insertMarkForCourse(5, "Workshop 1");
+        for (Mark mark : insertMarkForCourse) {
+            System.out.println(mark.getValue());
+        }
     }
 }

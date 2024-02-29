@@ -121,6 +121,8 @@ public class HomeFilter implements Filter {
                 chain.doFilter(request, response);
             } else if ((role.equals("3") && urlPattern.startsWith("/student"))) {
                 chain.doFilter(request, response);
+            } else if ((role.equals("1") && urlPattern.startsWith("/admin"))) {
+                chain.doFilter(request, response);
             } else {
                 // Nếu không phù hợp với vai trò hoặc URL pattern, trả về lỗi 403 (Forbidden)
                 httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied.");

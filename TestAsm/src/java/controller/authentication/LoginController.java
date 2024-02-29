@@ -68,6 +68,9 @@ public class LoginController extends HttpServlet {
             } else if (account.getRole().equals("2")) {
                 homePage = "lecture/home";
             }
+            else if (account.getRole().equals("1")) {
+                homePage = "admin/home";
+            }
             response.sendRedirect(homePage);
         } else {
             // Session không tồn tại hoặc chưa đăng nhập, hiển thị trang đăng nhập
