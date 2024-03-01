@@ -52,13 +52,12 @@ public class TimetableStudentController extends HttpServlet {
         if (session.getAttribute("dropDownWeek") == null) {
             session.setAttribute("dropDownWeek", 1);
         }
-        
+
         if (session.getAttribute("dropDownYear") == null) {
             session.setAttribute("dropDownYear", "2024");
         }
-        
+
         String username = a.getUsername();
- 
 
         request.setAttribute("list", adb.listInfoStudent(username));
         request.setAttribute("slots", sdbc.list());
@@ -88,8 +87,8 @@ public class TimetableStudentController extends HttpServlet {
             session.setAttribute("dropDownWeek", dropDownWeek);
         }
 
-        String startDate = request.getParameter("startDate");
-        String endDate = request.getParameter("endDate");
+        String startDate = request.getParameter("startDate" + dropDownWeek);
+        String endDate = request.getParameter("endDate" + dropDownWeek);
 
         String valueChange = request.getParameter("yearChanged");
 

@@ -112,6 +112,7 @@
                             "-" +
                             ("0" + (weekRange.end.getMonth() + 1)).slice(-2);
                     weekElement.add(option);
+                    
                 }
 
                 // Update timetable when weeks change

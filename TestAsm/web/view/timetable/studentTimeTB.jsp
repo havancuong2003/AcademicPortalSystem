@@ -154,39 +154,40 @@
             var isSelected = (dropDownWeekValue === i); // So sánh giá trị của biến JavaScript và biến JSP
             if (isSelected) {
                 option.selected = true;
-                // Create and append hidden input for start date
-                var startDate = document.createElement("input");
-                startDate.type = "hidden";
-                startDate.name = "startDate"; // Set the name attribute if needed
 
-                // Set start date to the first day of the current week
-                var firstDayOfWeek = new Date(weekRange.start);
-                firstDayOfWeek.setDate(firstDayOfWeek.getDate() - firstDayOfWeek.getDay() + 1); // Set to Monday of the week
-                var year = firstDayOfWeek.getFullYear(); // Get the year of the start date
-                var month = firstDayOfWeek.getMonth() + 1; // Get the month of the start date
-                var day = firstDayOfWeek.getDate(); // Get the day of the start date
-
-                // Format the start date as yyyy-mm-dd
-                startDate.value = year + "-" + (month < 10 ? "0" : "") + month + "-" + (day < 10 ? "0" : "") + day;
-
-                weekElement.appendChild(startDate);
-
-                // Create hidden input for end date
-                var endDate = document.createElement("input");
-                endDate.type = "hidden";
-                endDate.name = "endDate"; // Set the name attribute if needed
-                // Set end date to the last day of the current week
-                var lastDayOfWeek = new Date(weekRange.end);
-                lastDayOfWeek.setDate(lastDayOfWeek.getDate() + (lastDayOfWeek.getDay())); // Set to Sunday of the week
-                year = lastDayOfWeek.getFullYear(); // Get the year of the end date
-                month = lastDayOfWeek.getMonth() + 1; // Get the month of the end date
-                day = lastDayOfWeek.getDate(); // Get the day of the end date
-
-                // Format the end date as yyyy-mm-dd
-                endDate.value = year + "-" + (month < 10 ? "0" : "") + month + "-" + (day < 10 ? "0" : "") + day;
-
-                weekElement.appendChild(endDate);
             }
+            // Create and append hidden input for start date
+            var startDate = document.createElement("input");
+            startDate.type = "hidden";
+            startDate.name = "startDate" + i; // Set the name attribute if needed
+
+            // Set start date to the first day of the current week
+            var firstDayOfWeek = new Date(weekRange.start);
+            firstDayOfWeek.setDate(firstDayOfWeek.getDate() - firstDayOfWeek.getDay() + 1); // Set to Monday of the week
+            var year = firstDayOfWeek.getFullYear(); // Get the year of the start date
+            var month = firstDayOfWeek.getMonth() + 1; // Get the month of the start date
+            var day = firstDayOfWeek.getDate(); // Get the day of the start date
+
+            // Format the start date as yyyy-mm-dd
+            startDate.value = year + "-" + (month < 10 ? "0" : "") + month + "-" + (day < 10 ? "0" : "") + day;
+
+            weekElement.appendChild(startDate);
+
+            // Create hidden input for end date
+            var endDate = document.createElement("input");
+            endDate.type = "hidden";
+            endDate.name = "endDate" + i; // Set the name attribute if needed
+            // Set end date to the last day of the current week
+            var lastDayOfWeek = new Date(weekRange.end);
+            lastDayOfWeek.setDate(lastDayOfWeek.getDate() + (lastDayOfWeek.getDay())); // Set to Sunday of the week
+            year = lastDayOfWeek.getFullYear(); // Get the year of the end date
+            month = lastDayOfWeek.getMonth() + 1; // Get the month of the end date
+            day = lastDayOfWeek.getDate(); // Get the day of the end date
+
+            // Format the end date as yyyy-mm-dd
+            endDate.value = year + "-" + (month < 10 ? "0" : "") + month + "-" + (day < 10 ? "0" : "") + day;
+
+            weekElement.appendChild(endDate);
             option.value = i;
             option.text =
                     "Week " +
@@ -270,7 +271,7 @@
         $('#week').change(function () {
             // Automatically submit the form when the select element changes
             // Set a timeout of 1 second before submitting the form
-            setTimeout(function() {
+            setTimeout(function () {
                 $('#myForm').submit();
             }, 1000); // Delay of 1 second
         });
