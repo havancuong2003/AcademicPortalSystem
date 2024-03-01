@@ -13,7 +13,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
 import model.Account;
+import util.DateTimeHelper;
 
 /**
  *
@@ -46,11 +48,18 @@ public class TimetableStudentController extends HttpServlet {
         AttendanceDBContext adb = new AttendanceDBContext();
         SlotDBContext sdbc = new SlotDBContext();
 
+        DateTimeHelper dateTimeHelper = new DateTimeHelper();
+        LocalDate today = LocalDate.now();
+
+        int weekOfYear = dateTimeHelper.getWeekOfYear(today);
+
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("account");
 
         if (session.getAttribute("dropDownWeek") == null) {
-            session.setAttribute("dropDownWeek", 1);
+            session.setAttribute("dropDownWeek", weekOfYear);
+            session.setAttribute("startDate", dateTimeHelper.getFirstDayOfWeek(today));
+            session.setAttribute("endDate", dateTimeHelper.getLastDayOfWeek(today));
         }
 
         if (session.getAttribute("dropDownYear") == null) {

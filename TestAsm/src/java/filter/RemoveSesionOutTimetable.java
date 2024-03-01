@@ -25,6 +25,8 @@ public class RemoveSesionOutTimetable implements Filter {
 
     private final String SESSION_ATTRIBUTE_TO_CHECK1 = "dropDownYear"; // Tên của thuộc tính session cần kiểm tra
     private final String SESSION_ATTRIBUTE_TO_CHECK2 = "dropDownWeek"; // Tên của thuộc tính session cần kiểm tra
+    private final String SESSION_ATTRIBUTE_TO_CHECK3 = "startDate"; // Tên của thuộc tính session cần kiểm tra
+    private final String SESSION_ATTRIBUTE_TO_CHECK4 = "endDate"; // Tên của thuộc tính session cần kiểm tra
     private final String URL_CONTAINS_CHECK = "timetable"; // Chuỗi để kiểm tra xem URL có chứa "timetable" không
     private static final boolean debug = true;
 
@@ -120,6 +122,13 @@ public class RemoveSesionOutTimetable implements Filter {
             if (session.getAttribute(SESSION_ATTRIBUTE_TO_CHECK2) != null) {
                 session.removeAttribute(SESSION_ATTRIBUTE_TO_CHECK2); // Xóa thuộc tính của session
             }
+            if (session.getAttribute(SESSION_ATTRIBUTE_TO_CHECK3) != null) {
+                session.removeAttribute(SESSION_ATTRIBUTE_TO_CHECK3);
+            }
+            if (session.getAttribute(SESSION_ATTRIBUTE_TO_CHECK4) != null) {
+                session.removeAttribute(SESSION_ATTRIBUTE_TO_CHECK4);
+            }
+
         }
 
         chain.doFilter(request, response);
