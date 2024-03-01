@@ -7,7 +7,6 @@ package controller.timetable;
 import dal.AttendanceDBContext;
 import dal.SlotDBContext;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -50,15 +49,16 @@ public class TimetableStudentController extends HttpServlet {
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("account");
 
+        if (session.getAttribute("dropDownWeek") == null) {
+            session.setAttribute("dropDownWeek", 1);
+        }
+        
+        if (session.getAttribute("dropDownYear") == null) {
+            session.setAttribute("dropDownYear", "2024");
+        }
+        
         String username = a.getUsername();
-        String startDate = request.getParameter("startDate");
-        String endDate = request.getParameter("endDate");
-
-        // Xử lý logic để tạo danh sách chứa tất cả các ngày giữa startDate và endDate
-        // Ví dụ: bạn có thể sử dụng một phương thức trong lớp utiliy hoặc thư viện thời gian để làm điều này
-        // In ra để kiểm tra
-        request.setAttribute("t1", startDate + "a");
-        request.setAttribute("t2", endDate);
+ 
 
         request.setAttribute("list", adb.listInfoStudent(username));
         request.setAttribute("slots", sdbc.list());
@@ -91,12 +91,21 @@ public class TimetableStudentController extends HttpServlet {
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
 
-        
-        
+        String valueChange = request.getParameter("yearChanged");
+
+        if (valueChange.equals("")) {
+
+            session.setAttribute("getValueChange", "false");
+        } else {
+            session.setAttribute("getValueChange", valueChange);
+        }
+        if (valueChange.equals("true")) {
+            session.setAttribute("dropDownWeek", 1);
+        }
         session.setAttribute("startDate", startDate);
         session.setAttribute("endDate", endDate);
         response.sendRedirect("timetable");
-        
+
     }
 
     /**
