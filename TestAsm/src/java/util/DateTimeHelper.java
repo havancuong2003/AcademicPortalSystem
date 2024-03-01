@@ -7,6 +7,8 @@ package util;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 public class DateTimeHelper {
@@ -31,6 +33,18 @@ public class DateTimeHelper {
 
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
         return date.get(weekFields.weekOfWeekBasedYear());
+    }
+
+    public ArrayList<java.sql.Date> getWeekDaysAsSqlDates(LocalDate date) {
+        LocalDate firstDayOfWeek = getFirstDayOfWeek(date);
+        LocalDate lastDayOfWeek = getLastDayOfWeek(date);
+        
+        ArrayList<java.sql.Date> weekDays = new ArrayList<>();
+        while (!firstDayOfWeek.isAfter(lastDayOfWeek)) {
+            weekDays.add(java.sql.Date.valueOf(firstDayOfWeek));
+            firstDayOfWeek = firstDayOfWeek.plusDays(1);
+        }
+        return weekDays;
     }
 
 }

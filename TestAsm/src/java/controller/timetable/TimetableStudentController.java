@@ -14,6 +14,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import model.Account;
 import util.DateTimeHelper;
 
@@ -60,8 +62,11 @@ public class TimetableStudentController extends HttpServlet {
             session.setAttribute("dropDownWeek", weekOfYear);
             session.setAttribute("startDate", dateTimeHelper.getFirstDayOfWeek(today));
             session.setAttribute("endDate", dateTimeHelper.getLastDayOfWeek(today));
+
         }
 
+        ArrayList<java.sql.Date> dates = dateTimeHelper.getWeekDaysAsSqlDates((LocalDate) session.getAttribute("startDate"));
+        request.setAttribute("dates", dates);
         if (session.getAttribute("dropDownYear") == null) {
             session.setAttribute("dropDownYear", "2024");
         }
@@ -89,15 +94,16 @@ public class TimetableStudentController extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("dropDownYear", dropDownYear);
 
+        if (!session.getAttribute("dropDownYear").equals(dropDownYear)) {
+            session.setAttribute("dropDownWeek", 1);
+        }
+
         if (dropDownWeek == null) {
 
             session.setAttribute("dropDownWeek", 1);
         } else {
             session.setAttribute("dropDownWeek", dropDownWeek);
         }
-
-        String startDate = request.getParameter("startDate" + dropDownWeek);
-        String endDate = request.getParameter("endDate" + dropDownWeek);
 
         String valueChange = request.getParameter("yearChanged");
 
@@ -110,8 +116,15 @@ public class TimetableStudentController extends HttpServlet {
         if (valueChange.equals("true")) {
             session.setAttribute("dropDownWeek", 1);
         }
-        session.setAttribute("startDate", startDate);
-        session.setAttribute("endDate", endDate);
+
+        session.setAttribute("t11", session.getAttribute("dropDownWeek"));
+        String startDate = request.getParameter("startDate" + session.getAttribute("dropDownWeek"));
+        String endDate = request.getParameter("endDate" + session.getAttribute("dropDownWeek"));
+        
+        LocalDate startDates = LocalDate.parse(startDate, DateTimeFormatter.ISO_LOCAL_DATE);
+        LocalDate endDates = LocalDate.parse(endDate, DateTimeFormatter.ISO_LOCAL_DATE);
+        session.setAttribute("startDate", startDates);
+        session.setAttribute("endDate", endDates);
         response.sendRedirect("timetable");
 
     }
