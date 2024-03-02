@@ -186,7 +186,7 @@
         </style>
     </head>
     <body>
-
+        <h1 style="color:red">${requestScope.error}</h1>
         <div class="home">
             <a href="home">Home</a>
         </div>
@@ -204,7 +204,7 @@
             <h3>Courses</h3>
             <ul id="courseList">
                 <c:forEach items="${requestScope.courseByTerm}" var="g">
-                    <li id="active${g.course.id}"><a href="mark?termid=${param.termid}&courseid=${g.course.id}" onclick="showMarks()">${g.course.description}</a></li>
+                    <li id="active${g.course.id}"><a href="mark?termid=${param.termid}&courseid=${g.course.id}&gid=${g.id}" onclick="showMarks()">${g.course.description}</a></li>
                     </c:forEach>
 
 
@@ -236,11 +236,14 @@
             <br/>
             <div class="totalMark">
                 <h1>
-                    COURSE TOTAL: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AVERAGE &nbsp;&nbsp;:<span>8.3</span>
+                    COURSE TOTAL: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AVERAGE &nbsp;&nbsp;:<span>${requestScope.total}</span>
                 </h1>
                 <br/>
                 <h1>
-                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   Status &nbsp;&nbsp;&nbsp;<span> PASSED</span> 
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   Status &nbsp;&nbsp;&nbsp;<span> ${requestScope.status}</span> 
+                </h1>
+                 <h1>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    &nbsp;&nbsp;&nbsp;<span> ${requestScope.cmt}</span> 
                 </h1>
             </div>
         </div>

@@ -1,4 +1,5 @@
 1 sinh viên học 20 slot ở 1 môn. Nếu như đổi 10 slot cuối sang lớp khác thì sao?
+update diem danh, update mark_student
 
 
 ---- làm phần tính điểm

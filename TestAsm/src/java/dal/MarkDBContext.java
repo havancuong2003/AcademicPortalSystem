@@ -137,7 +137,7 @@ public class MarkDBContext extends DBContext<Mark> {
     public ArrayList<Group> getSelectTermToSeeMark(String username, String termId) {
         ArrayList<Group> groups = new ArrayList<>();
         try {
-            String sql = "select g.termID,g.courseId,g.[name],g.timeStart,g.timeEnd from [group] g \n"
+            String sql = "select g.id as gid,g.termID,g.courseId,g.[name],g.timeStart,g.timeEnd from [group] g \n"
                     + "	join student_group sg on sg.groupid=g.id\n"
                     + "	join student s on s.id=sg.Studentid\n"
                     + "	where s.userName like ? and g.termId like ?";
@@ -147,6 +147,7 @@ public class MarkDBContext extends DBContext<Mark> {
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Group g = new Group();
+                g.setId(rs.getInt("gid"));
                 g.setTerm(getTermByID(rs.getString("termID")));
                 g.setCourse(getCourseByID(rs.getInt("courseId")));
                 g.setName(rs.getString("name"));

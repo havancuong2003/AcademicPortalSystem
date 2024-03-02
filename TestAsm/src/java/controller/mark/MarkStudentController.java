@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import model.Account;
 import model.Group;
 import model.Mark;
+import util.TotalMarkHelper;
 
 /**
  *
@@ -77,7 +78,7 @@ public class MarkStudentController extends HttpServlet {
 
         request.setAttribute("activeTerm", getTermID);
         request.setAttribute("activeCourse", getCourseid);
-        
+
         if (getCourseid != null) {
             ArrayList<Mark> m = mdb.getMarkByTermAndCourse(a.getUsername(), getTermID, Integer.parseInt(getCourseid));
             request.setAttribute("markOfCourse", m);
@@ -93,6 +94,30 @@ public class MarkStudentController extends HttpServlet {
         }
         // request.setAttribute("markOfCourse", mdb.getMarkByTermAndCourse(a.getUsername(), "sp24", 19));
         //  request.setAttribute("listGroup", mdb.getGroupIdToTakeCourse());
+        String gid = request.getParameter("gid");
+        if (gid != null) {
+            TotalMarkHelper t = new TotalMarkHelper();
+            String statusMark = t.getStatusMark(a.getUsername(), Integer.parseInt(gid));
+            String[] parts = statusMark.split(";");
+
+// Đảm bảo rằng có đủ phần
+            if (parts.length == 3) {
+                // Lưu các phần vào các biến
+                String part1 = parts[0];
+                String part2 = parts[1];
+                String part3 = parts[2];
+
+                // Set các phần vào request attribute
+                request.setAttribute("status", part1);
+                request.setAttribute("total", part2);
+                request.setAttribute("cmt", part3);
+            } else {
+                // Nếu không đủ phần, xử lý theo yêu cầu của bạn
+                // Ví dụ:
+                request.setAttribute("error", "Invalid status mark format");
+            }
+
+        }
 
         request.getRequestDispatcher("../view/mark/markPart2.jsp").forward(request, response);
     }
