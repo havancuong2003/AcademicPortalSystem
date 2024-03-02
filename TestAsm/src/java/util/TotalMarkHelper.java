@@ -18,7 +18,7 @@ public class TotalMarkHelper {
 
     public String getCurrentSemester() {
 
-        return "fa23";
+        return "sp24";
     }
 
     public boolean hasZeroValueForJPD(ArrayList<Mark> grades, String gradeCategory) {
@@ -166,7 +166,7 @@ public class TotalMarkHelper {
         }
         // Nếu tất cả điểm đều khác 0 hoặc không có giá trị null, tính total và kiểm tra kết quả
         if (hasNullValue(markForTotal, currentSemester)) {
-            getTotal = ("Current studying ; 0.0");
+            getTotal = ("Current studying ; 0.0; ...");
         } else {
             double total = calculateTotal(markForTotal);
             DecimalFormat df = new DecimalFormat("#.##");

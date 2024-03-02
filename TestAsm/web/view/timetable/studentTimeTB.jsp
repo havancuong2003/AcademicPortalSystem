@@ -186,7 +186,7 @@
                                 <c:if test="${les.session.group.timeslot.id eq slot.id and les.session.date eq d}">
                                     ${les.session.group.teacher.name} <br/> ${les.session.group.room.description} <br/>
                                     <span class="statusAtt" value="${les.status}">  ${les.status}</span><br/>
-
+                                    
                                 </c:if>
                             </c:forEach>
                         </td>
