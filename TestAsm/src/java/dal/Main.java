@@ -16,6 +16,6 @@ public class Main {
     public static void main(String[] args) {
        MarkDBContext mdbc = new MarkDBContext();
         ArrayList<Group> selectTermToSeeMark = mdbc.getSelectTermToSeeMark("cuonghv", "fa23");
-        System.out.println(selectTermToSeeMark.size());
+        System.out.println(mdbc.getMarkForTotal("cuonghv", 11).size());
     }
 }

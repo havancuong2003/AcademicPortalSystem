@@ -93,6 +93,7 @@
                     <!-- Grades will be displayed here -->
                 </tbody>
             </table>
+     
         </div>
 
         <script>

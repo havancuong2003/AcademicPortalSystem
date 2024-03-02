@@ -1,4 +1,4 @@
- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -141,7 +141,7 @@
             .home {
                 padding: 10px;
                 border-radius: 5px;
-                
+
 
             }
             #active${requestScope.activeTerm} a,#active${requestScope.activeCourse} a{
@@ -179,6 +179,9 @@
             }
             .containGrade{
                 width:1000px;
+            }
+            .totalMark{
+                text-align: left;
             }
         </style>
     </head>
@@ -224,9 +227,22 @@
                     <tbody id="gradeTableBody">
                         <!-- Grades will be displayed here -->
                     </tbody>
-                </table>
-            </div>
 
+                </table>
+
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <div class="totalMark">
+                <h1>
+                    COURSE TOTAL: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AVERAGE &nbsp;&nbsp;:<span>8.3</span>
+                </h1>
+                <br/>
+                <h1>
+                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   Status &nbsp;&nbsp;&nbsp;<span> PASSED</span> 
+                </h1>
+            </div>
         </div>
 
 

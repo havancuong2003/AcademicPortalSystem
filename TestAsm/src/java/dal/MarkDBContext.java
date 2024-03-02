@@ -11,8 +11,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Course;
 import model.Group;
+import model.Room;
 import model.Student;
+import model.Teacher;
 import model.Term;
+import model.TimeSlot;
 
 /**
  *
@@ -230,9 +233,9 @@ public class MarkDBContext extends DBContext<Mark> {
                 g.setName(rs.getString("name"));
                 g.setCourse(getCourseByID(rs.getInt("courseid")));
                 g.setTerm(getTermByID(rs.getString("termID")));
-//                g.setRoom(getRoomByID(rs.getInt("roomID")));
-//                g.setTimeslot(getTimeSlotByID(rs.getInt("timeSlotID")));
-//                g.setTeacher(getLectureByID(rs.getString("lectureid")));
+                g.setRoom(getRoomByID(rs.getInt("roomID")));
+                g.setTimeslot(getTimeSlotByID(rs.getInt("timeSlotID")));
+                g.setTeacher(getLectureByID(rs.getString("lectureid")));
                 g.setTimeStart(rs.getDate("timeStart"));
                 g.setTimeEnd(rs.getDate("timeEnd"));
                 g.setFirstDay(rs.getDate("firstday"));
@@ -241,6 +244,60 @@ public class MarkDBContext extends DBContext<Mark> {
         } catch (SQLException e) {
         }
         return g;
+    }
+
+    public Room getRoomByID(int id) {
+        Room r = null;
+        try {
+            String sql = "select * from room where id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                r = new Room();
+                r.setId(rs.getInt("id"));
+                r.setDescription(rs.getString("name"));
+
+            }
+        } catch (SQLException e) {
+        }
+        return r;
+    }
+
+    public TimeSlot getTimeSlotByID(int id) {
+        TimeSlot ts = null;
+        try {
+            String sql = "select * from timeslot where id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                ts = new TimeSlot();
+                ts.setId(rs.getInt("id"));
+                ts.setDescription(rs.getString("description"));
+            }
+        } catch (SQLException e) {
+        }
+        return ts;
+    }
+
+    public Teacher getLectureByID(String id) {
+        Teacher t = null;
+        try {
+            String sql = "select * from lecture where id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, id);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                t = new Teacher();
+                t.setId(rs.getString("id"));
+                t.setName(rs.getString("name"));
+                t.setDob(rs.getDate("dob"));
+                t.setEmail(rs.getString("email"));
+            }
+        } catch (SQLException e) {
+        }
+        return t;
     }
 
     public Student getStudentByID(String id) {
@@ -282,7 +339,7 @@ public class MarkDBContext extends DBContext<Mark> {
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Mark m = new Mark();
-              
+
                 m.setGroup(getGroupByID(rs.getInt("gid")));
                 m.setStudent(getStudentByID(rs.getString("studentid")));
                 m.setValue(rs.getString("value"));
@@ -317,6 +374,37 @@ public class MarkDBContext extends DBContext<Mark> {
             Logger.getLogger(MarkDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public ArrayList<Mark> getMarkForTotal(String username, int gid) {
+        ArrayList<Mark> marks = new ArrayList<>();
+        try {
+            String sql = "select ms.id as msid,g.id as gid,mc.gradeCategory,mc.gradeItem,mc.weight,ms.[value],g.termID from mark_student ms\n"
+                    + "join student_group sg on sg.id=ms.student_group_id\n"
+                    + "join mark_course mc on mc.id=ms.mark_course_id\n"
+                    + "join student s on sg.Studentid=s.id\n"
+                    + "join [group] g on g.id=sg.groupid\n"
+                    + "join course c on c.id=g.courseId\n"
+                    + "\n"
+                    + "where s.username= ? and g.id= ?\n";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            stm.setInt(2, gid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Mark m = new Mark();
+                m.setId(rs.getInt("msid"));
+                m.setGroup(getGroupByID(rs.getInt("gid")));
+                m.setGradeCategory(rs.getString("gradeCategory"));
+                m.setGradeItem(rs.getString("gradeItem"));
+                m.setWeight(rs.getFloat("weight"));
+                m.setValue(rs.getString("value"));
+                marks.add(m);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MarkDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return marks;
     }
 
     @Override
