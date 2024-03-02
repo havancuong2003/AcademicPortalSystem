@@ -110,6 +110,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         </style>
     </head>
     <body>
+        <div class="welcome">
+            <h2>Hello ${requestScope.user}</h2>
+        </div>
+        
         <div class="container">
             <div class="header-fpt">
                 <div class="logo-header">

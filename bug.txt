@@ -1,0 +1,22 @@
+1 sinh viên học 20 slot ở 1 môn. Nếu như đổi 10 slot cuối sang lớp khác thì sao?
+
+
+---- làm phần tính điểm
+
+In ra total
+
+		có 1 thẻ input hidden tính total cho từng grade category ( nếu 1 đầu điểm grade category nào = 0 ) thì sẽ not pass luôn
+nếu chưa full điểm. 
+
+		nếu đang ở trong kì học để là studying
+		còn lại các điểm sẽ set là 0.
+		
+
+nếu đã full điểm tính pass or not pass
+		nghỉ quá số buổi -> not pass
+		Nếu có điểm FE mà không có FE Resit thì tính FE
+		Có FE và FE Resit thì tính FE resit
+		không có FE và có FE resit thì tính FE resit
+		
+		 
+

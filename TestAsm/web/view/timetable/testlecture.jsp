@@ -134,10 +134,10 @@
     <body>
 
         <div class="home">
-            <a href="/testasm/student/home">Home</a>
+            <a href="/testasm/lecture/home">Home</a>
         </div>
         <div>
-            <h2 id="header-timetable">Student Time Table</h2>
+            <h2 id="header-timetable">Lecture Time Table</h2>
         </div>
 
 
@@ -182,13 +182,19 @@
                     <td>${slot.description}  </td>
                     <c:forEach items="${requestScope.dates}" var="d">
                         <td>
-                            <c:forEach items="${requestScope.list}" var="les">
-                                <c:if test="${les.session.group.timeslot.id eq slot.id and les.session.date eq d}">
-                                    ${les.session.group.teacher.name} <br/> ${les.session.group.room.description} <br/>
-                                    <span class="statusAtt" value="${les.status}">  ${les.status}</span><br/>
+                            <c:forEach items="${requestScope.listLecture}" var="les">
+                                <c:if test="${les.group.timeslot.id eq slot.id and les.date eq d}">
+                                    ${les.group.teacher.name} <br/> ${les.group.room.description} <br/>
+                                    <br/>
 
+                                    <a href="../lecture/attendance?sessionid=${les.id}">
+                                        <span class="statusAtt" value="${les.status}">
+                                            ${les.status}
+                                        </span>
+                                    </a>
                                 </c:if>
                             </c:forEach>
+
                         </td>
                     </c:forEach>
                 </tr>
@@ -349,10 +355,10 @@
                     var statusElement = statusElements[i];
                     var statusValue = statusElement.getAttribute("value");
 
-                    if (statusValue === "not yet" || statusValue === "Absent") {
-                        statusElement.style.color = "red";
-                    } else if (statusValue === "Present") {
+                    if (statusValue === "attendanced") {
                         statusElement.style.color = "green";
+                    } else if (statusValue === "Take attendance") {
+                        statusElement.style.color = "red";
                     }
                 }
             });

@@ -5,15 +5,19 @@
 package controller.timetable;
 
 import dal.AttendanceDBContext;
+import dal.SlotDBContext;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import model.Account;
 import model.Session;
+import util.DateTimeHelper;
 
 /**
  *
@@ -29,15 +33,74 @@ public class TimetableLectureController extends HttpServlet {
         Account a = (Account) session.getAttribute("account");
         String username = a.getUsername();
         ArrayList<Session> listInfoLecture = adb.listInfoLecture(username);
-  
-        request.setAttribute("list", listInfoLecture);
-        request.getRequestDispatcher("../view/timetable/lecture.jsp").forward(request, response);
+
+        request.setAttribute("listLecture", listInfoLecture);
+
+        SlotDBContext sdbc = new SlotDBContext();
+
+        DateTimeHelper dateTimeHelper = new DateTimeHelper();
+        LocalDate today = LocalDate.now();
+
+        int weekOfYear = dateTimeHelper.getWeekOfYear(today);
+
+        if (session.getAttribute("dropDownWeek") == null) {
+            session.setAttribute("dropDownWeek", weekOfYear);
+            session.setAttribute("startDate", dateTimeHelper.getFirstDayOfWeek(today));
+            session.setAttribute("endDate", dateTimeHelper.getLastDayOfWeek(today));
+
+        }
+
+        ArrayList<java.sql.Date> dates = dateTimeHelper.getWeekDaysAsSqlDates((LocalDate) session.getAttribute("startDate"));
+        request.setAttribute("dates", dates);
+        if (session.getAttribute("dropDownYear") == null) {
+            session.setAttribute("dropDownYear", "2024");
+        }
+
+     
+        request.setAttribute("slots", sdbc.list());
+        request.getRequestDispatcher("../view/timetable/testlecture.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        String dropDownYear = request.getParameter("dropdownYear");
+        String dropDownWeek = request.getParameter("dropdownWeek");
+        HttpSession session = request.getSession();
+        session.setAttribute("dropDownYear", dropDownYear);
+
+        if (!session.getAttribute("dropDownYear").equals(dropDownYear)) {
+            session.setAttribute("dropDownWeek", 1);
+        }
+
+        if (dropDownWeek == null) {
+
+            session.setAttribute("dropDownWeek", 1);
+        } else {
+            session.setAttribute("dropDownWeek", dropDownWeek);
+        }
+
+        String valueChange = request.getParameter("yearChanged");
+
+        if (valueChange.equals("")) {
+
+            session.setAttribute("getValueChange", "false");
+        } else {
+            session.setAttribute("getValueChange", valueChange);
+        }
+        if (valueChange.equals("true")) {
+            session.setAttribute("dropDownWeek", 1);
+        }
+
+        session.setAttribute("t11", session.getAttribute("dropDownWeek"));
+        String startDate = request.getParameter("startDate" + session.getAttribute("dropDownWeek"));
+        String endDate = request.getParameter("endDate" + session.getAttribute("dropDownWeek"));
+
+        LocalDate startDates = LocalDate.parse(startDate, DateTimeFormatter.ISO_LOCAL_DATE);
+        LocalDate endDates = LocalDate.parse(endDate, DateTimeFormatter.ISO_LOCAL_DATE);
+        session.setAttribute("startDate", startDates);
+        session.setAttribute("endDate", endDates);
+        response.sendRedirect("timetable");
     }
 
     /**

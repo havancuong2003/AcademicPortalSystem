@@ -111,7 +111,7 @@
 
                     </tbody>
                 </table>
-                <input type="submit">Submit Grades</input>
+                <input type="submit" value="SAVE"></input>
             </form>
         </div>
     </body>

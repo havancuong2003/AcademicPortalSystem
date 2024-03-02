@@ -4,12 +4,8 @@
  */
 package dal;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import model.Attendance;
-import model.Mark;
+import model.Group;
 
 /**
  *
@@ -18,8 +14,8 @@ import model.Mark;
 public class Main {
 
     public static void main(String[] args) {
-       AttendanceDBContext a  = new AttendanceDBContext();
-        ArrayList<Attendance> listInfoStudent = a.listInfoStudent("cuonghv");
-        System.out.println(listInfoStudent.get(0).getStatus());
+       MarkDBContext mdbc = new MarkDBContext();
+        ArrayList<Group> selectTermToSeeMark = mdbc.getSelectTermToSeeMark("cuonghv", "fa23");
+        System.out.println(selectTermToSeeMark.size());
     }
 }

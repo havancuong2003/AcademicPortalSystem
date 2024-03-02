@@ -49,14 +49,14 @@ public class TimetableStudentController extends HttpServlet {
             throws ServletException, IOException {
         AttendanceDBContext adb = new AttendanceDBContext();
         SlotDBContext sdbc = new SlotDBContext();
-
+        HttpSession session = request.getSession();
+        Account a = (Account) session.getAttribute("account");
+        
+        
         DateTimeHelper dateTimeHelper = new DateTimeHelper();
         LocalDate today = LocalDate.now();
 
         int weekOfYear = dateTimeHelper.getWeekOfYear(today);
-
-        HttpSession session = request.getSession();
-        Account a = (Account) session.getAttribute("account");
 
         if (session.getAttribute("dropDownWeek") == null) {
             session.setAttribute("dropDownWeek", weekOfYear);
@@ -120,7 +120,7 @@ public class TimetableStudentController extends HttpServlet {
         session.setAttribute("t11", session.getAttribute("dropDownWeek"));
         String startDate = request.getParameter("startDate" + session.getAttribute("dropDownWeek"));
         String endDate = request.getParameter("endDate" + session.getAttribute("dropDownWeek"));
-        
+
         LocalDate startDates = LocalDate.parse(startDate, DateTimeFormatter.ISO_LOCAL_DATE);
         LocalDate endDates = LocalDate.parse(endDate, DateTimeFormatter.ISO_LOCAL_DATE);
         session.setAttribute("startDate", startDates);

@@ -4,7 +4,6 @@
  */
 package dal;
 
-import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import model.Attendance;
 import java.sql.*;
