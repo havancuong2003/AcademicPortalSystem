@@ -1,6 +1,6 @@
 <%-- 
-    Document   : SendMail
-    Created on : Mar 1, 2024, 8:30:55 PM
+    Document   : sendEmail
+    Created on : Mar 3, 2024, 8:43:10 PM
     Author     : -MSI-
 --%>
 
@@ -23,7 +23,7 @@
     </head>
     <body>
 
-
+        <jsp:include page="homebutton.jsp"></jsp:include>
 
         <form action="emailsending" method="post">
 
@@ -39,13 +39,14 @@
                 </tr>
                 <c:forEach var="student" items="${students}">
                     <tr>
-                        <td><c:out value="${student.id}" /></td>
-                        <td><c:out value="${student.name}" /></td>
-                        <td><c:out value="${student.email}" /></td>
-                        <td><c:out value="${student.course}" /></td> 
+                        <td><c:out value="${student.student.id}" /></td>
+                        <td><c:out value="${student.student.name}" /></td>
+                        <td><c:out value="${student.student.email}" /></td>
+                        <td><c:out value="${student.course.code}" /></td> 
                         <td>
-                            <input type="checkbox" name="selectedStudents" value="${student.id}" />
-                            <input type="hidden" name="course-${student.id}" value="${student.course}" />
+                            <input type="checkbox" name="selectedStudents" value="${student.student.id}" />
+                            <input type="hidden" name="course-${student.student.id}" value="${student.course.code}" />
+                            <input type="hidden" name="courseid" value="${student.course.id}" />
                         </td>
                     </tr>
                 </c:forEach>

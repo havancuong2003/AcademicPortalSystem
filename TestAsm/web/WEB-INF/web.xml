@@ -76,6 +76,18 @@
         <servlet-name>HomeAdmin</servlet-name>
         <servlet-class>controller.admin.HomeAdmin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EmailSendingServlet</servlet-name>
+        <servlet-class>controller.sendingemail.EmailSendingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StudentControlByAdmin</servlet-name>
+        <servlet-class>controller.modelAdminControl.StudentControlByAdmin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LectureControlByAdmin</servlet-name>
+        <servlet-class>controller.modelAdminControl.LectureControlByAdmin</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AttendanceStudentController</servlet-name>
         <url-pattern>/student/timetable</url-pattern>
@@ -124,7 +136,40 @@
         <servlet-name>HomeAdmin</servlet-name>
         <url-pattern>/admin/home</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmailSendingServlet</servlet-name>
+        <url-pattern>/admin/emailsending</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StudentControlByAdmin</servlet-name>
+        <url-pattern>/admin/controlStudent</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LectureControlByAdmin</servlet-name>
+        <url-pattern>/admin/controlLecture</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>
     </session-config>
+    <display-name>EmailSendingWebApp</display-name>
+    <!-- SMTP settings -->
+    <context-param>
+        <param-name>host</param-name>
+        <param-value>smtp.gmail.com</param-value>
+    </context-param>
+    <context-param>
+        <param-name>port</param-name>
+        <param-value>587</param-value>
+    </context-param>
+    <context-param>
+        <param-name>user</param-name>
+        <param-value>havancuong07122003@gmail.com</param-value>
+    </context-param>
+    <context-param>
+        <param-name>pass</param-name>
+        <param-value>rnyo ovaw awmu ojxu</param-value>
+    </context-param>
+    <welcome-file-list>
+        <welcome-file>EmailForm.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

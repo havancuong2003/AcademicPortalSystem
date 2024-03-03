@@ -176,29 +176,29 @@
                 <nav id="navbar" class="col-lg-4">
                     <header>Feature admin's</header>
                     <ul>
-                        <li><a class="nav-link" href="#Introduction">Introduction</a></li>
+                        <li><a class="nav-link" href="#Introduction"></a></li>
                         <li>
-                            <a class="nav-link" href="#What_you_should_already_know"
-                               >What you should already know</a
+                            <a class="nav-link" href="emailsending"
+                               >Check student Absent</a
                             >
                         </li>
                         <li>
                             <a class="nav-link" href="#JavaScript_and_Java"
-                               >JavaScript and Java</a
+                               ></a
                             >
                         </li>
-                        <li><a class="nav-link" href="#Hello_world">Hello world</a></li>
-                        <li><a class="nav-link" href="#Variables">Variables</a></li>
+                        <li><a class="nav-link" href="#Hello_world"></a></li>
+                        <li><a class="nav-link" href="#Variables"></a></li>
                         <li>
                             <a class="nav-link" href="#Declaring_variables"
-                               >Declaring variables</a
+                               > </a
                             >
                         </li>
                         <li>
-                            <a class="nav-link" href="#Variable_scope">Variable scope</a>
+                            <a class="nav-link" href="#Variable_scope"> </a>
                         </li>
                         <li>
-                            <a class="nav-link" href="#Global_variables">Global variables</a>
+                            <a class="nav-link" href="#Global_variables"> </a>
                         </li>
                         <!-- Các mục khác -->
                     </ul>
@@ -241,9 +241,31 @@
         </div>
 
         <script>
-           function logout(){
+            function logout() {
                 window.location.href = '/testasm/logout';
-           }
+            }
+
+            function manager(event) {
+                // Lấy ra phần tử đang được click
+                var clickedElement = event.target;
+                // Lấy nội dung của phần tử được click
+                var elementContent = clickedElement.innerText;
+                console.log(elementContent);
+                // Thực hiện điều kiện tùy thuộc vào nội dung của phần tử được click
+                switch (elementContent) {
+                    case "Student":
+                       
+                        window.location.href = "controlStudent"; // Chuyển hướng sang trang tương ứng cho phần tử 'a'
+                        break;
+                    case "Lecture":
+                        window.location.href = "controlLecture"; // Chuyển hướng sang trang tương ứng cho phần tử 'b'
+                        break;
+                        // Thêm các trường hợp khác tương ứng với các phần tử khác nếu cần
+                    default:
+                        // Thực hiện hành động mặc định nếu không phù hợp với bất kỳ trường hợp nào
+                        break;
+                }
+            }
         </script>
     </body>
 </html>

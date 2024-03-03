@@ -173,6 +173,21 @@ BEGIN
 END;
 
 
+--trigger insert data vao absentPercent theo student_group_id
+
+CREATE TRIGGER insert_absentPercent_on_student_group
+ON student_group
+AFTER INSERT
+AS
+BEGIN
+    -- Chèn một bản ghi mới vào bảng absentPercent cho mỗi bản ghi mới được thêm vào bảng student_group
+    INSERT INTO absentPercent (student_group_id, absentCount, totalClasses,emailCheck)
+    SELECT id, 0, 0,0
+    FROM inserted;
+END;
+
+
+
 ---- tinh toan so buoi nghi cua sinh vien
 
 CREATE TRIGGER update_absentPercent

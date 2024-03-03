@@ -14,8 +14,7 @@ import model.Group;
 public class Main {
 
     public static void main(String[] args) {
-       MarkDBContext mdbc = new MarkDBContext();
-        ArrayList<Group> selectTermToSeeMark = mdbc.getSelectTermToSeeMark("cuonghv", "fa23");
-        System.out.println(mdbc.getMarkForTotal("cuonghv", 11).size());
+      SendingEmailDBContext s =new SendingEmailDBContext();
+        System.out.println(s.getAllStudentAbsentThan10().size());
     }
 }

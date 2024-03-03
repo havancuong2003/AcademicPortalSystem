@@ -1,13 +1,14 @@
-package controller;
+package controller.sendingemail;
 
+import dal.SendingEmailDBContext;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.SendEmail;
 
 import model.Student;
 import util.getStudentHelper;
@@ -29,11 +30,10 @@ public class EmailSendingServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Student> students = new ArrayList<>();
-        students.add(new Student("he2", "Linh Do", "dothuylinh2673@gmail.com", "MAS"));
-        students.add(new Student("he1", "Ha Cuong", "cuonghvhe176362@fpt.edu.vn", "PRJ"));
+        SendingEmailDBContext sedbc = new SendingEmailDBContext();
+        ArrayList<SendEmail> students = sedbc.getAllStudentAbsentThan10();
         req.setAttribute("students", students);
-        req.getRequestDispatcher("SendMail.jsp").forward(req, resp);
+        req.getRequestDispatcher("../view/admin/sendEmail.jsp").forward(req, resp);
     }
 
     @Override
@@ -41,7 +41,8 @@ public class EmailSendingServlet extends HttpServlet {
         String[] selectedStudents = request.getParameterValues("selectedStudents");
         String resultMessage = "";
         getStudentHelper g = new getStudentHelper();
-
+        ArrayList<String> sidAndCids = new ArrayList<>();
+        String sidAndCid = "";
         try {
             if (selectedStudents == null || selectedStudents.length == 0) {
                 throw new IllegalArgumentException("No students selected.");
@@ -53,10 +54,13 @@ public class EmailSendingServlet extends HttpServlet {
                 if (student == null) {
                     throw new IllegalArgumentException("Student with ID " + studentId + " not found.");
                 }
-
+                String courseid = request.getParameter("courseid");
                 String course = request.getParameter("course-" + studentId); // Lấy môn học của sinh viên
-                String emailContent = "Content for " + course; // Nội dung email có thể được tạo dựa trên môn học
-                EmailUtility.sendEmail(host, port, user, pass, student.getEmail(), "Subject for " + course, emailContent);
+                String emailContent = "You absent more than 10% of " + course +" please attention about lession"; // Nội dung email có thể được tạo dựa trên môn học
+                sidAndCid = (student.getId() + "-" + courseid);
+                sidAndCids.add(sidAndCid);
+                sidAndCid = "";
+                EmailUtility.sendEmail(host, port, user, pass, student.getEmail(), "ATTENDANCE STATUS FOR " + course, emailContent);
             }
 
             resultMessage = "The emails were sent successfully";
@@ -65,7 +69,9 @@ public class EmailSendingServlet extends HttpServlet {
             resultMessage = "There was an error: " + ex.getMessage();
         } finally {
             request.setAttribute("Message", resultMessage);
-            request.getRequestDispatcher("/Result.jsp").forward(request, response);
+            SendingEmailDBContext sedbc = new SendingEmailDBContext();
+            sedbc.updateEmailCheck(sidAndCids);
+            response.sendRedirect("home");
         }
     }
 
