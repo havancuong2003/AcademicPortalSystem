@@ -15,7 +15,7 @@ import model.Mark;
 public class Main {
     public static void main(String[] args) {
         TotalMarkHelper t =new TotalMarkHelper();
-        String statusMark = t.getStatusMark("cuonghv", 6);
+        String statusMark = t.getStatusMark("cuonghv", 7);
         System.out.println(statusMark);
         MarkDBContext mdbc =new MarkDBContext();
         ArrayList<Mark> markForTotal = mdbc.getMarkForTotal("cuonghv", 7);

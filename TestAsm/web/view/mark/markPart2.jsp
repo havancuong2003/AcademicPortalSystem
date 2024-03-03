@@ -183,6 +183,10 @@
             .totalMark{
                 text-align: left;
             }
+            #statusMark{
+                color:#45a049;
+                <c:if test="${requestScope.status eq 'NOT PASS'}">color:red;</c:if>
+            }
         </style>
     </head>
     <body>
@@ -240,10 +244,11 @@
                 </h1>
                 <br/>
                 <h1>
-                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   Status &nbsp;&nbsp;&nbsp;<span> ${requestScope.status}</span> 
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   Status &nbsp;&nbsp;&nbsp;<span id="statusMark"> ${requestScope.status}</span> 
                 </h1>
+                <br/>
                  <h1>
-                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    &nbsp;&nbsp;&nbsp;<span> ${requestScope.cmt}</span> 
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span> ${requestScope.cmt}</span> 
                 </h1>
             </div>
         </div>
