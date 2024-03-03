@@ -15,6 +15,7 @@ public class Main {
 
     public static void main(String[] args) {
       SendingEmailDBContext s =new SendingEmailDBContext();
-        System.out.println(s.getAllStudentAbsentThan10().size());
+       StudentDBContext ss = new StudentDBContext();
+        System.out.println(ss.getStudentForSerach("c").size());
     }
 }

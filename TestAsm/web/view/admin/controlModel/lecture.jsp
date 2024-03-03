@@ -12,6 +12,10 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <jsp:include page="../homebutton.jsp"></jsp:include>
+        <form>
+            <input type="text" placeholder="Search">
+            
+        </form>
     </body>
 </html>

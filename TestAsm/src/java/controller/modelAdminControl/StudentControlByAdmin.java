@@ -5,12 +5,15 @@
 
 package controller.modelAdminControl;
 
+import dal.StudentDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import model.Student;
 
 /**
  *
@@ -53,6 +56,12 @@ public class StudentControlByAdmin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        String studentInfo = request.getParameter("studentInfo");
+        StudentDBContext sdbc = new StudentDBContext();
+        ArrayList<Student> studentForSerach = sdbc.getStudentForSerach(studentInfo);
+        if(studentInfo != null){
+            request.setAttribute("students",studentForSerach);
+        }
        request.getRequestDispatcher("../view/admin/controlModel/student.jsp").forward(request, response);
     } 
 

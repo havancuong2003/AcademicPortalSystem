@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Students</title>
+    <script>
+        function editStudent(studentId) {
+            var row = document.getElementById(studentId);
+            var cells = row.cells;
+
+            // Loop through each cell (except the first and last one)
+            for (var i = 1; i < cells.length - 1; i++) {
+                var cellData = cells[i].innerHTML;
+                // Create an input element
+                var input = document.createElement("input");
+                // Set its type to text
+                input.type = "text";
+                // Set its value to the current cell content
+                input.value = cellData.trim(); // trim() to remove leading/trailing whitespace
+                // Replace the cell content with the input element
+                cells[i].innerHTML = "";
+                cells[i].appendChild(input);
+            }
+
+            // Hide the edit button
+            cells[cells.length - 2].style.display = "none";
+            // Show the save button
+            cells[cells.length - 1].style.display = "inline-block";
+        }
+
+        function saveStudent(studentId) {
+            var row = document.getElementById(studentId);
+            var cells = row.cells;
+
+            // Loop through each cell (except the first and last one)
+            for (var i = 1; i < cells.length - 1; i++) {
+                // Extract the input value
+                var inputVal = cells[i].querySelector('input').value;
+                // Replace the input element with its value
+                cells[i].innerHTML = inputVal;
+            }
+
+            // Show the edit button
+            cells[cells.length - 2].style.display = "inline-block";
+            // Hide the save button
+            cells[cells.length - 1].style.display = "none";
+        }
+    </script>
+</head>
+<body>
+
+<table border="1">
+    <tr>
+        <th>NO</th>
+        <th>Student ID</th>
+        <th>Student Name</th>
+        <th>Date of birth</th>
+        <th>Image</th>
+        <th>Email</th>
+        <th>User Name</th>
+        <th>Edit</th>
+       
+    </tr>
+    <tr id="1">
+        <td>1</td>
+        <td>001</td>
+        <td>John Doe</td>
+        <td>1990-01-01</td>
+        <td>image.jpg</td>
+        <td>johndoe@example.com</td>
+        <td>johndoe123</td>
+        <td><button onclick="editStudent('1')">Edit</button></td>
+        <td style="display: none;"><button onclick="saveStudent('1')">Save</button></td>
+    </tr>
+    <!-- Add more rows here -->
+</table>
+
+</body>
+</html>
