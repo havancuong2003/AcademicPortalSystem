@@ -126,3 +126,11 @@ comment nvarchar(max)
 );
 
 
+create table absentPercent(
+id int identity(1,1) primary key,
+student_group_id int,
+foreign key (student_group_id) references student_group(id),
+absentCount int,
+totalClasses int,
+emailCheck bit
+);

@@ -172,3 +172,43 @@ BEGIN
     DEALLOCATE @InsertedCursor
 END;
 
+
+---- tinh toan so buoi nghi cua sinh vien
+
+CREATE TRIGGER update_absentPercent
+ON Attendance
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @groupid int
+    DECLARE @studentid nvarchar(50)
+
+    -- Khai báo con trỏ
+    DECLARE updateCursor CURSOR FOR
+    SELECT s.group_id, student_id FROM inserted a join Session s on a.session_id=s.id
+
+    -- Mở con trỏ
+    OPEN updateCursor;
+
+    -- Lấy giá trị đầu tiên từ con trỏ
+    FETCH NEXT FROM updateCursor INTO @groupid, @studentid;
+
+    -- Lặp qua từng hàng trong con trỏ
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        -- Cập nhật bảng absentPercent cho mỗi studentid và groupid
+        UPDATE absentPercent
+        SET absentCount = (SELECT COUNT(*) FROM Attendance a JOIN [Session] s ON s.id = a.session_id
+                           WHERE a.student_id = @studentid AND s.group_id = @groupid AND a.[status] = 'false'),
+            totalClasses = (SELECT COUNT(*) FROM [Session] WHERE group_id = @groupid)
+        WHERE student_group_id IN (SELECT id FROM student_group WHERE Studentid = @studentid AND groupid = @groupid);
+
+        -- Lấy giá trị tiếp theo từ con trỏ
+        FETCH NEXT FROM updateCursor INTO @groupid, @studentid;
+    END;
+
+    -- Đóng con trỏ
+    CLOSE updateCursor;
+    DEALLOCATE updateCursor;
+END;
+
