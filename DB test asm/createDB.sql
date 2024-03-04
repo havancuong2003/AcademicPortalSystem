@@ -43,6 +43,7 @@ CREATE TABLE Course (
 
 Create table Term (
 id varchar(50) primary key,
+code varchar(50),
 [description] nvarchar(255),
 timeStart date,
 timeEnd date
