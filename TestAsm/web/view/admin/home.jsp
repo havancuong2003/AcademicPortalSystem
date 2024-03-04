@@ -176,15 +176,15 @@
                 <nav id="navbar" class="col-lg-4">
                     <header>Feature admin's</header>
                     <ul>
-                        <li><a class="nav-link" href="#Introduction"></a></li>
+                        <li><a class="nav-link" href="changepassword">Change PassWord</a></li>
                         <li>
                             <a class="nav-link" href="emailsending"
                                >Check student Absent</a
                             >
                         </li>
                         <li>
-                            <a class="nav-link" href="#JavaScript_and_Java"
-                               ></a
+                            <a class="nav-link" href="noticechangepassword"
+                               >Notice Changepasss</a
                             >
                         </li>
                         <li><a class="nav-link" href="#Hello_world"></a></li>
@@ -254,7 +254,7 @@
                 // Thực hiện điều kiện tùy thuộc vào nội dung của phần tử được click
                 switch (elementContent) {
                     case "Student":
-                       
+
                         window.location.href = "controlStudent"; // Chuyển hướng sang trang tương ứng cho phần tử 'a'
                         break;
                     case "Lecture":

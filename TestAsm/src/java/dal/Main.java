@@ -5,6 +5,7 @@
 package dal;
 
 import java.util.ArrayList;
+import model.Account;
 import model.Group;
 
 /**
@@ -14,8 +15,8 @@ import model.Group;
 public class Main {
 
     public static void main(String[] args) {
-      SendingEmailDBContext s =new SendingEmailDBContext();
-       StudentDBContext ss = new StudentDBContext();
-        System.out.println(ss.getStudentForSerach("c").size());
+        AccountDBContext a = new AccountDBContext();
+     Account sa=   a.getAccountForChangePassWord(1, "admin");
+        System.out.println(a.getEmailByUserName("cuonghv"));
     }
 }

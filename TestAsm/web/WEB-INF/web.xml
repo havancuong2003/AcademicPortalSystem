@@ -88,6 +88,14 @@
         <servlet-name>LectureControlByAdmin</servlet-name>
         <servlet-class>controller.modelAdminControl.LectureControlByAdmin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChangePassWordControl</servlet-name>
+        <servlet-class>controller.admin.ChangePassWordControl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NoticeChangePassWordServlet</servlet-name>
+        <servlet-class>controller.admin.NoticeChangePassWordServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AttendanceStudentController</servlet-name>
         <url-pattern>/student/timetable</url-pattern>
@@ -147,6 +155,14 @@
     <servlet-mapping>
         <servlet-name>LectureControlByAdmin</servlet-name>
         <url-pattern>/admin/controlLecture</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePassWordControl</servlet-name>
+        <url-pattern>/admin/changepassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NoticeChangePassWordServlet</servlet-name>
+        <url-pattern>/admin/noticechangepassword</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>

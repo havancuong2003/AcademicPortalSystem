@@ -40,6 +40,63 @@ public class AccountDBContext extends DBContext<Account> {
 
     }
 
+    public Account getAccountForChangePassWord(int role, String username) {
+        Account a = null;
+        try {
+            String sql = "select username, [password],rolid from account\n"
+                    + "where rolid = ? and userName = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, role);
+            stm.setString(2, username);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                a = new Account();
+                a.setUsername(rs.getString("userName"));
+                a.setPassword(rs.getString("password"));
+                a.setRole(rs.getString("rolid"));
+                return a;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void changePassWord(String username, String password) {
+        try {
+            String sql = "update account\n"
+                    + "set password = ?\n"
+                    + "where username = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, password);
+            stm.setString(2, username);
+            stm.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public String getEmailByUserName(String username) {
+        String s ="";
+        try {
+            String sql = "SELECT COALESCE(s.email, l.email) AS email\n"
+                    + "FROM Account a\n"
+                    + "LEFT JOIN Student s ON a.userName = s.userName\n"
+                    + "LEFT JOIN Lecture l ON a.userName = l.userName\n"
+                    + "WHERE a.userName = ?";
+            PreparedStatement stm =connection.prepareStatement(sql);
+            stm.setString(1, username);
+           ResultSet rs = stm.executeQuery();
+           if(rs.next()){
+               s = rs.getString("email");
+           }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return s;
+    }
+
     @Override
     public ArrayList<Account> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
