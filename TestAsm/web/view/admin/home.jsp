@@ -183,8 +183,8 @@
                             >
                         </li>
                         <li>
-                            <a class="nav-link" href="noticechangepassword"
-                               >Notice Changepasss</a
+                            <a class="nav-link" href="#"
+                               ></a
                             >
                         </li>
                         <li><a class="nav-link" href="#Hello_world"></a></li>
