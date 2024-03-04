@@ -408,6 +408,25 @@ public class MarkDBContext extends DBContext<Mark> {
         return marks;
     }
 
+    public void updateTotalForMark(String username,int gid,String total,String status ,String comment) {
+        try {
+            String sql = "update statusMarkCourse\n"
+                    + "set	total = ?, [status]  = ?,comment =  ?\n"
+                    + "where id = (select sg.id from student_group sg\n"
+                    + "join student s on sg.studentId = s.id\n"
+                    + "where s.username = ? and sg.groupid = ?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1,total );
+            stm.setString(2, status);
+            stm.setString(3, comment);
+            stm.setString(4, username);
+            stm.setInt(5, gid);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(MarkDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @Override
     public ArrayList<Mark> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

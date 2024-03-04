@@ -10,3 +10,5 @@ ADD userName nvarchar(50);
 
 ALTER TABLE Lecture
 ADD CONSTRAINT FK_Teacher_Account FOREIGN KEY (userName) REFERENCES account(userName);
+
+

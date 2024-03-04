@@ -111,6 +111,8 @@ public class MarkStudentController extends HttpServlet {
                 request.setAttribute("status", part1);
                 request.setAttribute("total", part2);
                 request.setAttribute("cmt", part3);
+                mdb.updateTotalForMark(a.getUsername(), Integer.parseInt(gid), part2, part1, part3);
+
             } else {
                 // Nếu không đủ phần, xử lý theo yêu cầu của bạn
                 // Ví dụ:

@@ -9,7 +9,7 @@ insert into account values
 ('trangvtt','123',3)
 
 
-INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he1', N'Ha Van Cuong', CAST(N'2003-01-01' AS Date), N'havancuong@example.com', N'male.png', N'cuonghv')
+INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he1', N'Ha Van Cuong', CAST(N'2003-01-01' AS Date), N'havancuong07122003@gmail.com', N'male.png', N'cuonghv')
 INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he10', N'Le Thi Mai Phuong', CAST(N'2003-10-10' AS Date), N'lethimaiphuong@example.com', N'female.png', NULL)
 INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he11', N'Pham Thi Thanh Nga', CAST(N'2003-11-11' AS Date), N'phamthithanhnga@example.com', N'male.png', NULL)
 INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he12', N'Tran Thi Thu Hang', CAST(N'2003-12-12' AS Date), N'tranthithuhang@example.com', N'female.png', NULL)
@@ -20,7 +20,7 @@ INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALU
 INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he17', N'Tran Thi Ngoc Tram', CAST(N'2003-05-17' AS Date), N'tranthingoctram@example.com', N'male.png', NULL)
 INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he18', N'Ngo Thi Thanh Thuy', CAST(N'2003-06-18' AS Date), N'ngothithanhthuy@example.com', N'female.png', NULL)
 INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he19', N'Le Thi Thanh Tam', CAST(N'2003-07-19' AS Date), N'lethithanhtam@example.com', N'male.png', NULL)
-INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he2', N'Nguyen Thi Dieu Linh', CAST(N'2003-02-02' AS Date), N'nguyenthidieulinh@example.com', N'female.png', N'linhntd')
+INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he2', N'Nguyen Thi Dieu Linh', CAST(N'2003-02-02' AS Date), N'cuonghvhe176362@fpt.edu.vn', N'female.png', N'linhntd')
 INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he20', N'Phan Thi Phuong Anh', CAST(N'2003-08-20' AS Date), N'phanthiphuonganh@example.com', N'female.png', NULL)
 INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he21', N'Hoang Thi Thu Hien', CAST(N'2003-09-21' AS Date), N'hoangthithuhien@example.com', N'male.png', NULL)
 INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he22', N'Nguyen Thi Bich Ngoc', CAST(N'2003-10-22' AS Date), N'nguyenthibichngoc@example.com', N'female.png', NULL)
@@ -31,7 +31,7 @@ INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALU
 INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he27', N'Tran Thi Thanh Tu', CAST(N'2003-03-27' AS Date), N'tranthithanhtu@example.com', N'male.png', NULL)
 INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he28', N'Le Thi Thu Thao', CAST(N'2003-04-28' AS Date), N'lethithuthao@example.com', N'female.png', NULL)
 INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he29', N'Nguyen Thi Thanh Mai', CAST(N'2003-05-29' AS Date), N'nguyenthithanhmai@example.com', N'male.png', NULL)
-INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he3', N'Dinh Gian Han', CAST(N'2003-03-03' AS Date), N'dinhhangian@example.com', N'male.png', N'handg')
+INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he3', N'Dinh Gian Han', CAST(N'2003-03-03' AS Date), N'dothuylinh2673@gmail.com', N'male.png', N'handg')
 INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he30', N'Do Thi Thu Ha', CAST(N'2003-06-30' AS Date), N'dothithuha@example.com', N'female.png', NULL)
 INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he31', N'Trinh Thi Thuy Linh', CAST(N'2003-07-31' AS Date), N'trinhthithuylinh@example.com', N'male.png', NULL)
 INSERT [dbo].[Student] ([id], [name], [dob], [email], [imgUrl], [userName]) VALUES (N'he32', N'Le Thi Hong Loan', CAST(N'2003-08-01' AS Date), N'lethihongloan@example.com', N'female.png', NULL)

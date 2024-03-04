@@ -200,9 +200,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         <input type="submit" value="search"/>
                     </form>
                     <c:if test="${requestScope.nothing ne 0}">
-
-
-
                         <table>
                             <thead>
                                 <tr>
@@ -212,6 +209,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                     <th>Date of birth</th>
                                     <th>Image</th>
                                     <th>Email</th>
+                                    <th>View grade</th>
 
                                 </tr>
                             </thead>
@@ -227,6 +225,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
                                         <td><img src="../img/${s.imgUrl}" alt="Student image"></td>
                                         <td>${s.email}</td>   
+                                        <td><a href="viewgrade?sid=${s.id}">View Grade</a></td>   
                                     </tr>
                                 </c:forEach>
 

@@ -227,3 +227,15 @@ BEGIN
     DEALLOCATE updateCursor;
 END;
 
+--trigger insert data vao markcourse de xem total cua mon hoc  theo student_group_id
+
+CREATE TRIGGER insert_markcourseStudent_on_student_group
+ON student_group
+AFTER INSERT
+AS
+BEGIN
+    -- Chèn một bản ghi mới vào bảng absentPercent cho mỗi bản ghi mới được thêm vào bảng student_group
+    INSERT INTO statusMarkCourse (student_group_id, total, [status],comment)
+    SELECT id, 0, null,null
+    FROM inserted;
+END;

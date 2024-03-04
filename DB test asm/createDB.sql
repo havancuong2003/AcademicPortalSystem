@@ -134,3 +134,12 @@ absentCount int,
 totalClasses int,
 emailCheck bit
 );
+
+create table statusMarkCourse(
+id int identity(1,1) primary key,
+student_group_id int,
+Foreign key (student_group_id) references student_group(id),
+total float,
+[status] nvarchar(50),
+comment nvarchar(50)
+);

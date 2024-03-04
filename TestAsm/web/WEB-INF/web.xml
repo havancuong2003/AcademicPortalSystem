@@ -96,6 +96,10 @@
         <servlet-name>NoticeChangePassWordServlet</servlet-name>
         <servlet-class>controller.admin.NoticeChangePassWordServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewGradeStudentByLecture</servlet-name>
+        <servlet-class>controller.home.ViewGradeStudentByLecture</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AttendanceStudentController</servlet-name>
         <url-pattern>/student/timetable</url-pattern>
@@ -163,6 +167,10 @@
     <servlet-mapping>
         <servlet-name>NoticeChangePassWordServlet</servlet-name>
         <url-pattern>/admin/noticechangepassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewGradeStudentByLecture</servlet-name>
+        <url-pattern>/lecture/viewgrade</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>
