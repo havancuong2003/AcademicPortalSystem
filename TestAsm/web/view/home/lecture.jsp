@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!--
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -9,11 +10,31 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th, td {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+
+            .studentimg  img {
+                max-width: 100px;
+                height: auto;
+            }
+
             body {
                 font-family: Arial, sans-serif;
                 margin: 0;
                 padding: 0;
                 background-color: #f5f5f5;
+
             }
             .container {
                 max-width: 800px;
@@ -76,17 +97,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 opacity: 1;
             }
             .footer {
+                position: relative;
+                bottom: 0;
+                left: 0;
+                width: 100%;
                 background-color: #ef9926;
                 color: white;
                 font-weight: bold;
-                position: absolute;
-                bottom: 0;
-                font-size: 20px;
-                width: 100%;
-                height: 100px;
                 text-align: center;
                 padding: 20px;
+                font-size: 20px;
+                height: 100px;
             }
+
             body {
                 margin: 0;
                 padding: 0;
@@ -107,41 +130,113 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             .logo-header img {
                 width: 150px;
             }
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .container {
+                display: flex;
+                flex-direction: column;
+                min-height: 67%;
+            }
+
+            .content {
+                flex: 1;
+            }
+
+            .footer {
+                background-color: #ef9926;
+                color: white;
+                font-weight: bold;
+                text-align: center;
+                padding: 20px;
+                font-size: 20px;
+            }
         </style>
     </head>
     <body>
-           <div class="welcome">
+        <div class="welcome">
             <h2>Hello ${requestScope.user}</h2>
         </div>
         <div class="container">
-            <div class="header-fpt">
-                <div class="logo-header">
-                    <img src="../img/logofpt.png" alt="logo" />
+            <div class="content">
+                <div class="header-fpt">
+                    <div class="logo-header">
+                        <img src="../img/logofpt.png" alt="logo" />
+                    </div>
+                    <div class="logout">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                            width="35"
+                            height="35"
+                            fill="#808080"
+                            onclick="logout()"
+                            >
+                        <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                        <path
+                            d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
+                            />
+                        </svg>
+                    </div>
                 </div>
-                <div class="logout">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
-                        width="35"
-                        height="35"
-                        fill="#808080"
-                        onclick="logout()"
-                        >
-                    <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                    <path
-                        d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
-                        />
-                    </svg>
-                </div>
+                <nav>
+                    <ul>
+                        <li><a href="timetable">Weekly Timetable</a></li>
+                        <li><a href="lecture_info.jsp">Thông Tin Lecture</a></li>
+                        <li><a href="mark" >Mark report</a></li>
+
+                    </ul>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <form action="home" method="get"> 
+                        <input type="text" name="stinfo" placeholder="enter name or student id"/>
+                        <input type="submit" value="search"/>
+                    </form>
+                    <c:if test="${requestScope.nothing ne 0}">
+
+
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>NO</th>    
+                                    <th>StudentID</th>
+                                    <th>Name</th>
+                                    <th>Date of birth</th>
+                                    <th>Image</th>
+                                    <th>Email</th>
+
+                                </tr>
+                            </thead>
+                            <h3 style="color:red">${requestScope.notFound}</h3>
+                            <tbody>
+
+                                <c:forEach items="${requestScope.list}" var="s" varStatus="loop">
+                                    <tr>
+                                        <td>${loop.index + 1}</td>
+                                        <td>${s.id}</td>
+                                        <td>${s.name}</td>                                  
+                                        <td>${s.dob}</td>                                  
+
+                                        <td><img src="../img/${s.imgUrl}" alt="Student image"></td>
+                                        <td>${s.email}</td>   
+                                    </tr>
+                                </c:forEach>
+
+                            </tbody>
+                        </table>
+                    </c:if>
+
+
+                </nav>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="timetable">Weekly Timetable</a></li>
-                    <li><a href="lecture_info.jsp">Thông Tin Lecture</a></li>
-                    <li><a href="mark" >Mark report</a></li>
-                    
-                </ul>
-            </nav>
         </div>
         <div class="footer">
             <p>FPT UNIVERSITY</p>
