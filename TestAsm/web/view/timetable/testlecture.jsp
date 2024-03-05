@@ -185,6 +185,7 @@
                             <c:forEach items="${requestScope.listLecture}" var="les">
                                 <c:if test="${les.group.timeslot.id eq slot.id and les.date eq d}">
                                     ${les.group.teacher.name} <br/> ${les.group.room.description} <br/>
+                                    ${les.group.course.code}
                                     <br/>
 
                                     <a href="../lecture/attendance?sessionid=${les.id}">

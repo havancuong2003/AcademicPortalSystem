@@ -408,15 +408,15 @@ public class MarkDBContext extends DBContext<Mark> {
         return marks;
     }
 
-    public void updateTotalForMark(String username,int gid,String total,String status ,String comment) {
+    public void updateTotalForMark(String username, int gid, String total, String status, String comment) {
         try {
             String sql = "update statusMarkCourse\n"
                     + "set	total = ?, [status]  = ?,comment =  ?\n"
-                    + "where id = (select sg.id from student_group sg\n"
+                    + "where student_group_id = (select sg.id from student_group sg\n"
                     + "join student s on sg.studentId = s.id\n"
                     + "where s.username = ? and sg.groupid = ?)";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1,total );
+            stm.setString(1, total);
             stm.setString(2, status);
             stm.setString(3, comment);
             stm.setString(4, username);
@@ -425,6 +425,38 @@ public class MarkDBContext extends DBContext<Mark> {
         } catch (SQLException ex) {
             Logger.getLogger(MarkDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public ArrayList<String> getAcademicTranscript(String sid) {
+        ArrayList<String> getInfoMark = new ArrayList<>();
+        try {
+            String sql = "select distinct t.id,t.description as term,c.code,c.description as [Course Name],sc.total,sc.status from statusMarkCourse sc\n"
+                    + "join student_group sg on sc.student_group_id=sg.id\n"
+                    + "join student s on s.id=sg.Studentid\n"
+                    + "join [group] g on g.id = sg.groupid\n"
+                    + "join term t on t.id = g.termID\n"
+                    + "join course c on c.id=g.courseId\n"
+                    + "where s.id =? \n"
+                    + "order by t.id\n";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, sid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                String info = "";
+                info += rs.getString("id") + ";";
+                info += rs.getString("term") + ";";
+                info += rs.getString("code") + ";";
+                info += rs.getString("course name") + ";";
+                info += rs.getString("total") + ";";
+                info += rs.getString("status") + ";";
+                getInfoMark.add(info);
+                info = "";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MarkDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return getInfoMark;
     }
 
     @Override

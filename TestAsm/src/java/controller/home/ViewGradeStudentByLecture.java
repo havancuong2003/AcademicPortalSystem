@@ -5,12 +5,14 @@
 
 package controller.home;
 
+import dal.MarkDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
@@ -53,7 +55,11 @@ public class ViewGradeStudentByLecture extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        MarkDBContext m = new MarkDBContext();
        String sid = request.getParameter("sid");
+       ArrayList<String> academicTranscript = m.getAcademicTranscript(sid);
+       request.setAttribute("infoMarks", academicTranscript);
+       request.getRequestDispatcher("../view/admin/viewGradeStudentByLecture.jsp").forward(request, response);
        
     } 
 

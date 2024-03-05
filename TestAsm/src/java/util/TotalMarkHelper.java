@@ -18,7 +18,7 @@ public class TotalMarkHelper {
 
     public String getCurrentSemester() {
 
-        return "sp24";
+        return "4";
     }
 
     public boolean hasZeroValueForJPD(ArrayList<Mark> grades, String gradeCategory) {

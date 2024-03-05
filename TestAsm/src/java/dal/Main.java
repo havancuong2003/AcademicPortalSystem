@@ -5,8 +5,6 @@
 package dal;
 
 import java.util.ArrayList;
-import model.Account;
-import model.Group;
 
 /**
  *
@@ -15,8 +13,10 @@ import model.Group;
 public class Main {
 
     public static void main(String[] args) {
-        AccountDBContext a = new AccountDBContext();
-     Account sa=   a.getAccountForChangePassWord(1, "admin");
-        System.out.println(a.getEmailByUserName("cuonghv"));
+      MarkDBContext m = new MarkDBContext();
+        ArrayList<String> academicTranscript = m.getAcademicTranscript("he1");
+        for (String string : academicTranscript) {
+            System.out.println(string);
+        }
     }
 }

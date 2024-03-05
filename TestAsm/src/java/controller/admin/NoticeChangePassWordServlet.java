@@ -6,20 +6,13 @@ package controller.admin;
 
 import controller.sendingemail.EmailUtility;
 import dal.AccountDBContext;
-import dal.SendingEmailDBContext;
 import jakarta.mail.MessagingException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.SendEmail;
-import model.Student;
-import util.getStudentHelper;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -42,15 +35,11 @@ public class NoticeChangePassWordServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        req.getRequestDispatcher("../view/admin/noticeChangPassword.jsp").forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        String recipient = (String) session.getAttribute("accountNotice");
         // Lấy địa chỉ email từ form
         AccountDBContext a = new AccountDBContext();
-        String recipient = request.getParameter("getAccount");
+
         String email = a.getEmailByUserName(recipient);
         // Nội dung email
         String subject = "CHANGE PASSWORD";
@@ -61,11 +50,16 @@ public class NoticeChangePassWordServlet extends HttpServlet {
             EmailUtility.sendEmail(host, port, user, pass, email, subject, content);
 
             // Chuyển hướng về trang thông báo đã gửi email thành công
-            response.sendRedirect("changepassword");
+            resp.sendRedirect("changepassword");
         } catch (MessagingException ex) {
         } finally {
-            response.sendRedirect("changepassword");
+            resp.sendRedirect("changepassword");
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 
 }

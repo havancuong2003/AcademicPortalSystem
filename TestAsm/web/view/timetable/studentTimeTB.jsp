@@ -185,6 +185,7 @@
                             <c:forEach items="${requestScope.list}" var="les">
                                 <c:if test="${les.session.group.timeslot.id eq slot.id and les.session.date eq d}">
                                     ${les.session.group.teacher.name} <br/> ${les.session.group.room.description} <br/>
+                                    <span style="color:blue"> ${les.session.group.course.code}</span> <br/>
                                     <span class="statusAtt" value="${les.status}">  ${les.status}</span><br/>
                                     
                                 </c:if>
@@ -349,10 +350,13 @@
                     var statusElement = statusElements[i];
                     var statusValue = statusElement.getAttribute("value");
 
-                    if (statusValue === "not yet" || statusValue === "Absent") {
+                    if ( statusValue === "Absent") {
                         statusElement.style.color = "red";
                     } else if (statusValue === "Present") {
                         statusElement.style.color = "green";
+                    }
+                    else{
+                         statusElement.style.color = "orange";
                     }
                 }
             });
