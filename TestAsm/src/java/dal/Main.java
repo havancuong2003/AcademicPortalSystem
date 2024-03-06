@@ -5,6 +5,8 @@
 package dal;
 
 import java.util.ArrayList;
+import model.Mark;
+import util.TotalMarkHelper;
 
 /**
  *
@@ -13,10 +15,16 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-      MarkDBContext m = new MarkDBContext();
-        ArrayList<String> academicTranscript = m.getAcademicTranscript("he1");
-        for (String string : academicTranscript) {
-            System.out.println(string);
-        }
+        MarkDBContext mdbc = new MarkDBContext();
+        ArrayList<Mark> markForTotal = mdbc.getMarkForTotal("cuonghv", 11);
+        TotalMarkHelper t = new TotalMarkHelper();
+        Double calculateAverageValue = t.calculateAverageValue(markForTotal, "Final Exam Resit");
+        System.out.println(calculateAverageValue);
+        
+        
+        
+        System.out.println("aaa");
+        System.out.println(t.calculateCategoryTotal(markForTotal, "Final Exam"));
+        System.out.println(t.calculateCategoryTotal(markForTotal, "Final Exam Resit"));
     }
 }

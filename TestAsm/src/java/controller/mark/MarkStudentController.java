@@ -73,6 +73,26 @@ public class MarkStudentController extends HttpServlet {
         ArrayList<Group> selectTermToSeeMark = mdb.getSelectTermToSeeMark(a.getUsername(), getTermID);
         request.setAttribute("courseByTerm", selectTermToSeeMark);
 
+        for (Group group : selectTermToSeeMark) {
+            TotalMarkHelper ts = new TotalMarkHelper();
+            String statusMarks = ts.getStatusMark(a.getUsername(), (group.getId()));
+            String[] partss = statusMarks.split(";");
+
+// Đảm bảo rằng có đủ phần
+            if (partss.length == 3) {
+                // Lưu các phần vào các biến
+                String part1 = partss[0];
+                String part2 = partss[1];
+                String part3 = partss[2];
+
+                // Set các phần vào request attribute
+                request.setAttribute("status", part1);
+                request.setAttribute("total", part2);
+                request.setAttribute("cmt", part3);
+                mdb.updateTotalForMark(a.getUsername(), group.getId(), part2, part1, part3);
+            }
+        }
+
         // neu nhu lay tu url xuong ma chua click vao course thi trang web se tra thi loi can not parse null
         String getCourseid = request.getParameter("courseid");
 
@@ -111,7 +131,7 @@ public class MarkStudentController extends HttpServlet {
                 request.setAttribute("status", part1);
                 request.setAttribute("total", part2);
                 request.setAttribute("cmt", part3);
-                mdb.updateTotalForMark(a.getUsername(), Integer.parseInt(gid), part2, part1, part3);
+                //  mdb.updateTotalForMark(a.getUsername(), Integer.parseInt(gid), part2, part1, part3);
 
             } else {
                 // Nếu không đủ phần, xử lý theo yêu cầu của bạn
