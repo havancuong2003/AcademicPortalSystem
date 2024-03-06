@@ -190,6 +190,7 @@
         </style>
     </head>
     <body>
+        <h1>${requestScope.ts}</h1>
         <h1 style="color:red">${requestScope.error}</h1>
         <div class="home">
             <a href="home">Home</a>

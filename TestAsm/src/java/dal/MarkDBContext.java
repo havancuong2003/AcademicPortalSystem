@@ -459,6 +459,50 @@ public class MarkDBContext extends DBContext<Mark> {
         return getInfoMark;
     }
 
+    public int countAbsent(String username, int gid) {
+        int a = 0;
+        try {
+            String sql = "select ap.absentCount from absentPercent ap\n"
+                    + " join student_group sg\n"
+                    + " on ap.student_group_id = sg.id\n"
+                    + " join student s on s.id=sg.Studentid\n"
+                    + " where s.userName = ? and sg.groupid = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            stm.setInt(2, gid);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                a = rs.getInt("absentCount");
+                return a;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MarkDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return a;
+    }
+    
+     public int countTotalClass(String username, int gid) {
+        int a = 0;
+        try {
+            String sql = "select ap.totalClasses from absentPercent ap\n"
+                    + " join student_group sg\n"
+                    + " on ap.student_group_id = sg.id\n"
+                    + " join student s on s.id=sg.Studentid\n"
+                    + " where s.userName = ? and sg.groupid = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            stm.setInt(2, gid);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                a = rs.getInt("totalClasses");
+                return a;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MarkDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return a;
+    }
+
     @Override
     public ArrayList<Mark> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

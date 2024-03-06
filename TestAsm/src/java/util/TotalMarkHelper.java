@@ -20,6 +20,7 @@ public class TotalMarkHelper {
 
         return "4";
     }
+// check diem FE cua mon JPD xem co ton tai diem 0 hay khong
 
     public boolean hasZeroValueForJPD(ArrayList<Mark> grades, String gradeCategory) {
         for (Mark grade : grades) {
@@ -34,92 +35,104 @@ public class TotalMarkHelper {
         }
         return false;
     }
+// tra ve tong so buoi hoc cua 1 mon
 
-    public int calculateTotalClasses(ArrayList<Mark> grades) {
-        int totalClasses = 0;
-        for (Mark grade : grades) {
-            if (grade.getValue() != null) {
-                totalClasses++;
-            }
-        }
-        return 24;
+    public int calculateTotalClasses(String username, int gid) {
+        MarkDBContext mdbc = new MarkDBContext();
+        return mdbc.countAbsent(username, gid);
     }
 
     // Hàm tính tổng số buổi nghỉ
-    public int calculateTotalAbsences(ArrayList<Mark> grades) {
-        int totalAbsences = 0;
-        for (Mark grade : grades) {
-            if (grade.getValue() == null) {
-                totalAbsences++;
-            }
-        }
-        return 4;
+    public int calculateTotalAbsences(String username, int gid) {
+        MarkDBContext mdbc = new MarkDBContext();
+        return mdbc.countTotalClass(username, gid);
     }
+// de check xem cac dau diem da full chua, neu chua thi de la current studying
+    //  neu chua full nhung ton tai diem FE hoac FE Resit ( bo thi FE de thi FE resit)
+    // day la da full . nen return false
+    // chua full tuc la fe va fe resit deu khong ton tai va cac diem thanh phan chua full
 
+    // tuc la diem fe  = null va fe resit = null
     public boolean hasNullValue(ArrayList<Mark> grades, String currentSemester) {
-        boolean hasNullValue = false;
-        boolean hasFinalExamZero = false;
-        boolean hasFinalExamResitZero = false;
+        boolean isFinalExamNull = true;
+        boolean isFinalExamResitNull = true;
 
         for (Mark grade : grades) {
-            // Kiểm tra điều kiện 1: Có mục nào đó chứa giá trị null.
-            if (grade.getGroup().getTerm().getId().equals(currentSemester) && grade.getValue() == null) {
-                hasNullValue = true;
-            }
+            // Kiểm tra điểm Final Exam và Final Exam Resit
 
-            // Kiểm tra điều kiện 2: Final Exam có gradeCategory bằng 0.
-            if (grade.getGroup().getTerm().getId().equals(currentSemester) && grade.getGradeCategory().equals("Final Exam")) {
-                if (grade.getValue() != null && grade.getValue().equals("0")) {
-                    hasFinalExamZero = true;
+            if (grade.getGradeCategory().equals("Final Exam")) {
+                if (grade.getValue() != null) {
+                    isFinalExamNull = false; // Nếu Final Exam không null, gán false
+                }
+            }
+            if (grade.getGradeCategory().equals("Final Exam Resit")) {
+                if (grade.getValue() != null) {
+                    isFinalExamResitNull = false; // Nếu Final Exam Resit không null, gán false
                 }
             }
 
-            // Kiểm tra điều kiện 3: Final Exam Resit có gradeCategory bằng 0.
-            if (grade.getGroup().getTerm().getId().equals(currentSemester) && grade.getGradeCategory().equals("Final Exam Resit")) {
-                if (grade.getValue() != null && grade.getValue().equals("0")) {
-                    hasFinalExamResitZero = true;
-                }
-            }
         }
-
-        // Trả về true nếu cả ba điều kiện đều đúng.
-        return hasNullValue && hasFinalExamZero && hasFinalExamResitZero;
+        // Trả về true nếu cả hai điểm đều là null
+        return isFinalExamNull && isFinalExamResitNull && currentSemester.equals("4");
     }
 
     // Hàm tính điểm theo quy tắc
-    public double calculateGrade(String value, float weight) {
+    public Double calculateGrade(String value, float weight) {
         if (value == null) {
-            return 0;
+            return null;
         }
         return Double.parseDouble(value) * weight / 100.0;
     }
 
     // Hàm tính tổng của một loại điểm
-    public double calculateCategoryTotal(ArrayList<Mark> grades, String category) {
+    public double checkGradeEqual4OrNot(ArrayList<Mark> grades, String category) {
         double total = 0;
         for (Mark grade : grades) {
             if (grade.getGradeCategory().equals(category)) {
-                total += calculateGrade(grade.getValue(), grade.getWeight());
+                String gradeValue = grade.getValue();
+                if (gradeValue != null) {
+                    total = Double.parseDouble(gradeValue);
+                }
             }
         }
         return total;
     }
 
+    // Hàm tính tổng của một loại điểm
+    public Double calculateCategoryForFE(ArrayList<Mark> grades, String category) {
+        Double total = null; // Khởi tạo total là null
+
+        for (Mark grade : grades) {
+            if (grade.getGradeCategory().equals(category)) {
+                Double gradeValue = calculateGrade(grade.getValue(), grade.getWeight());
+                if (gradeValue != null) {
+                    // Nếu total là null, gán total bằng gradeValue; nếu không, cộng thêm vào total
+                    total = (total == null) ? gradeValue : total + gradeValue;
+                }
+            }
+        }
+
+        return total;
+    }
+
+    // ham tinh tung dau diem ( grade Category )
     public Double calculateAverageValue(ArrayList<Mark> grades, String gradeCategory) {
         double totalValue = 0;
         int count = 0;
 
         for (Mark grade : grades) {
             if (grade.getGradeCategory().equals(gradeCategory)) {
-                String value = grade.getValue();
-                if (value != null && !value.isEmpty()) {
-                    totalValue += Double.parseDouble(value);
+                if (grade.getValue() != null) {
+
+                    totalValue += Double.parseDouble(grade.getValue());
                     count++;
+                } else {
+                    return null;
                 }
             }
         }
 
-        // Nếu không có giá trị hợp lệ nào, trả về null
+        // Tránh chia cho 0
         if (count == 0) {
             return null;
         }
@@ -127,37 +140,48 @@ public class TotalMarkHelper {
         return totalValue / count;
     }
 
-// Hàm tính total tổng
+// tinh total cua tung loai category va check xem co cai nao la 0 hay khong. neu co return true
+    // neu khong return false
+    public boolean isCategoryTotalZero(ArrayList<Mark> grades) {
+        boolean normalMark = false;
+        for (Mark grade : grades) {
+            if (!grade.getGradeCategory().equals("Final Exam") && !grade.getGradeCategory().equals("Final Exam Resit")) {
+                Double averageValue = calculateAverageValue(grades, grade.getGradeCategory());
+                if (averageValue != null && averageValue == 0) {
+                    normalMark = true;
+                }
+            }
+        }
+        Double finalExamResitAverage = calculateAverageValue(grades, "Final Exam Resit");
+        if (finalExamResitAverage != null && finalExamResitAverage != 0) {
+            return true && normalMark;
+        }
+        Double finalExamAverage = calculateAverageValue(grades, "Final Exam");
+        return finalExamAverage == null || finalExamAverage == 0;
+    }
+
     public double calculateTotal(ArrayList<Mark> grades) {
         double total = 0;
-        ArrayList<String> categories = new ArrayList<>();
-        boolean hasFEGrade = false;
         boolean hasFEResitGrade = false;
-        double FEGrade = 0;
-        double FEResitGrade = 0;
 
+        double FEmark = 0;
         for (Mark grade : grades) {
-            String category = grade.getGradeCategory();
-            if (!categories.contains(category)) {
-                if (grade.getGradeCategory().equals("Final Exam")) {
-                    hasFEGrade = true;
-                    FEGrade = calculateCategoryTotal(grades, category);
-                } else if (grade.getGradeCategory().equals("Final Exam Resit")) {
-                    hasFEResitGrade = true;
-                    FEResitGrade = calculateCategoryTotal(grades, category);
-                } else {
-                    total += calculateCategoryTotal(grades, category);
-                }
-                categories.add(category);
+
+            Double calculateMark = calculateGrade(grade.getValue(), grade.getWeight());
+            if (calculateMark != null) {
+                total += calculateMark;
+            }
+            if (grade.getGradeCategory().equals("Final Exam") && grade.getValue() != null) {
+                FEmark = calculateMark;
+            }
+            if (grade.getGradeCategory().equals("Final Exam Resit") && grade.getValue() != null) {
+                hasFEResitGrade = true;
             }
         }
 
-        if (hasFEGrade && !hasFEResitGrade) {
-            total += FEGrade;
-        } else if (hasFEGrade && hasFEResitGrade) {
-            total += FEResitGrade;
-        } else if (!hasFEGrade && hasFEResitGrade) {
-            total += FEResitGrade;
+        // Nếu có Final Exam Resit, trừ Final Exam nếu tồn tại
+        if (hasFEResitGrade) {
+            total -= FEmark;
         }
 
         return total;
@@ -165,9 +189,7 @@ public class TotalMarkHelper {
 
     // Hàm kiểm tra xem một loại điểm pass hay NOT PASS
     public String checkPass(double grade) {
-        if (grade == 0) {
-            return "NOT PASS";
-        } else if (grade < 5) {
+        if (grade < 5) {
             return "NOT PASS";
         } else {
             return "PASSED";
@@ -176,65 +198,40 @@ public class TotalMarkHelper {
 
     public String getStatusMark(String username, int gid) {
         MarkDBContext mdbc = new MarkDBContext();
-        ArrayList<Mark> markForTotal = mdbc.getMarkForTotal(username, gid);
+        ArrayList<Mark> markForTotal = mdbc.getMarkForTotal("cuonghv", gid);
         String getTotal = "";
         String currentSemester = getCurrentSemester();
-        // Kiểm tra các điểm nếu có điểm nào là 0 thì in ra "NOT PASS"
-        boolean allPassed = true;
-        for (Mark grade : markForTotal) {
-            if (calculateCategoryTotal(markForTotal, grade.getGradeCategory()) == 0) {
-                allPassed = false;
-                break;
-            }
-        }
-        // Nếu tất cả điểm đều khác 0 hoặc không có giá trị null, tính total và kiểm tra kết quả
         if (hasNullValue(markForTotal, currentSemester)) {
-            getTotal = ("Current studying ; 0.0; ");
+            getTotal = "current studying;0.0; ";
+
         } else {
-            double total = calculateTotal(markForTotal);
-            DecimalFormat df = new DecimalFormat("#.##");
-            if (calculateTotalAbsences(markForTotal) * 1.0 / calculateTotalClasses(markForTotal) * 1.0 > 0.2) {
-                getTotal = ("NOT PASS;" + df.format(total) + ";absent");
-            } else {
-// all pass tuc nghia la tat ca cac dau diem deu khac 0
-                if (allPassed) {
-                    if (hasZeroValueForJPD(markForTotal, "Final Exam Resit")) {
-                        getTotal = ("NOT PASS;" + df.format(total) + ";FE =0");
-                    } else if (calculateAverageValue(markForTotal, "Final Exam Resit") < 4) {
-                        getTotal = ("NOT PASS;" + df.format(total) + ";FE < 4");
-                    } else {
-
-                        getTotal = (checkPass(total) + ";" + df.format(total) + "; 1");
-                    }
-                } // neu co 1 dau diem nao do khac  0 thi sao
-                else {
-                    if (hasZeroValueForJPD(markForTotal, "Final Exam") && calculateCategoryTotal(markForTotal, "Final Exam Resit") == 0) {
-                        getTotal = ("NOT PASS;" + df.format(total) + ";FE =0 1");
-                    } else if (hasZeroValueForJPD(markForTotal, "Final Exam Resit") && calculateCategoryTotal(markForTotal, "Final Exam Resit") != 0) {
-                        getTotal = ("NOT PASS;" + df.format(total) + ";FE =0 2");
-                    } else {
-                        // neu final exam khac  0 va final exam resit  = 0 thi se fail luon
-                        if (calculateCategoryTotal(markForTotal, "Final Exam") != 0 && calculateAverageValue(markForTotal, "Final Exam Resit") == 0) {
-
-                            getTotal = ("NOT PASS;" + df.format(total) + ";FE Resit =  0 3");
-
-                        } // hoac la neu final exam  = 0 va final exam resit khac 0 thi se tinh diem dua tren final exam resit
-                        else if (calculateCategoryTotal(markForTotal, "Final Exam Resit") != 0) {
-                            // neu final exam resit  ma nho hon 4 thi faile
-                            if (calculateAverageValue(markForTotal, "Final Exam Resit") < 4) {
-                                getTotal = ("NOT PASS;" + df.format(total) + ";FE < 4");
-                            } else {
-                                getTotal = (checkPass(total) + ";" + df.format(total) + "; 3");
-                            }
-                        } else {
-                            getTotal = ("NOT PASS;" + df.format(total) + ";category = 0");
-                        }
-                    }
-
+            if (calculateCategoryForFE(markForTotal, "Final Exam Resit") == null) {
+                if (calculateTotalAbsences(username, gid) * 1.0 / calculateTotalClasses(username, gid) > 0.2) {
+                    getTotal = "NOT PASS ;" + calculateTotal(markForTotal) + ";absent > 20%";
+                } else if (checkGradeEqual4OrNot(markForTotal, "Final Exam") < 4) {
+                    getTotal = "NOT PASS ;" + calculateTotal(markForTotal) + ";FE < 4";
+                } else if (calculateTotal(markForTotal) < 5) {
+                    getTotal = "NOT PASS ;" + calculateTotal(markForTotal) + ";Total < 5";
+                } else if (isCategoryTotalZero(markForTotal)) {
+                    getTotal = "NOT PASS ;" + calculateTotal(markForTotal) + ";Category = 0";
+                } else {
+                    getTotal = "PASSED ;" + calculateTotal(markForTotal) + "; ";
+                }
+            } else if (calculateCategoryForFE(markForTotal, "Final Exam Resit") != null) {
+                if (calculateTotalAbsences(username, gid) * 1.0 / calculateTotalClasses(username, gid) > 0.2) {
+                    getTotal = "NOT PASS ;" + calculateTotal(markForTotal) + ";absent > 20%";
+                } else if (checkGradeEqual4OrNot(markForTotal, "Final Exam Resit") < 4) {
+                    getTotal = "NOT PASS ;" + calculateTotal(markForTotal) + ";FE < 4";
+                } else if (calculateTotal(markForTotal) < 5) {
+                    getTotal = "NOT PASS ;" + calculateTotal(markForTotal) + ";Total < 5";
+                } else if (isCategoryTotalZero(markForTotal)) {
+                    getTotal = "NOT PASS ;" + calculateTotal(markForTotal) + ";Category = 0";
+                } else {
+                    getTotal = "PASSED ;" + calculateTotal(markForTotal) + "; ";
                 }
             }
-
         }
+        // Nếu chưa full điểm và thuộc kì hiện tại thì in ra "current studying"
         return getTotal;
     }
 

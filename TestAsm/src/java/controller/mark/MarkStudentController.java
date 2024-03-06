@@ -116,6 +116,7 @@ public class MarkStudentController extends HttpServlet {
         //  request.setAttribute("listGroup", mdb.getGroupIdToTakeCourse());
         String gid = request.getParameter("gid");
         if (gid != null) {
+            request.setAttribute("ts", gid);
             TotalMarkHelper t = new TotalMarkHelper();
             String statusMark = t.getStatusMark(a.getUsername(), Integer.parseInt(gid));
             String[] parts = statusMark.split(";");
