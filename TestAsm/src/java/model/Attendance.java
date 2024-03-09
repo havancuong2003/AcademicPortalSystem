@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.sql.Timestamp;
+
 /**
  *
  * @author -MSI-
@@ -15,16 +17,20 @@ public class Attendance implements IEntity {
     private Session session;
     private String status;
     private String description;
+    private Teacher teacher;
+    private Timestamp time;
 
     public Attendance() {
     }
 
-    public Attendance(int id, Student student, Session session, String status, String description) {
+    public Attendance(int id, Student student, Session session, String status, String description, Teacher teacher, Timestamp time) {
         this.id = id;
         this.student = student;
         this.session = session;
         this.status = status;
         this.description = description;
+        this.teacher = teacher;
+        this.time = time;
     }
 
     public int getId() {
@@ -65,6 +71,22 @@ public class Attendance implements IEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
     }
 
 }

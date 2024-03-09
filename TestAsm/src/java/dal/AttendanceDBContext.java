@@ -182,13 +182,35 @@ public class AttendanceDBContext extends DBContext<Attendance> {
                 a.setSession(getSessionByID(rs.getInt("session_id")));
                 a.setId(rs.getInt("id"));
                 a.setDescription(rs.getString("description"));
+                a.setTeacher(getTeacherBySessionID(rs.getInt("session_id")));
+                a.setTime(rs.getTimestamp("timeAtt"));
+
                 students.add(a);
             }
         } catch (SQLException e) {
         }
         return students;
     }
-    
+
+    public Teacher getTeacherBySessionID(int ssid) {
+        Teacher t = null;
+        try {
+            String sql = "select distinct s.lectureid from Attendance a\n"
+                    + "join [Session] s on s.id=a.session_id\n"
+                    + "where session_id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, ssid);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                t = getLectureByID(rs.getString("lectureid"));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return t;
+    }
+
     public Student getStudentByID(String id) {
         Student s = null;
         try {
@@ -203,7 +225,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
                 s.setDob(rs.getDate("dob"));
                 s.setEmail(rs.getString("email"));
                 s.setImgUrl(rs.getString("imgUrl"));
-                
+
             }
         } catch (SQLException e) {
         }
@@ -277,7 +299,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         try {
             for (Attendance a : attendances) {
                 String sql = "update Attendance "
-                        + "set status = ? ,description = ? "
+                        + "set status = ? ,description = ?,timeAtt = ? "
                         + "where session_id = ? and student_id = ?; "
                         + "update [Session] "
                         + "set status = ? "
@@ -286,10 +308,13 @@ public class AttendanceDBContext extends DBContext<Attendance> {
 
                 stm.setString(1, a.getStatus());
                 stm.setString(2, a.getDescription());
-                stm.setInt(3, id);
-                stm.setString(4, a.getStudent().getId());
-                stm.setString(5, "true");
-                stm.setInt(6, id);
+                long currentTimeMillis = System.currentTimeMillis();
+                Timestamp currentTime = new Timestamp(currentTimeMillis);
+                stm.setTimestamp(3, currentTime);
+                stm.setInt(4, id);
+                stm.setString(5, a.getStudent().getId());
+                stm.setString(6, "true");
+                stm.setInt(7, id);
                 stm.executeUpdate();
             }
         } catch (SQLException e) {

@@ -16,16 +16,17 @@ public class Session implements IEntity {
     private String status;
     private Group group;
     private Date date;
+    private Teacher teacher;
 
     public Session() {
     }
 
-    public Session(int id, String status, Group group, Date date) {
+    public Session(int id, String status, Group group, Date date, Teacher teacher) {
         this.id = id;
         this.status = status;
         this.group = group;
-
         this.date = date;
+        this.teacher = teacher;
     }
 
     public int getId() {
@@ -58,6 +59,14 @@ public class Session implements IEntity {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
 }

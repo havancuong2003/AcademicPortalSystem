@@ -17,10 +17,7 @@ public class Main {
     public static void main(String[] args) {
         MarkDBContext mdbc = new MarkDBContext();
         TotalMarkHelper t = new TotalMarkHelper();
-        ArrayList<Mark> markForTotal = mdbc.getMarkForTotal("cuonghv", 10);
-//        for (Mark mark : markForTotal) {
-//            System.out.println(mark.getGradeCategory()+" - "+t.calculateAverageValue(markForTotal,mark.getGradeCategory()));
-//        }
-        System.out.println(t.getStatusMark("cuonghv", 8));
+        System.out.println(t.calculateTotalAbsences("cuonghv", 11));
+        System.out.println(t.calculateTotalClasses("cuonghv", 11));
     }
 }

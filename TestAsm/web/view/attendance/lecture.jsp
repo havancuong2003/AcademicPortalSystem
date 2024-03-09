@@ -72,7 +72,7 @@
         </style>
     </head>
     <body>
-      
+
         <div class="container">
             <div class="home">
                 <a href="home">Home</a>
@@ -89,6 +89,8 @@
                             <th>Image</th>
                             <th>Attendance Status</th>
                             <th>Description</th>
+                            <th>Attandence By</th>
+                            <th>Time</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -116,7 +118,8 @@
                                 <td>
                                     <input type="text" name="description${s.student.id}" value="${s.description}">
                                 </td>
-
+                                <td>${s.teacher.name}</td>
+                                 <td>${s.time}</td>
                         <input type="hidden" value="${s.session.id}" name="sessionid"/>
                         </tr>
                     </c:forEach>

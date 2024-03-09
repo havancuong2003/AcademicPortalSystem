@@ -5,7 +5,6 @@
 package util;
 
 import dal.MarkDBContext;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import model.Mark;
 
@@ -19,6 +18,18 @@ public class TotalMarkHelper {
     public String getCurrentSemester() {
 
         return "4";
+    }
+
+    public boolean allNull(ArrayList<Mark> grades, String semester) {
+        for (Mark grade : grades) {
+            if (!grade.getGroup().getTerm().getId().equals(semester)) {
+                return false;
+            }
+            if (grade.getValue() != null) {
+                return false;
+            }
+        }
+        return true;
     }
 // check diem FE cua mon JPD xem co ton tai diem 0 hay khong
 
@@ -39,13 +50,13 @@ public class TotalMarkHelper {
 
     public int calculateTotalClasses(String username, int gid) {
         MarkDBContext mdbc = new MarkDBContext();
-        return mdbc.countAbsent(username, gid);
+        return mdbc.countTotalClass(username, gid);
     }
 
     // Hàm tính tổng số buổi nghỉ
     public int calculateTotalAbsences(String username, int gid) {
         MarkDBContext mdbc = new MarkDBContext();
-        return mdbc.countTotalClass(username, gid);
+        return mdbc.countAbsent(username, gid);
     }
 // de check xem cac dau diem da full chua, neu chua thi de la current studying
     //  neu chua full nhung ton tai diem FE hoac FE Resit ( bo thi FE de thi FE resit)
@@ -201,9 +212,10 @@ public class TotalMarkHelper {
         ArrayList<Mark> markForTotal = mdbc.getMarkForTotal("cuonghv", gid);
         String getTotal = "";
         String currentSemester = getCurrentSemester();
-        if (hasNullValue(markForTotal, currentSemester)) {
+        if (allNull(markForTotal, "4")) {
             getTotal = "current studying;0.0; ";
-
+        } else if (hasNullValue(markForTotal, currentSemester)) {
+            getTotal = "NOT PASS;0.0; ";
         } else {
             if (calculateCategoryForFE(markForTotal, "Final Exam Resit") == null) {
                 if (calculateTotalAbsences(username, gid) * 1.0 / calculateTotalClasses(username, gid) > 0.2) {

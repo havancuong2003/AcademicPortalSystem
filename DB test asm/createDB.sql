@@ -93,9 +93,9 @@ CREATE TABLE [Session] (
     [date] DATE,
     FOREIGN KEY (group_id) REFERENCES [Group](id),
 	lectureid nvarchar(50),
-	 FOREIGN KEY (lectureid) REFERENCES Lecture(id),
+	 FOREIGN KEY (lectureid) REFERENCES Lecture(id)
+	
 );
-
 CREATE TABLE Attendance (
     id INT identity(1,1) PRIMARY KEY,
     [status] NVARCHAR(255),
@@ -103,7 +103,8 @@ CREATE TABLE Attendance (
     student_id nvarchar(50),
     session_id INT,
     FOREIGN KEY (student_id) REFERENCES Student(id),
-    FOREIGN KEY (session_id) REFERENCES [Session](id)
+    FOREIGN KEY (session_id) REFERENCES [Session](id),
+	 timeAtt datetime
 );
 
 create table mark_course(
