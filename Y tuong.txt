@@ -1,14 +1,18 @@
   -- LECTURE: phan quyen theo RBAC, ABAC ( neu khong thi giang vien nay co the diem danh cho giang vien khac )
 
- -- Admin: check room con trong.
+ -- Admin: 
 move out class
-timetable cac thu
 
-fix mark :done
+
+
 
 
 websocket tao trang chat
 
+------
+click vao mon hoc trong timetable của sinh viên sẽ ra thông tin giống như fap, sau đó ra trang lớp học của sinh viên đó để xem thông tin của sinh viên trong lớp đó. (09-03) done
 
-click vao mon hoc trong timetable của sinh viên sẽ ra thông tin giống như fap, sau đó ra trang lớp học của sinh viên đó để xem thông tin của sinh viên trong lớp đó.
+fix mark :done
+
+Doi lich cho giang vien ( done )
 

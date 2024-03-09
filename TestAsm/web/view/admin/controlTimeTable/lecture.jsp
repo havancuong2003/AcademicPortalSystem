@@ -1,3 +1,11 @@
+<%-- 
+    Document   : lecture
+    Created on : Mar 9, 2024, 1:57:15 PM
+    Author     : -MSI-
+--%>
+
+
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -134,12 +142,17 @@
     <body>
 
         <div class="home">
-            <a href="/testasm/lecture/home">Home</a>
+            <a href="/testasm/admin/home">Home</a>
         </div>
         <div>
             <h2 id="header-timetable">Lecture Time Table</h2>
         </div>
+        <form action="timetablelecture" method="get">
 
+            <input type="text" name="info" placeholder="lecture id"/>
+            <input type="submit" value="search" />
+        </form>
+        <h3 style="color:red">${requestScope.ms}</h3>
 
 
 
@@ -148,7 +161,7 @@
                 <tr>
                     <th rowspan="2">
                         <div>
-                            <form action="timetable" id="myForm" method="post">
+                            <form action="timetablelecture?info=" id="myForm" method="post">
                                 <label for="year"></label>
                                 <select id="year" name="dropdownYear">
                                     <option value="2022" <c:if test="${sessionScope.dropDownYear eq '2022'}">selected</c:if>>2022</option>
@@ -184,7 +197,7 @@
                         <td>
                             <c:forEach items="${requestScope.listLecture}" var="les">
                                 <c:if test="${les.group.timeslot.id eq slot.id and les.date eq d}">
-                                    ${les.teacher.name} <br/> ${les.group.room.description} <br/>
+                                     ${les.teacher.name} <br/> ${les.group.room.description} <br/>
                                     ${les.group.course.code}
                                     <br/>
 
@@ -201,9 +214,13 @@
                 </tr>
             </c:forEach>
         </table> 
-
-
-        <div id="timetable"></div>
+        <br/>
+        <br/>
+        <br/>
+        <form>
+            
+            <a href="changeschedule">change teaching schedule</a>
+            
         <script>
             var yearElements = document.querySelector("#year");
 
@@ -391,3 +408,4 @@
 
     </body>
 </html>
+

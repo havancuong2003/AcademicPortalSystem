@@ -184,8 +184,8 @@
                         <td>
                             <c:forEach items="${requestScope.list}" var="les">
                                 <c:if test="${les.session.group.timeslot.id eq slot.id and les.session.date eq d}">
-                                    ${les.session.group.teacher.name} <br/> ${les.session.group.room.description} <br/>
-                                    <span style="color:blue"> ${les.session.group.course.code}</span> <br/>
+                                    ${les.session.teacher.name} <br/> ${les.session.group.room.description} <br/>
+                                    <span style="color:blue"> <a href="activitydetail?ssid=${les.session.id}">${les.session.group.course.code}</a></span> <br/>
                                     <span class="statusAtt" value="${les.status}">  ${les.status}</span><br/>
                                     
                                 </c:if>

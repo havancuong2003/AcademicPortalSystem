@@ -121,6 +121,7 @@
                                 <td>${s.teacher.name}</td>
                                  <td>${s.time}</td>
                         <input type="hidden" value="${s.session.id}" name="sessionid"/>
+                        <input type="hidden" value="${s.session.teacher.id}" name="teacherid"/>
                         </tr>
                     </c:forEach>
                     </tbody>

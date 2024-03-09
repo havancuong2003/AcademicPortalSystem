@@ -211,7 +211,7 @@
                         <span>Lecture</span>
                     </div>
                     <div class="control-model" onclick="manager(event)">
-                        <ccdvspan>c</ccdv                                                                                                                                                                                                                                                                                           span>
+                        <span>Lecture Timetable</span>
                     </div>
                     <div class="control-model" onclick="manager(event)">
                         <span>d</span>
@@ -257,8 +257,12 @@
 
                         window.location.href = "controlStudent"; // Chuyển hướng sang trang tương ứng cho phần tử 'a'
                         break;
+
                     case "Lecture":
                         window.location.href = "controlLecture"; // Chuyển hướng sang trang tương ứng cho phần tử 'b'
+                        break;
+                    case "Lecture Timetable":
+                        window.location.href = "timetablelecture"; // Chuyển hướng sang trang tương ứng cho phần tử 'b'
                         break;
                         // Thêm các trường hợp khác tương ứng với các phần tử khác nếu cần
                     default:

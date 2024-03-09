@@ -100,10 +100,8 @@ public class RemoveSesionOutTimetable implements Filter {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
-    public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain)
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-
         if (debug) {
             log("RemoveSesionOutTimetable:doFilter()");
         }
@@ -113,9 +111,9 @@ public class RemoveSesionOutTimetable implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String url = httpRequest.getRequestURI(); // Lấy URL hiện tại
         HttpSession session = httpRequest.getSession(); // Lấy session hiện tại nếu tồn tại
+
         // Kiểm tra xem URL có chứa "timetable" không
         if (!url.contains(URL_CONTAINS_CHECK)) {
-
             if (session.getAttribute(SESSION_ATTRIBUTE_TO_CHECK1) != null) {
                 session.removeAttribute(SESSION_ATTRIBUTE_TO_CHECK1); // Xóa thuộc tính của session
             }
@@ -128,35 +126,12 @@ public class RemoveSesionOutTimetable implements Filter {
             if (session.getAttribute(SESSION_ATTRIBUTE_TO_CHECK4) != null) {
                 session.removeAttribute(SESSION_ATTRIBUTE_TO_CHECK4);
             }
-
         }
 
+        // Gọi filter tiếp theo trong chuỗi
         chain.doFilter(request, response);
 
-        Throwable problem = null;
-        try {
-            chain.doFilter(request, response);
-        } catch (Throwable t) {
-            // If an exception is thrown somewhere down the filter chain,
-            // we still want to execute our after processing, and then
-            // rethrow the problem after that.
-            problem = t;
-            t.printStackTrace();
-        }
-
         doAfterProcessing(request, response);
-
-        // If there was a problem, we want to rethrow it if it is
-        // a known type, otherwise log it.
-        if (problem != null) {
-            if (problem instanceof ServletException) {
-                throw (ServletException) problem;
-            }
-            if (problem instanceof IOException) {
-                throw (IOException) problem;
-            }
-            sendProcessingError(problem, response);
-        }
     }
 
     /**

@@ -4,9 +4,7 @@
  */
 package dal;
 
-import java.util.ArrayList;
-import model.Mark;
-import util.TotalMarkHelper;
+import model.Session;
 
 /**
  *
@@ -15,9 +13,10 @@ import util.TotalMarkHelper;
 public class Main {
 
     public static void main(String[] args) {
-        MarkDBContext mdbc = new MarkDBContext();
-        TotalMarkHelper t = new TotalMarkHelper();
-        System.out.println(t.calculateTotalAbsences("cuonghv", 11));
-        System.out.println(t.calculateTotalClasses("cuonghv", 11));
+        LectureDBContext ldbc = new LectureDBContext();
+        ldbc.updateLectureChange("10", 19);
+        Session sessionForChange = ldbc.getSessionForChange("2024-03-06", 4);
+        System.out.println(sessionForChange.getId());
+      
     }
 }

@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * @author -MSI-
  */
 public class StudentDBContext extends DBContext<Student> {
-    
+
     @Override
     public ArrayList<Student> list() {
         ArrayList<Student> students = new ArrayList<>();
@@ -38,7 +38,7 @@ public class StudentDBContext extends DBContext<Student> {
         }
         return students;
     }
-    
+
     public ArrayList<Student> getStudentForSerach(String studentInfo) {
         ArrayList<Student> students = new ArrayList<>();
         try {
@@ -58,14 +58,14 @@ public class StudentDBContext extends DBContext<Student> {
                 s.setImgUrl(rs.getString("imgUrl"));
                 s.setUsername(rs.getString("userName"));
                 students.add(s);
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return students;
     }
-    
+
     public void updateStudentAfterEdit(String oldID, String newid, String name, String dob, String img, String email, String username) {
         try {
             String sql = "update Student\n"
@@ -83,27 +83,51 @@ public class StudentDBContext extends DBContext<Student> {
         } catch (SQLException ex) {
             Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
+    public ArrayList<Student> getAllStudentInGroup(String gid) {
+        ArrayList<Student> students = new ArrayList<>();
+        try {
+            String sql = "select distinct st.id ,st.name ,st.imgUrl from Attendance a\n"
+                    + "join Session s on a.session_id=s.id\n"
+                    + "join [Group] g on g.id = s.group_id\n"
+                    + "join student st on st.id=a.student_id\n"
+                    + "and g.id=?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, gid);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                Student s = new Student();
+                s.setId(rs.getString("id"));
+                s.setName(rs.getString("name"));
+                s.setImgUrl(rs.getString("imgUrl"));
+                students.add(s);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return students;
+    }
+
     @Override
     public void insert(Student entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public void update(Student entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public void delete(Student entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public Student get(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
 }

@@ -36,6 +36,7 @@ public class LectureAttendance extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String a_raw = request.getParameter("sessionid");
+        String b_raw = request.getParameter("teacherid");
         int ssid = Integer.parseInt(a_raw);
         AttendanceDBContext adb = new AttendanceDBContext();
         ArrayList<Attendance> studentsBySessionID = adb.getStudentsBySessionID(ssid);
@@ -56,7 +57,7 @@ public class LectureAttendance extends HttpServlet {
             attendance.setStatus(status);
         }
         
-        adb.updateAttendanceStatus(studentsBySessionID, ssid);
+        adb.updateAttendanceStatus(studentsBySessionID, ssid,b_raw);
         response.sendRedirect("timetable");
     }
 // check cai nay de biet la giang vien da diem danh chua, neu khong ton tai co nghia la giaing vien chua diem danh

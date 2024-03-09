@@ -19,11 +19,12 @@ public class Attendance implements IEntity {
     private String description;
     private Teacher teacher;
     private Timestamp time;
+    private int slot;
 
     public Attendance() {
     }
 
-    public Attendance(int id, Student student, Session session, String status, String description, Teacher teacher, Timestamp time) {
+    public Attendance(int id, Student student, Session session, String status, String description, Teacher teacher, Timestamp time, int slot) {
         this.id = id;
         this.student = student;
         this.session = session;
@@ -31,6 +32,7 @@ public class Attendance implements IEntity {
         this.description = description;
         this.teacher = teacher;
         this.time = time;
+        this.slot = slot;
     }
 
     public int getId() {
@@ -87,6 +89,14 @@ public class Attendance implements IEntity {
 
     public void setTime(Timestamp time) {
         this.time = time;
+    }
+
+    public int getSlot() {
+        return slot;
+    }
+
+    public void setSlot(int slot) {
+        this.slot = slot;
     }
 
 }
