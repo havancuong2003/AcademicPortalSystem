@@ -4,6 +4,7 @@
  */
 package dal;
 
+import java.util.ArrayList;
 import model.Session;
 
 /**
@@ -13,10 +14,17 @@ import model.Session;
 public class Main {
 
     public static void main(String[] args) {
-        LectureDBContext ldbc = new LectureDBContext();
-        ldbc.updateLectureChange("10", 19);
-        Session sessionForChange = ldbc.getSessionForChange("2024-03-06", 4);
-        System.out.println(sessionForChange.getId());
-      
+        AttendanceDBContext a = new AttendanceDBContext();
+        ArrayList<Session> sessionForFilter = a.getSessionForFilter("sonnt");
+        int sessionid = 222;
+        boolean flag = true;
+        for (Session session : sessionForFilter) {
+            if (session.getId() == sessionid) {
+                flag = false;
+            }
+        }
+        if(flag == false){
+            System.out.println("Co ");
+        }
     }
 }

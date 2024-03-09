@@ -270,9 +270,9 @@ public class AttendanceDBContext extends DBContext<Attendance> {
     public ArrayList<Session> listInfoLecture(String username) {
         ArrayList<Session> sessions = new ArrayList<>();
         try {
-            String sql = "select s.id,s.date,s.group_id,s.lectureid,s.status from Session s\n" +
-"					  join Lecture l on s.lectureid=l.id\n" +
-"					  where l.userName =?";
+            String sql = "select s.id,s.date,s.group_id,s.lectureid,s.status from Session s\n"
+                    + "					  join Lecture l on s.lectureid=l.id\n"
+                    + "					  where l.userName =?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);
             ResultSet rs = stm.executeQuery();
@@ -391,6 +391,26 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return sessions;
 
+    }
+
+    public ArrayList<Session> getSessionForFilter(String username) {
+        ArrayList<Session> sessions = new ArrayList<>();
+        try {
+            String sql = "select s.id from [session] s\n"
+                    + "join lecture l on s.lectureid=l.id\n"
+                    + "where l.userName = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                Session s = new Session();
+                s.setId(rs.getInt("id"));
+                sessions.add(s);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return sessions;
     }
 
     @Override

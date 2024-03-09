@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import model.Attendance;
 
@@ -18,35 +19,39 @@ import model.Attendance;
  * @author -MSI-
  */
 public class LectureAttendance extends HttpServlet {
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String a_raw = request.getParameter("sessionid");
+
+        HttpSession session = request.getSession();
         int ssid = Integer.parseInt(a_raw);
-        
+        session.setAttribute("sessionid", ssid);
+
         AttendanceDBContext adb = new AttendanceDBContext();
         ArrayList<Attendance> studentsBySessionID = adb.getStudentsBySessionID(ssid);
-        
+
         request.setAttribute("list", studentsBySessionID);
         request.getRequestDispatcher("../view/attendance/lecture.jsp").forward(request, response);
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String a_raw = request.getParameter("sessionid");
+
         String b_raw = request.getParameter("teacherid");
         int ssid = Integer.parseInt(a_raw);
         AttendanceDBContext adb = new AttendanceDBContext();
         ArrayList<Attendance> studentsBySessionID = adb.getStudentsBySessionID(ssid);
-        
+
         for (Attendance attendance : studentsBySessionID) {
             String attendanceValue = request.getParameter("attendance" + attendance.getStudent().getId());
             String descriptionValue = request.getParameter("description" + attendance.getStudent().getId());
             String status = null;
             if (attendanceValue != null) {
-                
+
                 if (attendanceValue.equals("present")) {
                     status = "true";
                 } else if (!attendanceValue.equals("present")) {
@@ -56,8 +61,8 @@ public class LectureAttendance extends HttpServlet {
             attendance.setDescription(descriptionValue);
             attendance.setStatus(status);
         }
-        
-        adb.updateAttendanceStatus(studentsBySessionID, ssid,b_raw);
+
+        adb.updateAttendanceStatus(studentsBySessionID, ssid, b_raw);
         response.sendRedirect("timetable");
     }
 // check cai nay de biet la giang vien da diem danh chua, neu khong ton tai co nghia la giaing vien chua diem danh

@@ -1,7 +1,7 @@
   -- LECTURE: phan quyen theo RBAC, ABAC ( neu khong thi giang vien nay co the diem danh cho giang vien khac )
 
  -- Admin: 
-move out class
+move out class (10/03)
 
 
 
@@ -15,4 +15,6 @@ click vao mon hoc trong timetable của sinh viên sẽ ra thông tin giống nh
 fix mark :done
 
 Doi lich cho giang vien ( done )
+
+da phan quyen giang vien diem danh xong.
 

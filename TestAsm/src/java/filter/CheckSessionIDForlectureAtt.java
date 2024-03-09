@@ -1,9 +1,10 @@
-package filter;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Filter.java to edit this template
  */
+package filter;
+
+import dal.AttendanceDBContext;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -17,13 +18,15 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import model.Account;
+import model.Session;
 
 /**
  *
  * @author -MSI-
  */
-public class HomeFilter implements Filter {
+public class CheckSessionIDForlectureAtt implements Filter {
 
     private static final boolean debug = true;
 
@@ -32,13 +35,13 @@ public class HomeFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public HomeFilter() {
+    public CheckSessionIDForlectureAtt() {
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("HomeFilter:DoBeforeProcessing");
+            log("CheckSessionIDForlectureAtt:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -66,7 +69,7 @@ public class HomeFilter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("HomeFilter:DoAfterProcessing");
+            log("CheckSessionIDForlectureAtt:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -102,32 +105,30 @@ public class HomeFilter implements Filter {
             throws IOException, ServletException {
 
         if (debug) {
-            log("HomeFilter:doFilter()");
+            log("CheckSessionIDForlectureAtt:doFilter()");
         }
 
         doBeforeProcessing(request, response);
+
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-
         HttpSession session = httpRequest.getSession();
         Account a = (Account) session.getAttribute("account");
-        
-        if (a == null) {
-            httpResponse.sendRedirect("../login");
-        } else {
-            String role = a.getRole();
-            String urlPattern = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
 
-            if (role.equals("2") && urlPattern.startsWith("/lecture")) {
-                chain.doFilter(request, response);
-            } else if ((role.equals("3") && urlPattern.startsWith("/student"))) {
-                chain.doFilter(request, response);
-            } else if ((role.equals("1") && urlPattern.startsWith("/admin"))) {
-                chain.doFilter(request, response);
-            } else {
-                // Nếu không phù hợp với vai trò hoặc URL pattern, trả về lỗi 403 (Forbidden)
-                httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied.");
+        
+        String sessionid = httpRequest.getParameter("sessionid");
+        AttendanceDBContext adbc = new AttendanceDBContext();
+        ArrayList<Session> sessionForFilter = adbc.getSessionForFilter(a.getUsername());
+
+        boolean flag = true;
+        for (Session sessions : sessionForFilter) {
+            if (sessions.getId() == Integer.parseInt(sessionid)) {
+                flag = false;
             }
+        }
+        if (flag == true) {
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/lecture/home");
+            return;
         }
 
         Throwable problem = null;
@@ -185,7 +186,7 @@ public class HomeFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {
-                log("HomeFilter:Initializing filter");
+                log("CheckSessionIDForlectureAtt:Initializing filter");
             }
         }
     }
@@ -196,9 +197,9 @@ public class HomeFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("HomeFilter()");
+            return ("CheckSessionIDForlectureAtt()");
         }
-        StringBuffer sb = new StringBuffer("HomeFilter(");
+        StringBuffer sb = new StringBuffer("CheckSessionIDForlectureAtt(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());
