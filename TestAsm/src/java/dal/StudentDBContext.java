@@ -109,7 +109,29 @@ public class StudentDBContext extends DBContext<Student> {
         }
         return students;
     }
-
+    public Student getInfoStudent(String username){
+        Student s =null;
+        try {
+            String sql =  "select * from student where username = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                s= new Student();
+                s.setId(rs.getString("id"));
+                s.setName(rs.getString("name"));
+                s.setDob(rs.getDate("dob"));
+                s.setEmail(rs.getString("Email"));
+                s.setImgUrl(rs.getString("imgUrl"));
+                s.setUsername(rs.getString("username"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return s;
+        
+    }
+    
     @Override
     public void insert(Student entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

@@ -124,6 +124,14 @@
         <servlet-name>ChangeTeacherSchedule</servlet-name>
         <servlet-class>controller.timetable.ChangeTeacherSchedule</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StudentInfomationController</servlet-name>
+        <servlet-class>controller.personalinfo.StudentInfomationController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckAttendanceStudent</servlet-name>
+        <servlet-class>controller.attendance.CheckAttendanceStudent</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AttendanceStudentController</servlet-name>
         <url-pattern>/student/timetable</url-pattern>
@@ -211,6 +219,14 @@
     <servlet-mapping>
         <servlet-name>ChangeTeacherSchedule</servlet-name>
         <url-pattern>/admin/changeschedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StudentInfomationController</servlet-name>
+        <url-pattern>/student/info</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckAttendanceStudent</servlet-name>
+        <url-pattern>/student/checkabsent</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>

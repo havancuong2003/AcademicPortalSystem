@@ -138,7 +138,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <nav>
                 <ul>
                     <li><a href="timetable">Weekly Timetable</a></li>
-                    <li><a href="student_info.html">Student information</a></li>
+                    <li><a href="info">Student information</a></li>
                     <li><a href="mark" >Mark report</a></li>
 
                 </ul>

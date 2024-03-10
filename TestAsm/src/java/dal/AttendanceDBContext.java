@@ -402,7 +402,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);
             ResultSet rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Session s = new Session();
                 s.setId(rs.getInt("id"));
                 sessions.add(s);
@@ -411,6 +411,74 @@ public class AttendanceDBContext extends DBContext<Attendance> {
             Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return sessions;
+    }
+
+    public ArrayList<Attendance> getAttendanceStatusForAll(String courseid, String termid, String userName) {
+        ArrayList<Attendance> attendances = new ArrayList<>();
+
+        try {
+            String sql = "select a.id as aid,s.id as ssid,a.status,a.description from Attendance a\n"
+                    + "join Session s on a.session_id=s.id\n"
+                    + "join [group] g on s.group_id=g.id\n"
+                    + "join student st on st.id=a.student_id\n"
+                    + "where session_id in \n"
+                    + "(select id from Session where group_id=\n"
+                    + "(select id from [Group] where courseId=? and termID=?)\n"
+                    + ")\n"
+                    + "and st.userName =?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, courseid);
+            stm.setString(2, termid);
+            stm.setString(3, userName);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Attendance a = new Attendance();
+                a.setId(rs.getInt("aid"));
+                a.setSession(getSessionByID(rs.getInt("ssid")));
+                a.setStatus(rs.getString("status"));
+                a.setDescription(rs.getString("description"));
+                attendances.add(a);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return attendances;
+    }
+
+    public String getTotalAbsent(String username, String courseid, String termid) {
+        String s = "";
+        try {
+            String sql = "SELECT \n"
+                    + "    absentCount,\n"
+                    + "    totalClasses,\n"
+                    + "    ROUND((CAST(absentCount AS FLOAT) / totalClasses) * 100, 2) AS percentAbsent\n"
+                    + "FROM \n"
+                    + "    absentPercent \n"
+                    + "WHERE \n"
+                    + "    student_group_id = (\n"
+                    + "        SELECT sg.id \n"
+                    + "        FROM student_group sg\n"
+                    + "        JOIN student s ON s.id = sg.Studentid\n"
+                    + "        WHERE s.userName = ? \n"
+                    + "        AND groupid = (\n"
+                    + "            SELECT id \n"
+                    + "            FROM [Group] \n"
+                    + "            WHERE courseId = ?\n"
+                    + "            AND termID = ?\n"
+                    + "        )\n"
+                    + "    );";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            stm.setString(2, courseid);
+            stm.setString(3, termid);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                s += rs.getInt("absentCount")+";"+rs.getInt("totalClasses")+";"+rs.getInt("percentAbsent");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return s;
     }
 
     @Override
