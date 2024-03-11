@@ -370,6 +370,24 @@ insert into student_group values
 ('he3',11)
 
 
+insert into feedback values 
+(NULL,'he1',8,0),
+(NULL,'he2',8,0),
+(NULL,'he3',8,0),
+
+(NULL,'he1',9,0),
+(NULL,'he2',9,0),
+(NULL,'he3',9,0),
+
+(NULL,'he1',10,0),
+(NULL,'he2',10,0),
+(NULL,'he3',10,0),
+
+(NULL,'he1',11,0),
+(NULL,'he2',11,0),
+(NULL,'he3',11,0)
+
+
 
 
 

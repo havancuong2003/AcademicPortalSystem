@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.home;
+package controller.feedback;
 
 import dal.FeedBackDBContext;
 import java.io.IOException;
@@ -21,7 +21,7 @@ import model.FeedBack;
  *
  * @author -MSI-
  */
-public class HomeStudentController extends HttpServlet {
+public class LectureSeeFeedBack extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +38,10 @@ public class HomeStudentController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeController</title>");  
+            out.println("<title>Servlet LectureSeeFeedBack</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet LectureSeeFeedBack at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,19 +58,13 @@ public class HomeStudentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-         HttpSession session = request.getSession();
+        FeedBackDBContext f = new FeedBackDBContext();
+        HttpSession session = request.getSession();
+        
         Account a = (Account) session.getAttribute("account");
-        request.setAttribute("user", a.getUsername());
-        
-          FeedBackDBContext fbdbc = new FeedBackDBContext();
-        ArrayList<FeedBack> allFeedBackForStudent = fbdbc.getAllFeedBackForStudent(a.getUsername());
-        request.setAttribute("feedbacks", allFeedBackForStudent);
-        request.setAttribute("count", allFeedBackForStudent.size());
-        
-        request.setAttribute("feedback", allFeedBackForStudent);
-        
-        
-        request.getRequestDispatcher("../view/home/student.jsp").forward(request, response);
+        ArrayList<FeedBack> lectureSeeAllFeedBack = f.lectureSeeAllFeedBack(a.getUsername());
+        request.setAttribute("feedbacks", lectureSeeAllFeedBack);
+        request.getRequestDispatcher("../view/feedback/lecture.jsp").forward(request, response);
     } 
 
     /** 

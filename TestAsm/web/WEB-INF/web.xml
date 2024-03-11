@@ -132,6 +132,18 @@
         <servlet-name>CheckAttendanceStudent</servlet-name>
         <servlet-class>controller.attendance.CheckAttendanceStudent</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StudentFeedBack</servlet-name>
+        <servlet-class>controller.feedback.StudentFeedBack</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StudentUpdateFeedBack</servlet-name>
+        <servlet-class>controller.feedback.StudentUpdateFeedBack</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LectureSeeFeedBack</servlet-name>
+        <servlet-class>controller.feedback.LectureSeeFeedBack</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AttendanceStudentController</servlet-name>
         <url-pattern>/student/timetable</url-pattern>
@@ -227,6 +239,18 @@
     <servlet-mapping>
         <servlet-name>CheckAttendanceStudent</servlet-name>
         <url-pattern>/student/checkabsent</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StudentFeedBack</servlet-name>
+        <url-pattern>/student/feedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StudentUpdateFeedBack</servlet-name>
+        <url-pattern>/student/updatefeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LectureSeeFeedBack</servlet-name>
+        <url-pattern>/lecture/seefeedback</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!--
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -107,13 +108,38 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             .logo-header img {
                 width: 150px;
             }
+            <c:choose>
+                <c:when test="${requestScope.count != 0}">
+                    <c:set var="displayValue" value="none"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="displayValue" value="block"/>
+                </c:otherwise>
+            </c:choose>
+
+            .container {
+                display: ${displayValue};
+            }
+           .feedback{
+               text-align: center;
+               <c:if test="${requestScope.count == 0}">display:none</c:if>
+           }
+           
+
         </style>
     </head>
     <body>
         <div class="welcome">
             <h2>Hello ${requestScope.user}</h2>
         </div>
-        
+        <div class="feedback">
+            <ul>
+                <c:forEach items="${requestScope.feedbacks}" var="s">
+                    <li><a href="feedback?id=${s.id}">Send feed back to <span  style="color:red">${s.group.teacher.name}</span> with course ${s.group.course.description} <span style="color:red">${s.group.course.code}</span> </a></li><br/><br/><br/>
+                    </c:forEach>
+            </ul>
+            <h3 style="color:red">You must feedback all</h3>
+        </div>
         <div class="container">
             <div class="header-fpt">
                 <div class="logo-header">
@@ -140,6 +166,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <li><a href="timetable">Weekly Timetable</a></li>
                     <li><a href="info">Student information</a></li>
                     <li><a href="mark" >Mark report</a></li>
+                     <li><a href="updatefeedback" >Update FeedBack</a></li>
 
                 </ul>
             </nav>
@@ -149,6 +176,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <p>FPT UNIVERSITY</p>
             <span>DAI HOC FPT HA NOI</span>
         </div>
+
         <script>
 
             function logout() {

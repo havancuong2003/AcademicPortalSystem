@@ -17,7 +17,8 @@
         <center>
             <h3><%=request.getAttribute("Message")%></h3>
         </center>
-            <h1>${requestScope.t}</h1>
+            <h1>${requestScope.fid}</h1>
+            <h1>${requestScope.content}</h1>
         
     </body>
 </html>

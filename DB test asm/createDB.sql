@@ -145,3 +145,14 @@ total float,
 [status] nvarchar(50),
 comment nvarchar(50)
 );
+
+
+create table feedback(
+id int identity(1,1) primary key,
+content nvarchar(MAX),
+studentid nvarchar(50),
+groupid int,
+foreign key (studentid) references student(id),
+foreign key (groupid) references [group](id),
+[status] bit,
+);

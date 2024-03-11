@@ -4,13 +4,17 @@
  */
 package util;
 
+import dal.FeedBackDBContext;
+import java.util.ArrayList;
+import model.FeedBack;
+
 public class Main {
 
-//    public static void main(String[] args) {
-//        LocalDate date = LocalDate.of(2024, 3, 10); // Ngày muốn kiểm tra
-//        int weekNumber = getWeekOfYear(date);
-//        System.out.println("Tuần thứ " + weekNumber + " trong năm.");
-//    }
+    public static void main(String[] args) {
+        FeedBackDBContext f= new FeedBackDBContext();
+        ArrayList<FeedBack> allFeedBackForStudent = f.getAllFeedBackForStudent("cuonghv");
+        System.out.println(allFeedBackForStudent.size());
+         }
 }
 
    
