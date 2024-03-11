@@ -273,7 +273,7 @@ public class FeedBackDBContext extends DBContext<FeedBack> {
     }
 
     public ArrayList<Integer> getFeedBackIDByUserName(String username) {
-            ArrayList<Integer> integers = new ArrayList<>();
+        ArrayList<Integer> integers = new ArrayList<>();
         try {
             String sql = "select f.id from feedback f\n"
                     + " join student s on f.studentid=s.id\n"
@@ -281,13 +281,36 @@ public class FeedBackDBContext extends DBContext<FeedBack> {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);
             ResultSet rs = stm.executeQuery();
-            while (rs.next()) {                
+            while (rs.next()) {
                 integers.add(rs.getInt("id"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(FeedBackDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return integers;
+    }
+
+    public ArrayList<FeedBack> getAllFeedBack() {
+        ArrayList<FeedBack> feedBacks = new ArrayList<>();
+        try {
+            String sql = "select f.id as fid,f.content,f.studentid,f.[status],f.groupid from feedback f\n"
+                    + "join Student s  on f.studentid=s.id\n"
+                    + "join [Group] g on g.id=f.groupid ";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                FeedBack f = new FeedBack();
+                f.setId(rs.getInt("fid"));
+                f.setContent(rs.getString("content"));
+                f.setStatus(rs.getBoolean("status"));
+                f.setStudent(getStudentByID(rs.getString("studentid")));
+                f.setGroup(getGroupByID(rs.getInt("groupid")));
+                feedBacks.add(f);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FeedBackDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return feedBacks;
     }
 
     @Override

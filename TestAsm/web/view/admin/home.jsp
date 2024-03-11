@@ -183,8 +183,8 @@
                             >
                         </li>
                         <li>
-                            <a class="nav-link" href="#"
-                               ></a
+                            <a class="nav-link" href="feedback"
+                               >Check feedback</a
                             >
                         </li>
                         <li><a class="nav-link" href="#Hello_world"></a></li>

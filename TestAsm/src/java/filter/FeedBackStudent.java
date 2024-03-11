@@ -115,20 +115,22 @@ public class FeedBackStudent implements Filter {
         Account a = (Account) session.getAttribute("account");
 
         String feebackid = httpRequest.getParameter("id");
-        FeedBackDBContext f = new FeedBackDBContext();
-        ArrayList<Integer> feedBackIDByUserName = f.getFeedBackIDByUserName(a.getUsername());
-        boolean flag = true;
-        for (Integer integer : feedBackIDByUserName) {
-            if(integer == Integer.parseInt(feebackid)){
-                flag =  false;
+        if (feebackid != null) {
+            FeedBackDBContext f = new FeedBackDBContext();
+            ArrayList<Integer> feedBackIDByUserName = f.getFeedBackIDByUserName(a.getUsername());
+            boolean flag = true;
+            for (Integer integer : feedBackIDByUserName) {
+                if (integer == Integer.parseInt(feebackid)) {
+                    flag = false;
+                }
+            }
+
+            if (flag == true) {
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/student/home");
+                return;
             }
         }
-        
-         if (flag == true) {
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/student/home");
-            return;
-        }
-        
+
         Throwable problem = null;
         try {
             chain.doFilter(request, response);

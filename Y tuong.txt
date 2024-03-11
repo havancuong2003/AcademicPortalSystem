@@ -5,7 +5,7 @@
 - move out class ( check lich cua 2 sinh vien vao ki toi ) neu khong bi trung slot thi se chuyen dc. trung thi thoi khong chuyen, chuyen tung mon mot.
 	chi chuyen lich khi chua vao ki.  ( co khoang ngay de chuyen lich )
 
-- websocket tao trang chat
+- websocket tao trang chat ( done)
 
 - thong bao
 
@@ -16,7 +16,7 @@
 	+ admin( create feedback -> truy cap vao trang feedback set = null )
 
 
-feedback con admin chua xong
+feedback con admin chua xong ( done )
 phan quyen student feedback ( done )
 
 Sua lai loi phan quyen theo giang vien ( done )

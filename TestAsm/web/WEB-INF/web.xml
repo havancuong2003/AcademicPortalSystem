@@ -152,6 +152,14 @@
         <servlet-name>LectureSeeFeedBack</servlet-name>
         <servlet-class>controller.feedback.LectureSeeFeedBack</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChatController</servlet-name>
+        <servlet-class>controller.chat.ChatController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminFeedBack</servlet-name>
+        <servlet-class>controller.feedback.AdminFeedBack</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AttendanceStudentController</servlet-name>
         <url-pattern>/student/timetable</url-pattern>
@@ -259,6 +267,14 @@
     <servlet-mapping>
         <servlet-name>LectureSeeFeedBack</servlet-name>
         <url-pattern>/lecture/seefeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChatController</servlet-name>
+        <url-pattern>/chat</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminFeedBack</servlet-name>
+        <url-pattern>/admin/feedback</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>

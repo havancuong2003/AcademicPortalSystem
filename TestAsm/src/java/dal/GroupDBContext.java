@@ -143,6 +143,60 @@ public class GroupDBContext extends DBContext<Group> {
         return t;
     }
 
+    public ArrayList<String> getListGroupForStudent(String username) {
+        ArrayList<String> groups = new ArrayList<>();
+        try {
+            String sql = "select sg.groupid from student_group sg\n"
+                    + "join student s on sg.Studentid =s.id\n"
+                    + "join [group] g on g.id = sg.groupid\n"
+                    + "where s.userName =? and g.termID =4";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                String a = rs.getString("groupid");
+                groups.add(a);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return groups;
+    }
+
+    public ArrayList<String> getListGroupForLecture(String username) {
+        ArrayList<String> groups = new ArrayList<>();
+        try {
+            String sql = "select g.id from [group] g \n"
+                    + "join Lecture l on g.lectureid = l.id\n"
+                    + "where l.userName =?  and g.termID=4";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                String a = rs.getString("id");
+                groups.add(a);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return groups;
+    }
+    
+    public int getRole(String username){
+        int role =0;
+        try {
+            String sql ="select rolid from account where userName =?";
+            PreparedStatement stm =connection.prepareStatement(sql);
+            stm.setString(1, username);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                role = rs.getInt("rolid");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GroupDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return role;
+    }
     @Override
     public ArrayList<Group> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

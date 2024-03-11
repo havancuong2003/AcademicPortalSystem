@@ -188,6 +188,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         <li><a href="lecture_info.jsp">Thông Tin Lecture</a></li>
                         <li><a href="mark" >Mark report</a></li>
                         <li><a href="seefeedback" >See Feedback</a></li>
+                         <li><a href="../chat" >Chat</a></li>
 
                     </ul>
                     <br/>

@@ -182,6 +182,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <li><a href="info">Student information</a></li>
                     <li><a href="mark" >Mark report</a></li>
                     <li><a href="updatefeedback" >Update FeedBack</a></li>
+                    <li>  <a href="../chat">Group chat</a></li>
 
                 </ul>
             </nav>
