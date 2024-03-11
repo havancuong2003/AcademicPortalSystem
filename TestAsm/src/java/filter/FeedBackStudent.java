@@ -4,7 +4,6 @@
  */
 package filter;
 
-import dal.AttendanceDBContext;
 import dal.FeedBackDBContext;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -21,13 +20,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import model.Account;
-import model.Session;
 
 /**
  *
  * @author -MSI-
  */
-public class CheckSessionIDForlectureAtt implements Filter {
+public class FeedBackStudent implements Filter {
 
     private static final boolean debug = true;
 
@@ -36,13 +34,13 @@ public class CheckSessionIDForlectureAtt implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public CheckSessionIDForlectureAtt() {
+    public FeedBackStudent() {
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("CheckSessionIDForlectureAtt:DoBeforeProcessing");
+            log("FeedBackStudent:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -70,7 +68,7 @@ public class CheckSessionIDForlectureAtt implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("CheckSessionIDForlectureAtt:DoAfterProcessing");
+            log("FeedBackStudent:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -106,7 +104,7 @@ public class CheckSessionIDForlectureAtt implements Filter {
             throws IOException, ServletException {
 
         if (debug) {
-            log("CheckSessionIDForlectureAtt:doFilter()");
+            log("FeedBackStudent:doFilter()");
         }
 
         doBeforeProcessing(request, response);
@@ -116,23 +114,21 @@ public class CheckSessionIDForlectureAtt implements Filter {
         HttpSession session = httpRequest.getSession();
         Account a = (Account) session.getAttribute("account");
 
-        
-        String sessionid = httpRequest.getParameter("sessionid");
-        AttendanceDBContext adbc = new AttendanceDBContext();
-        ArrayList<Session> sessionForFilter = adbc.getSessionForFilter(a.getUsername());
-      
-      
+        String feebackid = httpRequest.getParameter("id");
+        FeedBackDBContext f = new FeedBackDBContext();
+        ArrayList<Integer> feedBackIDByUserName = f.getFeedBackIDByUserName(a.getUsername());
         boolean flag = true;
-        for (Session sessions : sessionForFilter) {
-            if (sessions.getId() == Integer.parseInt(sessionid)) {
-                flag = false;
+        for (Integer integer : feedBackIDByUserName) {
+            if(integer == Integer.parseInt(feebackid)){
+                flag =  false;
             }
         }
-        if (flag == true) {
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/lecture/home");
+        
+         if (flag == true) {
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/student/home");
             return;
         }
-
+        
         Throwable problem = null;
         try {
             chain.doFilter(request, response);
@@ -188,7 +184,7 @@ public class CheckSessionIDForlectureAtt implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {
-                log("CheckSessionIDForlectureAtt:Initializing filter");
+                log("FeedBackStudent:Initializing filter");
             }
         }
     }
@@ -199,9 +195,9 @@ public class CheckSessionIDForlectureAtt implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("CheckSessionIDForlectureAtt()");
+            return ("FeedBackStudent()");
         }
-        StringBuffer sb = new StringBuffer("CheckSessionIDForlectureAtt(");
+        StringBuffer sb = new StringBuffer("FeedBackStudent(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

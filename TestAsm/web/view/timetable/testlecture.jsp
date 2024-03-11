@@ -106,7 +106,7 @@
                 font-size: 14px;
             }
             a:hover {
-                background-color: #45a049;
+                background-color: #ccc;
             }
             .home a {
                 color: black;
@@ -128,7 +128,10 @@
             .take-attendance {
                 color: red;
             }
-            .disabled-element input,.atd{
+            .disabled-element input{
+                cursor: not-allowed;
+            }
+            .disabled-element-atd {
                 cursor: not-allowed;
             }
             #formSearch {
@@ -149,7 +152,8 @@
 
     </head>
     <body>
-
+        <h1>${sessionScope.lidsearch}  </h1>  
+        <h6>${requestScope.taaaa} </h6>  
         <div class="home">
             <a href="home">Home</a>
         </div>
@@ -181,6 +185,7 @@
                                     <label for="week"></label>
                                     <select id="week" name="dropdownWeek"></select>
                                     <input type="hidden" id="yearChanged" name="yearChanged" value="${sessionScope.getValueChange}">
+                                <input type="hidden" name="lidsearch" value="${requestScope.lid}"/>
                             </form>
                         </div>
                     </th>
@@ -223,22 +228,23 @@
                 </tr>
             </c:forEach>
         </table> 
-
-
+        ${requestScope.userNameMain}
+        ${requestScope.userNamefind}
         <div id="timetable"></div>
         <script>
             var usname = "${requestScope.userNameMain}";
             var usfind = "${requestScope.userNamefind}";
-
+            console.log(usname + 'a');
+            console.log(usfind + 'b');
             if (usname !== usfind) {
-                var atdElements = document.querySelectorAll("a.atd");
+                var atdElements = document.querySelectorAll(".statusAtt");
 
                 // Duyệt qua tất cả các phần tử <a> có class là "atd"
                 atdElements.forEach(function (element) {
                     // Vô hiệu hóa thuộc tính href của các phần tử
                     element.removeAttribute("href");
                     // Thêm class "disabled-element" để chỉ định rằng chúng đã bị vô hiệu hóa
-                    element.classList.add("disabled-element");
+                    element.classList.add("disabled-element-atd");
                 });
             }
 

@@ -15,7 +15,7 @@ public class Main {
 
     public static void main(String[] args) {
         AttendanceDBContext a = new AttendanceDBContext();
-    String aa =  a.getTotalAbsent("cuonghv", 10 + "", "" + 3);
-        System.out.println(aa);
+        ArrayList<Session> listInfoLecture = a.listInfoLecture("yennth");
+        System.out.println(listInfoLecture.get(0).getGroup().getCourse().getCode());
     }
 }

@@ -17,8 +17,10 @@
 
 
 feedback con admin chua xong
-Sua lai loi phan quyen theo giang vien
-Sua lai loi sonnt tim yennth nhung chuyen sang tuan khac thi se bug
+phan quyen student feedback ( done )
+
+Sua lai loi phan quyen theo giang vien ( done )
+Sua lai loi sonnt tim yennth nhung chuyen sang tuan khac thi se bug ( done)
 ---------------------
 click vao mon hoc trong timetable của sinh viên sẽ ra thông tin giống như fap, sau đó ra trang lớp học của sinh viên đó để xem thông tin của sinh viên trong lớp đó. (09-03) done
 

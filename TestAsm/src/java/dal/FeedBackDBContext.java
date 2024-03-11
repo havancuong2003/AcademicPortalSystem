@@ -272,6 +272,24 @@ public class FeedBackDBContext extends DBContext<FeedBack> {
         return feedBacks;
     }
 
+    public ArrayList<Integer> getFeedBackIDByUserName(String username) {
+            ArrayList<Integer> integers = new ArrayList<>();
+        try {
+            String sql = "select f.id from feedback f\n"
+                    + " join student s on f.studentid=s.id\n"
+                    + " where s.userName = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {                
+                integers.add(rs.getInt("id"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FeedBackDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return integers;
+    }
+
     @Override
     public ArrayList<FeedBack> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

@@ -36,18 +36,30 @@ public class TimetableLectureController extends HttpServlet {
         request.setAttribute("role", a.getRole());
 
         String lid = request.getParameter("lid");
+        String lidSession = (String) session.getAttribute("lidsearch");
+        if (lidSession == null) {
+            request.setAttribute("a", "null");
+        }
 
-        request.setAttribute("userNameMain", username);
-        request.setAttribute("userNamefind", lid);
-        
+        request.setAttribute("taaaa", lidSession);
         if (lid == null) {
+            if (lidSession == null) {
+                request.setAttribute("userNameMain", username);
+                request.setAttribute("userNamefind", username);
+                ArrayList<Session> listInfoLecture = adb.listInfoLecture(username);
+                request.setAttribute("listLecture", listInfoLecture);
+            } else {
+                request.setAttribute("userNameMain", username);
+                request.setAttribute("userNamefind", lidSession);
+                ArrayList<Session> listInfoLecture = adb.listInfoLecture(lidSession);
+                request.setAttribute("listLecture", listInfoLecture);
+            }
 
-            ArrayList<Session> listInfoLecture = adb.listInfoLecture(username);
-
-            request.setAttribute("listLecture", listInfoLecture);
         } else {
+            request.setAttribute("userNameMain", username);
+            request.setAttribute("userNamefind", lid);
             ArrayList<Session> listInfoLecture = adb.listInfoLecture(lid);
-
+            request.setAttribute("lid", lid);
             request.setAttribute("listLecture", listInfoLecture);
         }
 
@@ -114,14 +126,16 @@ public class TimetableLectureController extends HttpServlet {
         LocalDate endDates = LocalDate.parse(endDate, DateTimeFormatter.ISO_LOCAL_DATE);
         session.setAttribute("startDate", startDates);
         session.setAttribute("endDate", endDates);
+
+        String lid = request.getParameter("lidsearch");
+
+        if (!lid.equals("")) {
+            session.setAttribute("lidsearch", lid);
+        }
+
         response.sendRedirect("timetable");
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
