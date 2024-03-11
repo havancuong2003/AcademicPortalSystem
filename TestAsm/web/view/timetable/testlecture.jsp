@@ -105,10 +105,15 @@
             .lesson-info {
                 font-size: 14px;
             }
+            a:hover {
+                background-color: #45a049;
+            }
             .home a {
-                color: rgb(13, 90, 235);
+                color: black;
                 font-size: 25px;
                 padding: 5px 10px;
+                text-decoration: none;
+                background-color: #ccc;
             }
             .home {
                 padding: 10px;
@@ -123,6 +128,18 @@
             .take-attendance {
                 color: red;
             }
+            .disabled-element input,.atd{
+                cursor: not-allowed;
+            }
+            #formSearch {
+                width: 300px;
+            }
+            .containForm {
+                display: flex;
+                justify-content: center; /* Căn giữa theo chiều ngang */
+                align-items: center; /* Căn giữa theo chiều dọc */
+
+            }
         </style>
 
 
@@ -134,14 +151,19 @@
     <body>
 
         <div class="home">
-            <a href="/testasm/lecture/home">Home</a>
+            <a href="home">Home</a>
         </div>
         <div>
             <h2 id="header-timetable">Lecture Time Table</h2>
         </div>
+        <div class="containForm">
+            <form id="formSearch" action="timetable" method="get">
 
-
-
+                <input type="text" name="lid" placeholder="Enter id lecture">
+                <input type="submit" value="Search"/>
+            </form>
+        </div>
+        <br/>
 
         <table border="1px">
             <thead>
@@ -188,7 +210,7 @@
                                     ${les.group.course.code}
                                     <br/>
 
-                                    <a href="../lecture/attendance?sessionid=${les.id}">
+                                    <a class="atd" href="../lecture/attendance?sessionid=${les.id}">
                                         <span class="statusAtt" value="${les.status}">
                                             ${les.status}
                                         </span>
@@ -204,6 +226,38 @@
 
 
         <div id="timetable"></div>
+        <script>
+            var usname = "${requestScope.userNameMain}";
+            var usfind = "${requestScope.userNamefind}";
+
+            if (usname !== usfind) {
+                var atdElements = document.querySelectorAll("a.atd");
+
+                // Duyệt qua tất cả các phần tử <a> có class là "atd"
+                atdElements.forEach(function (element) {
+                    // Vô hiệu hóa thuộc tính href của các phần tử
+                    element.removeAttribute("href");
+                    // Thêm class "disabled-element" để chỉ định rằng chúng đã bị vô hiệu hóa
+                    element.classList.add("disabled-element");
+                });
+            }
+
+        </script>
+        <script>
+            var formSearch = document.querySelector("#formSearch");
+            var roleId = "${requestScope.role}";
+
+
+            // Kiểm tra vai trò của người dùng
+            if (roleId !== '4') {
+                // Nếu là giảng viên cấp thấp, khóa form search
+                var formElements = formSearch.elements;
+                for (var i = 0; i < formElements.length; i++) {
+                    formElements[i].disabled = true;
+                    formSearch.classList.add("disabled-element");
+                }
+            }
+        </script>
         <script>
             var yearElements = document.querySelector("#year");
 

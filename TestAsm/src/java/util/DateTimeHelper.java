@@ -6,9 +6,7 @@ package util;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.WeekFields;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class DateTimeHelper {
 
@@ -28,10 +26,18 @@ public class DateTimeHelper {
         return lastDayOfWeek;
     }
 
-    public int getWeekOfYear(LocalDate date) {
+    public  int getWeekOfYear(LocalDate date) {
+        DayOfWeek firstDayOfYear = date.withDayOfYear(1).getDayOfWeek(); // Ngày đầu tiên của năm
+        int daysToAdd = DayOfWeek.MONDAY.getValue() - firstDayOfYear.getValue(); // Số ngày cần thêm để đưa về Thứ Hai
+        
+        if (daysToAdd < 0) {
+            daysToAdd += 7; // Đảm bảo số ngày cần thêm là dương
+        }
 
-        WeekFields weekFields = WeekFields.of(Locale.getDefault());
-        return date.get(weekFields.weekOfWeekBasedYear());
+        int daysSinceFirstMonday = date.getDayOfYear() + daysToAdd - 1; // Số ngày tính từ Thứ Hai đầu tiên của năm
+        int weekNumber = daysSinceFirstMonday / 7 + 1; // Tính số tuần bằng cách chia số ngày cho 7
+        
+        return weekNumber;
     }
 
     public ArrayList<java.sql.Date> getWeekDaysAsSqlDates(LocalDate date) {

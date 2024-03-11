@@ -10,23 +10,42 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-           <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        td, th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-    </style>
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            a:hover {
+                background-color: #45a049;
+            }
+            .back a {
+                color: black;
+                font-size: 25px;
+                padding: 5px 10px;
+                text-decoration: none;
+                background-color: #ccc;
+            }
+            .back {
+                padding: 10px;
+                border-radius: 5px;
+                margin: 25px 0;
+            }
+        </style>
     </head>
     <body>
-          <jsp:include page="../homebutton.jsp"></jsp:include>
+        <jsp:include page="../homebutton.jsp"></jsp:include>
+        <div class="back">
+            <a href="timetable">Back</a>
+        </div>
         <div>
             <table>
                 <tr align="left">

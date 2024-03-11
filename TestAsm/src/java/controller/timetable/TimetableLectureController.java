@@ -32,9 +32,24 @@ public class TimetableLectureController extends HttpServlet {
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("account");
         String username = a.getUsername();
-        ArrayList<Session> listInfoLecture = adb.listInfoLecture(username);
 
-        request.setAttribute("listLecture", listInfoLecture);
+        request.setAttribute("role", a.getRole());
+
+        String lid = request.getParameter("lid");
+
+        request.setAttribute("userNameMain", username);
+        request.setAttribute("userNamefind", lid);
+        
+        if (lid == null) {
+
+            ArrayList<Session> listInfoLecture = adb.listInfoLecture(username);
+
+            request.setAttribute("listLecture", listInfoLecture);
+        } else {
+            ArrayList<Session> listInfoLecture = adb.listInfoLecture(lid);
+
+            request.setAttribute("listLecture", listInfoLecture);
+        }
 
         SlotDBContext sdbc = new SlotDBContext();
 
@@ -56,7 +71,6 @@ public class TimetableLectureController extends HttpServlet {
             session.setAttribute("dropDownYear", "2024");
         }
 
-     
         request.setAttribute("slots", sdbc.list());
         request.getRequestDispatcher("../view/timetable/testlecture.jsp").forward(request, response);
     }

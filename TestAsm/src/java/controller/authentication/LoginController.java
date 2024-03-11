@@ -63,20 +63,24 @@ public class LoginController extends HttpServlet {
             // Session tồn tại và đã đăng nhập, chuyển hướng đến trang home của account
             Account account = (Account) session.getAttribute("account");
             String homePage = "";
-            if (account.getRole().equals("3")) {
-                homePage = "student/home";
-            } else if (account.getRole().equals("2")) {
-                homePage = "lecture/home";
-            }
-            else if (account.getRole().equals("1")) {
-                homePage = "admin/home";
+            switch (account.getRole()) {
+                case "3" ->
+                    homePage = "student/home";
+                case "2" ->
+                    homePage = "lecture/home";
+                case "4" ->
+                    homePage = "lecture/home";
+                case "1" ->
+                    homePage = "admin/home";
+                default -> {
+                }
             }
             response.sendRedirect(homePage);
         } else {
             // Session không tồn tại hoặc chưa đăng nhập, hiển thị trang đăng nhập
             request.getRequestDispatcher("view/authentication/login.jsp").forward(request, response);
         }
-       // request.getRequestDispatcher("view/authentication/login.jsp").forward(request, response);
+        // request.getRequestDispatcher("view/authentication/login.jsp").forward(request, response);
     }
 
     /**
@@ -100,13 +104,21 @@ public class LoginController extends HttpServlet {
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("account", a);
-            if (a.getRole().equals("3")) {
-                response.sendRedirect("student/home");
-            } else if (a.getRole().equals("2")) {
-                response.sendRedirect("lecture/home");
-            }
-            else if (a.getRole().equals("1")) {
-                response.sendRedirect("admin/home");
+            switch (a.getRole()) {
+                case "3":
+                    response.sendRedirect("student/home");
+                    break;
+                case "2":
+                    response.sendRedirect("lecture/home");
+                    break;
+                case "4":
+                    response.sendRedirect("lecture/home");
+                    break;
+                case "1":
+                    response.sendRedirect("admin/home");
+                    break;
+                default:
+                    break;
             }
         }
     }

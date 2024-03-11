@@ -1,13 +1,20 @@
-  -- LECTURE: phan quyen theo RBAC, ABAC ( neu khong thi giang vien nay co the diem danh cho giang vien khac )
 
- -- Admin: 
-move out class (10/03)
+-------------------
+ Admin: 
+
+- move out class ( check lich cua 2 sinh vien vao ki toi ) neu khong bi trung slot thi se chuyen dc. trung thi thoi khong chuyen, chuyen tung mon mot.
+	chi chuyen lich khi chua vao ki.  ( co khoang ngay de chuyen lich )
+
+- websocket tao trang chat
+
+- thong bao
+
+- feedback (insert feedback vao db, man hinh hs. hien thong bao len home, neu khong feedback thi ko cho vao )
+	+ sua feedback (student )
+	+ lecture (xem feedback va khong hien sinh vien )
+	+ admin ( xem feedback va sinh vien sent )
 
 
-
-
-
-websocket tao trang chat
 
 ------
 click vao mon hoc trong timetable của sinh viên sẽ ra thông tin giống như fap, sau đó ra trang lớp học của sinh viên đó để xem thông tin của sinh viên trong lớp đó. (09-03) done
@@ -16,5 +23,14 @@ fix mark :done
 
 Doi lich cho giang vien ( done )
 
-da phan quyen giang vien diem danh xong.
+da phan quyen giang vien diem danh xong. ( done)
+
+-------------
+
+sonnt cầm quyền xem lịch giảng viên, nhưng không có quyền điểm danh hộ giảng viên đó được
+ví dụ sonnt xem lịch của yennth nhưng không được phép điểm danh (done)
+
+yennth không có quyền search nên nút search bị khóa (done)
+
+  -- LECTURE: phan quyen theo RBAC, ABAC ( neu khong thi giang vien nay co the diem danh cho giang vien khac ) ( done)
 

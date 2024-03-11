@@ -111,7 +111,7 @@ public class HomeFilter implements Filter {
 
         HttpSession session = httpRequest.getSession();
         Account a = (Account) session.getAttribute("account");
-        
+
         if (a == null) {
             httpResponse.sendRedirect("../login");
         } else {
@@ -119,6 +119,8 @@ public class HomeFilter implements Filter {
             String urlPattern = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
 
             if (role.equals("2") && urlPattern.startsWith("/lecture")) {
+                chain.doFilter(request, response);
+            } else if (role.equals("4") && urlPattern.startsWith("/lecture")) {
                 chain.doFilter(request, response);
             } else if ((role.equals("3") && urlPattern.startsWith("/student"))) {
                 chain.doFilter(request, response);

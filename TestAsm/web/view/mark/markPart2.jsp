@@ -63,26 +63,6 @@
                 margin-bottom: 20px;
             }
 
-            /* Anchor tag styles */
-            a {
-                display: block;
-                width: 100%;
-                padding: 15px;
-                text-decoration: none;
-                color: #fff;
-                background-color: #777;
-                border-radius: 5px;
-                text-align: center;
-                transition: background-color 0.3s, transform 0.3s;
-                font-weight: bold;
-            }
-
-            a:hover {
-                background-color: #777;
-                transform: translateY(-3px);
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            }
-
             /* Table styles */
             table {
                 width: 100%;
@@ -132,18 +112,7 @@
                 vertical-align: top;
                 width: 40%;
             }
-            .home a {
-                color: #fff;
-                font-size: 25px;
-                padding: 5px 10px;
-                margin-bottom: 50px;
-            }
-            .home {
-                padding: 10px;
-                border-radius: 5px;
-
-
-            }
+         
             #active${requestScope.activeTerm} a,#active${requestScope.activeCourse} a{
                 background-color:green;
             }
@@ -153,7 +122,7 @@
             }
             /* Anchor tag styles */
             /* Anchor tag styles */
-            a {
+          .terms  a,.courses a {
                 display: block;
                 width: 100%;
                 padding: 15px;
@@ -186,6 +155,18 @@
             #statusMark{
                 color:#45a049;
                 <c:if test="${requestScope.status eq 'NOT PASS'}">color:red;</c:if>
+            }
+              .home a {
+                color: black;
+                font-size: 25px;
+                padding: 5px 10px;
+                text-decoration: none;
+                background-color: #ccc;
+            }
+            .home {
+                padding: 10px;
+                border-radius: 5px;
+                margin: 25px 0;
             }
         </style>
     </head>

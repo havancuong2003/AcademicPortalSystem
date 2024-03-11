@@ -209,7 +209,7 @@ public class TotalMarkHelper {
 
     public String getStatusMark(String username, int gid) {
         MarkDBContext mdbc = new MarkDBContext();
-        ArrayList<Mark> markForTotal = mdbc.getMarkForTotal("cuonghv", gid);
+        ArrayList<Mark> markForTotal = mdbc.getMarkForTotal(username, gid);
         String getTotal = "";
         String currentSemester = getCurrentSemester();
         if (allNull(markForTotal, "4")) {

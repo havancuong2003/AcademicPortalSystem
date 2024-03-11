@@ -23,7 +23,7 @@ import util.DateTimeHelper;
  *
  * @author -MSI-
  */
-@WebServlet(name = "AttendanceStudentController", urlPatterns = {"/student/attendance"})
+//@WebServlet(name = "AttendanceStudentController", urlPatterns = {"/student/attendance"})
 public class TimetableStudentController extends HttpServlet {
 
     /**

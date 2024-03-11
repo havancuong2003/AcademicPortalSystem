@@ -105,10 +105,15 @@
             .lesson-info {
                 font-size: 14px;
             }
+              a:hover {
+                background-color: #45a049;
+            }
             .home a {
-                color: rgb(13, 90, 235);
+                color: black;
                 font-size: 25px;
                 padding: 5px 10px;
+                text-decoration: none;
+                background-color: #ccc;
             }
             .home {
                 padding: 10px;
@@ -123,6 +128,10 @@
             .take-attendance {
                 color: red;
             }
+            .courseLearn{
+                color:blue;
+                
+            }
         </style>
 
 
@@ -134,7 +143,7 @@
     <body>
 
         <div class="home">
-            <a href="/testasm/student/home">Home</a>
+            <a href="home">Home</a>
         </div>
         <div>
             <h2 id="header-timetable">Student Time Table</h2>
@@ -185,7 +194,7 @@
                             <c:forEach items="${requestScope.list}" var="les">
                                 <c:if test="${les.session.group.timeslot.id eq slot.id and les.session.date eq d}">
                                     ${les.session.teacher.name} <br/> ${les.session.group.room.description} <br/>
-                                    <span style="color:blue"> <a href="activitydetail?ssid=${les.session.id}">${les.session.group.course.code}</a></span> <br/>
+                                    <span style="color:blue"> <a class="courseLearn" href="activitydetail?ssid=${les.session.id}">${les.session.group.course.code}</a></span> <br/>
                                     <span class="statusAtt" value="${les.status}">  ${les.status}</span><br/>
                                     
                                 </c:if>
