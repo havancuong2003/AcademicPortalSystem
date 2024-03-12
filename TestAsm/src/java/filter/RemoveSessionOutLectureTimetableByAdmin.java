@@ -21,28 +21,28 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author -MSI-
  */
-public class RemoveSesionOutTimetable implements Filter {
+public class RemoveSessionOutLectureTimetableByAdmin implements Filter {
 
-    private final String SESSION_ATTRIBUTE_TO_CHECK1 = "dropDownYear"; 
-    private final String SESSION_ATTRIBUTE_TO_CHECK2 = "dropDownWeek"; 
-    private final String SESSION_ATTRIBUTE_TO_CHECK3 = "startDate"; 
-    private final String SESSION_ATTRIBUTE_TO_CHECK4 = "endDate"; 
-    private final String SESSION_ATTRIBUTE_TO_CHECK5="lidsearch";
-    private final String URL_CONTAINS_CHECK = "timetable";
     private static final boolean debug = true;
 
+    private final String SESSION_ATTRIBUTE_TO_CHECK1 = "dropDownYear";
+    private final String SESSION_ATTRIBUTE_TO_CHECK2 = "dropDownWeek";
+    private final String SESSION_ATTRIBUTE_TO_CHECK3 = "startDate";
+    private final String SESSION_ATTRIBUTE_TO_CHECK4 = "endDate";
+    private final String SESSION_ATTRIBUTE_TO_CHECK5 = "lidsearch";
+    private final String URL_CONTAINS_CHECK = "timetablelecture";
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public RemoveSesionOutTimetable() {
+    public RemoveSessionOutLectureTimetableByAdmin() {
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("RemoveSesionOutTimetable:DoBeforeProcessing");
+            log("RemoveSessionOutLectureTimetableByAdmin:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -70,7 +70,7 @@ public class RemoveSesionOutTimetable implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("RemoveSesionOutTimetable:DoAfterProcessing");
+            log("RemoveSessionOutLectureTimetableByAdmin:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -101,10 +101,12 @@ public class RemoveSesionOutTimetable implements Filter {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    public void doFilter(ServletRequest request, ServletResponse response,
+            FilterChain chain)
             throws IOException, ServletException {
+
         if (debug) {
-            log("RemoveSesionOutTimetable:doFilter()");
+            log("RemoveSessionOutLectureTimetableByAdmin:doFilter()");
         }
 
         doBeforeProcessing(request, response);
@@ -127,9 +129,10 @@ public class RemoveSesionOutTimetable implements Filter {
             if (session.getAttribute(SESSION_ATTRIBUTE_TO_CHECK4) != null) {
                 session.removeAttribute(SESSION_ATTRIBUTE_TO_CHECK4);
             }
-              if (session.getAttribute(SESSION_ATTRIBUTE_TO_CHECK5) != null) {
+            if (session.getAttribute(SESSION_ATTRIBUTE_TO_CHECK5) != null) {
                 session.removeAttribute(SESSION_ATTRIBUTE_TO_CHECK5);
             }
+
         }
 
         // Gọi filter tiếp theo trong chuỗi
@@ -167,7 +170,7 @@ public class RemoveSesionOutTimetable implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {
-                log("RemoveSesionOutTimetable:Initializing filter");
+                log("RemoveSessionOutLectureTimetableByAdmin:Initializing filter");
             }
         }
     }
@@ -178,9 +181,9 @@ public class RemoveSesionOutTimetable implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("RemoveSesionOutTimetable()");
+            return ("RemoveSessionOutLectureTimetableByAdmin()");
         }
-        StringBuffer sb = new StringBuffer("RemoveSesionOutTimetable(");
+        StringBuffer sb = new StringBuffer("RemoveSessionOutLectureTimetableByAdmin(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

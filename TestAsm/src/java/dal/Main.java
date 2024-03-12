@@ -5,6 +5,7 @@
 package dal;
 
 import java.util.ArrayList;
+import model.Group;
 import model.Session;
 
 /**
@@ -14,8 +15,8 @@ import model.Session;
 public class Main {
 
     public static void main(String[] args) {
-        AttendanceDBContext a = new AttendanceDBContext();
-        ArrayList<Session> listInfoLecture = a.listInfoLecture("yennth");
-        System.out.println(listInfoLecture.get(0).getGroup().getCourse().getCode());
+        GroupDBContext g = new GroupDBContext();
+      AccountDBContext a = new AccountDBContext();
+        System.out.println(a.getStudentIDByUserName("cuonghv"));
     }
 }

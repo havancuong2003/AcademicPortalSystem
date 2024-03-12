@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -180,9 +181,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <ul>
                     <li><a href="timetable">Weekly Timetable</a></li>
                     <li><a href="info">Student information</a></li>
-                    <li><a href="mark" >Mark report</a></li>
+                    <li><a href="mark" >Mark report</a></li><br/><br/><br/>
                     <li><a href="updatefeedback" >Update FeedBack</a></li>
                     <li>  <a href="../chat">Group chat</a></li>
+                     <li><a href="checkabsent" >Attendance report</a></li>
+                     <li><a href="change" >Yêu cầu đổi chéo lớp sinh viên</a></li>
 
                 </ul>
             </nav>

@@ -99,6 +99,40 @@ BEGIN
 END;
 
 
+--- trigger update lai student neu nhu sua lop
+CREATE TRIGGER trg_UpdateAttendanceForGroupChange
+ON [student_group]
+AFTER UPDATE
+AS
+BEGIN
+    DECLARE @OldGroupID INT;
+    DECLARE @NewGroupID INT;
+    DECLARE @StudentID NVARCHAR(50);
+
+    -- Lấy ra group_id cũ và mới từ bảng inserted và deleted
+    SELECT @OldGroupID = d.groupid, @NewGroupID = i.groupid, @StudentID = i.Studentid
+    FROM inserted i
+    INNER JOIN deleted d ON i.id = d.id;
+
+    -- Xóa các bản ghi liên quan đến student_id và group_id cũ trong bảng Attendance
+    DELETE FROM Attendance
+    WHERE student_id = @StudentID
+    AND session_id IN (
+        SELECT s.id
+        FROM [Session] s
+        WHERE s.group_id = @OldGroupID
+    );
+
+    -- Insert các bản ghi mới với group_id mới vào bảng Attendance
+    INSERT INTO Attendance ([status], [description], student_id, session_id)
+    SELECT NULL, NULL, @StudentID, s.id
+    FROM [Session] s
+    WHERE s.group_id = @NewGroupID;
+END;
+
+
+
+
 
 ----- trigger nay de set trang thai diem danh cua giang vien
 

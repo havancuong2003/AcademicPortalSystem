@@ -78,19 +78,39 @@ public class AccountDBContext extends DBContext<Account> {
     }
 
     public String getEmailByUserName(String username) {
-        String s ="";
+        String s = "";
         try {
             String sql = "SELECT COALESCE(s.email, l.email) AS email\n"
                     + "FROM Account a\n"
                     + "LEFT JOIN Student s ON a.userName = s.userName\n"
                     + "LEFT JOIN Lecture l ON a.userName = l.userName\n"
                     + "WHERE a.userName = ?";
-            PreparedStatement stm =connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);
-           ResultSet rs = stm.executeQuery();
-           if(rs.next()){
-               s = rs.getString("email");
-           }
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                s = rs.getString("email");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return s;
+    }
+
+    public String getStudentIDByUserName(String username) {
+        String s = "";
+        try {
+            String sql = "SELECT COALESCE(s.id, l.id) AS id\n"
+                    + "                    FROM Account a\n"
+                    + "                    LEFT JOIN Student s ON a.userName = s.userName\n"
+                    + "                    LEFT JOIN Lecture l ON a.userName = l.userName\n"
+                    + "                    WHERE a.userName = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                s = rs.getString("id");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -20,6 +20,14 @@
         <filter-name>FeedBackStudent</filter-name>
         <filter-class>filter.FeedBackStudent</filter-class>
     </filter>
+    <filter>
+        <filter-name>RemoveSessionOutLectureTimetableByAdmin</filter-name>
+        <filter-class>filter.RemoveSessionOutLectureTimetableByAdmin</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RemoveSessionOutLectureTimetableByAdmin</filter-name>
+        <url-pattern>/timetablelecture</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>FeedBackStudent</filter-name>
         <url-pattern>/student/feedback</url-pattern>
@@ -160,6 +168,10 @@
         <servlet-name>AdminFeedBack</servlet-name>
         <servlet-class>controller.feedback.AdminFeedBack</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChangeClass</servlet-name>
+        <servlet-class>controller.studentChangeClass.ChangeClass</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AttendanceStudentController</servlet-name>
         <url-pattern>/student/timetable</url-pattern>
@@ -275,6 +287,10 @@
     <servlet-mapping>
         <servlet-name>AdminFeedBack</servlet-name>
         <url-pattern>/admin/feedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeClass</servlet-name>
+        <url-pattern>/student/change</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>

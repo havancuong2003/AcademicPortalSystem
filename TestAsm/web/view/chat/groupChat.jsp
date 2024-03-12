@@ -88,10 +88,10 @@
             <div class="grid-container">
             <c:forEach items="${requestScope.studentGroups}" var="g">
                 <div class="grid-item">
-                    <h2>Group ${g}</h2>
-                    <input id="textMessageGroup${g}" type="text" />
-                    <input onclick="sendMessageToGroup${g}()" value="Send Message" type="button" /> <br/><br/>
-                    <textarea id="textAreaMessageGroup${g}" rows="10" cols="50"></textarea>
+                    <h2>Group ${g.name} - ${g.course.code}</h2>
+                    <input id="textMessageGroup${g.id}" type="text" />
+                    <input onclick="sendMessageToGroup${g.id}()" value="Send Message" type="button" /> <br/><br/>
+                    <textarea id="textAreaMessageGroup${g.id}" rows="10" cols="50"></textarea>
                 </div>
             </c:forEach>
         </div>
@@ -102,29 +102,29 @@
 
 
             <c:forEach items="${requestScope.studentGroups}" var="g">
-            var websocketGroup${g} = new WebSocket("ws://localhost:9999/websocket/chatRoomServer/group${g}");
+            var websocketGroup${g.id} = new WebSocket("ws://localhost:9999/websocket/chatRoomServer/group${g.id}");
             </c:forEach>
 
             <c:forEach items="${requestScope.studentGroups}" var="g">
-            function processMessageGroup${g}(message) {
+            function processMessageGroup${g.id}(message) {
                 console.log(message);
-                document.getElementById("textAreaMessageGroup${g}").value += message.data + " \n";
+                document.getElementById("textAreaMessageGroup${g.id}").value += message.data + " \n";
             }
             </c:forEach>
 
             <c:forEach items="${requestScope.studentGroups}" var="g">
-            websocketGroup${g}.onmessage = processMessageGroup${g};
+            websocketGroup${g.id}.onmessage = processMessageGroup${g.id};
 
             </c:forEach>
 
 
 
             <c:forEach items="${requestScope.studentGroups}" var="g">
-            function sendMessageToGroup${g}() {
-                var message = document.getElementById("textMessageGroup${g}").value;
-                if (websocketGroup${g}.readyState === WebSocket.OPEN) {
-                    websocketGroup${g}.send(message);
-                    document.getElementById("textMessageGroup${g}").value = "";
+            function sendMessageToGroup${g.id}() {
+                var message = document.getElementById("textMessageGroup${g.id}").value;
+                if (websocketGroup${g.id}.readyState === WebSocket.OPEN) {
+                    websocketGroup${g.id}.send(message);
+                    document.getElementById("textMessageGroup${g.id}").value = "";
                 }
             }
             </c:forEach>
