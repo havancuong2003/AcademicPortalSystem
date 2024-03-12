@@ -140,7 +140,8 @@
 
     </head>
     <body>
-
+        <h1>${requestScope.a} b</h1><br/>
+        <h1>${requestScope.lid} aa</h1>
         <div class="home">
             <a href="/testasm/admin/home">Home</a>
         </div>
@@ -172,6 +173,7 @@
                                     <label for="week"></label>
                                     <select id="week" name="dropdownWeek"></select>
                                     <input type="hidden" id="yearChanged" name="yearChanged" value="${sessionScope.getValueChange}">
+                                     <input type="hidden" name="lidsearch" value="${requestScope.lid}"/>
                             </form>
                         </div>
                     </th>

@@ -67,13 +67,29 @@ public class AdminControllerLecture extends HttpServlet {
         AttendanceDBContext adb = new AttendanceDBContext();
         HttpSession session = request.getSession();
 
+        String lid = (String) session.getAttribute("lidsearch");
         String lectureInfo = request.getParameter("info");
-        if (lectureInfo != null) {
-            ArrayList<Session> listInfoLecture = adb.getLecture(lectureInfo);
-            if(listInfoLecture.isEmpty()){
-                request.setAttribute("ms", "can not find lecture with id = "+lectureInfo);
+
+        request.setAttribute("a", lid);
+
+        request.setAttribute("lid", lectureInfo);
+
+        if (lectureInfo == null) {
+            if (lid != null) {
+                ArrayList<Session> listInfoLecture = adb.getLecture(lid);
+                if (listInfoLecture.isEmpty()) {
+                    request.setAttribute("ms", "can not find lecture with id = " + lid);
+                }
+
+                request.setAttribute("listLecture", listInfoLecture);
             }
-            
+        } else if (lectureInfo != null) {
+
+            ArrayList<Session> listInfoLecture = adb.getLecture(lectureInfo);
+            if (listInfoLecture.isEmpty()) {
+                request.setAttribute("ms", "can not find lecture with id = " + lectureInfo);
+            }
+
             request.setAttribute("listLecture", listInfoLecture);
         }
         SlotDBContext sdbc = new SlotDBContext();
@@ -147,6 +163,14 @@ public class AdminControllerLecture extends HttpServlet {
         LocalDate endDates = LocalDate.parse(endDate, DateTimeFormatter.ISO_LOCAL_DATE);
         session.setAttribute("startDate", startDates);
         session.setAttribute("endDate", endDates);
+
+        String lid = request.getParameter("lidsearch");
+
+        if (!lid.equals("")) {
+
+            session.setAttribute("lidsearch", lid);
+        }
+
         response.sendRedirect("timetablelecture");
     }
 

@@ -23,11 +23,13 @@ import jakarta.servlet.http.HttpSession;
  */
 public class RemoveSesionOutTimetable implements Filter {
 
-    private final String SESSION_ATTRIBUTE_TO_CHECK1 = "dropDownYear"; // Tên của thuộc tính session cần kiểm tra
-    private final String SESSION_ATTRIBUTE_TO_CHECK2 = "dropDownWeek"; // Tên của thuộc tính session cần kiểm tra
-    private final String SESSION_ATTRIBUTE_TO_CHECK3 = "startDate"; // Tên của thuộc tính session cần kiểm tra
-    private final String SESSION_ATTRIBUTE_TO_CHECK4 = "endDate"; // Tên của thuộc tính session cần kiểm tra
-    private final String URL_CONTAINS_CHECK = "timetable"; // Chuỗi để kiểm tra xem URL có chứa "timetable" không
+    private final String SESSION_ATTRIBUTE_TO_CHECK1 = "dropDownYear"; 
+    private final String SESSION_ATTRIBUTE_TO_CHECK2 = "dropDownWeek"; 
+    private final String SESSION_ATTRIBUTE_TO_CHECK3 = "startDate"; 
+    private final String SESSION_ATTRIBUTE_TO_CHECK4 = "endDate"; 
+    private final String SESSION_ATTRIBUTE_TO_CHECK5="lidsearch";
+    private final String URL_CONTAINS_CHECK = "timetable";
+    private final String URL_CONTAINS_CHECK2 = "timetablelecture";
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
@@ -113,7 +115,7 @@ public class RemoveSesionOutTimetable implements Filter {
         HttpSession session = httpRequest.getSession(); // Lấy session hiện tại nếu tồn tại
 
         // Kiểm tra xem URL có chứa "timetable" không
-        if (!url.contains(URL_CONTAINS_CHECK)) {
+        if (!url.contains(URL_CONTAINS_CHECK)||!url.contains(URL_CONTAINS_CHECK2)) {
             if (session.getAttribute(SESSION_ATTRIBUTE_TO_CHECK1) != null) {
                 session.removeAttribute(SESSION_ATTRIBUTE_TO_CHECK1); // Xóa thuộc tính của session
             }
@@ -125,6 +127,9 @@ public class RemoveSesionOutTimetable implements Filter {
             }
             if (session.getAttribute(SESSION_ATTRIBUTE_TO_CHECK4) != null) {
                 session.removeAttribute(SESSION_ATTRIBUTE_TO_CHECK4);
+            }
+              if (session.getAttribute(SESSION_ATTRIBUTE_TO_CHECK5) != null) {
+                session.removeAttribute(SESSION_ATTRIBUTE_TO_CHECK5);
             }
         }
 
