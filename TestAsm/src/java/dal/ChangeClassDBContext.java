@@ -190,12 +190,10 @@ public class ChangeClassDBContext extends DBContext<ChangeClass> {
             Logger.getLogger(ChangeClassDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void insertRequired(String fromSt , String fromgr , String tost , String toGr){
+
+    public void insertRequired(String fromSt, String fromgr, String tost, String toGr) {
         try {
-            
-            
-            
-            
+
             String sql = "insert into changeClass(fromStudent,fromGroup,toStudent,toGroup) values (?,?,?,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, fromSt);
@@ -207,10 +205,29 @@ public class ChangeClassDBContext extends DBContext<ChangeClass> {
             Logger.getLogger(ChangeClassDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 //    public boolean checkInfo(String fromSt , String fromgr , String tost , String toGr){
 //        
 //    }
+    public int findID(String stid, String course) {
+        int a = 0;
+        try {
+            String sql = "	select cc.id from changeClass cc join [group] g on cc.fromGroup = g.id\n"
+                    + "		join course c on c.id=g.courseId\n"
+                    + "		where fromStudent = ?  and c.code =?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, stid);
+            stm.setString(2, course);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                a  = rs.getInt("id");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ChangeClassDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return a;
+    }
 
     @Override
     public ArrayList<ChangeClass> list() {

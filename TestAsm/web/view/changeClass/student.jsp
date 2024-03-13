@@ -12,8 +12,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Change Request</title>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script type="text/javascript">
             $(document).ready(function () {
 
                 // Mảng để lưu trữ các yêu cầu đã tạo
@@ -23,9 +24,9 @@
                 function showRequestForm() {
                     $('#requestForm').show();
                 }
-
+               
                 // Hàm để thêm yêu cầu vào bảng
-                function addRequestToTable(course, fromStudent, toStudent) {
+                function addRequestToTable( course, fromStudent, toStudent) {
                     // Kiểm tra xem course đã tồn tại trong yêu cầu trước đó chưa
                     var exists = false;
                     $.each(changeRequests, function (index, request) {
@@ -40,16 +41,40 @@
                         return;
                     }
 
-                    // Thêm yêu cầu vào mảng
-                    changeRequests.push({
-                        course: course,
-                        fromStudent: fromStudent,
-                        toStudent: toStudent
+                    $.ajax({
+                        type: 'POST',
+                        url: 'change', // Địa chỉ của servlet nhận dữ liệu
+                        data: {
+                            action: 'findID',
+                            course: course,
+                            fromStudent: fromStudent
+
+                        },
+                        success: function (response) {
+                            const regex = /\d+/; // Matches one or more digits
+                            const number = response.match(regex)[0];
+                            console.log(number);
+                            // Thêm yêu cầu vào mảng
+                            changeRequests.push({
+                                cid: number,
+                                course: course,
+                                fromStudent: fromStudent,
+                                toStudent: toStudent
+                            });
+
+                            // Hiển thị yêu cầu trên bảng
+                            var newRow = '<tr><td>' + course + '</td><td>' + fromStudent + '</td><td>' + toStudent + '</td><td><input type="hidden" name="cid" value="' + number + '"></td><td><button class="cancelRequestButton">Hủy</button></td></tr>';
+
+
+
+                            $('#changeRequestTable tbody').append(newRow);
+
+                        },
+                        error: function (xhr, status, error) {
+                            alert('Đã có lỗi xảy ra khi lấy ID mới: ' + error);
+                        }
                     });
 
-                    // Hiển thị yêu cầu trên bảng
-                    var newRow = '<tr><td>' + course + '</td><td>' + fromStudent + '</td><td>' + toStudent + '</td><td><button class="cancelRequestButton">Hủy</button></td></tr>';
-                    $('#changeRequestTable tbody').append(newRow);
                 }
 
                 // Sự kiện click cho nút tạo yêu cầu
@@ -84,7 +109,7 @@
                         return;
                     }
 
-                    addRequestToTable(course, fromStudent, toStudent);
+
 
                     // Gửi dữ liệu tới servlet
                     $.ajax({
@@ -100,8 +125,7 @@
                             // Chuyển đổi chuỗi JSON thành mảng JavaScript
                             var db = JSON.stringify(data);
                             var dataArray = JSON.parse(db);
-                            console.log(db);
-                            console.log(dataArray);
+
                             // Hiển thị dữ liệu trả về từ servlet lên trang web
                             var requestInfo = '';
                             for (var i = 0; i < dataArray.length; i++) {
@@ -113,6 +137,12 @@
                             alert('Đã có lỗi xảy ra: ' + error);
                         }
                     });
+
+                    addRequestToTable('0', course, fromStudent, toStudent);
+                    // Gửi dữ liệu tới servlet để lấy ID mới
+
+
+                    // addRequestToTable(course, fromStudent, toStudent);
                 });
 
                 // Sự kiện click cho nút Hủy
@@ -147,7 +177,7 @@
                 });
 
             <c:forEach items="${requestScope.requireds}" var="request">
-                addRequestToTable('${request.fromGroup.course.code}', '${request.fromStudent.name}', '${request.toStudent.name}');
+                addRequestToTable( '${request.fromGroup.course.code}', '${request.fromStudent.id}', '${request.toStudent.id}');
             </c:forEach>
 
                 // Sự kiện submit cho form

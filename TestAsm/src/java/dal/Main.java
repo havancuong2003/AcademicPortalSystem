@@ -18,8 +18,7 @@ public class Main {
         System.out.println(a.getStudentIDByUserName("cuonghv"));
         
           ChangeClassDBContext ccdbc = new ChangeClassDBContext();
-        ArrayList<model.ChangeClass> allRequired = ccdbc.getAllRequired("cuonghv");
-        System.out.println(allRequired.get(0).getFromGroup().getCourse().getCode());
+        System.out.println(ccdbc.findID("he1", "Mad101"));
         
     }
 }

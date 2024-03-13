@@ -5,6 +5,7 @@
 package controller.studentChangeClass;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import dal.AccountDBContext;
 import dal.ChangeClassDBContext;
 import dal.GroupDBContext;
@@ -100,17 +101,28 @@ public class ChangeClass extends HttpServlet {
             String course = request.getParameter("course");
             String fromStudent = request.getParameter("fromStudent");
             String toStudent = request.getParameter("toStudent");
-            
-        }
 
-        // Gửi dữ liệu của ArrayList dưới dạng JSON về client
-        Gson gson = new Gson();
-        String json = gson.toJson(a);
-        out.println(json);
+        } else if (action.equals("findID")) {
+            String course = request.getParameter("course");
+            String fromStudent = request.getParameter("fromStudent");
+            int newRequestId = ccdbc.findID(fromStudent, course);
+            JsonObject jsonResponse = new JsonObject();
+            jsonResponse.addProperty("", newRequestId);
+            Gson gson = new Gson();
+            String json = gson.toJson(jsonResponse);
+            response.getWriter().write(json);
+        } else if (action.equals("cancel")) {
+
+        }
+//        JsonObject j = new JsonObject();
+//        j.addProperty("message", "abcd");
+//        // Gửi dữ liệu của ArrayList dưới dạng JSON về client
+//        Gson gson = new Gson();
+//        String json = gson.toJson(j);
+//        out.println(json);
 
         // Flush để đảm bảo dữ liệu được gửi đi
         out.flush();
-        //  request.getRequestDispatcher("../Result.jsp").forward(request, response);
     }
 
     /**
