@@ -15,6 +15,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function () {
+
                 // Mảng để lưu trữ các yêu cầu đã tạo
                 var changeRequests = [];
 
@@ -24,7 +25,7 @@
                 }
 
                 // Hàm để thêm yêu cầu vào bảng
-                function addRequestToTable(course, fromStudent, fromGroup, toStudent, toGroup) {
+                function addRequestToTable(course, fromStudent, toStudent) {
                     // Kiểm tra xem course đã tồn tại trong yêu cầu trước đó chưa
                     var exists = false;
                     $.each(changeRequests, function (index, request) {
@@ -43,13 +44,11 @@
                     changeRequests.push({
                         course: course,
                         fromStudent: fromStudent,
-                        fromGroup: fromGroup,
-                        toStudent: toStudent,
-                        toGroup: toGroup
+                        toStudent: toStudent
                     });
 
                     // Hiển thị yêu cầu trên bảng
-                    var newRow = '<tr><td>' + course + '</td><td>' + fromStudent + '</td><td>' + fromGroup + '</td><td>' + toStudent + '</td><td>' + toGroup + '</td><td><button class="cancelRequestButton">Hủy</button></td></tr>';
+                    var newRow = '<tr><td>' + course + '</td><td>' + fromStudent + '</td><td>' + toStudent + '</td><td><button class="cancelRequestButton">Hủy</button></td></tr>';
                     $('#changeRequestTable tbody').append(newRow);
                 }
 
@@ -62,11 +61,15 @@
                 $('#addRequestButton').click(function (event) {
                     var course = $('#course').val();
                     var fromStudent = $('#fromStudent').val();
-                    var fromGroup = $('#fromGroup').val();
                     var toStudent = $('#toStudent').val();
-                    var toGroup = $('#toGroup').val();
 
-                    // Kiểm tra xem course đã tồn tại trong yêu cầu trước đó chưa
+                    // Kiểm tra xem có ô input nào trống không
+                    if (course === '' || fromStudent === '' || toStudent === '') {
+                        alert('Vui lòng điền đầy đủ thông tin yêu cầu.');
+                        return;
+                    }
+
+                    // Kiểm tra course đã tồn tại trong yêu cầu trước đó chưa
                     var exists = false;
                     $.each(changeRequests, function (index, request) {
                         if (request.course === course) {
@@ -81,22 +84,30 @@
                         return;
                     }
 
-                    addRequestToTable(course, fromStudent, fromGroup, toStudent, toGroup);
+                    addRequestToTable(course, fromStudent, toStudent);
 
                     // Gửi dữ liệu tới servlet
                     $.ajax({
                         type: 'POST',
                         url: 'change', // Địa chỉ của servlet nhận dữ liệu
                         data: {
+                            action: 'add',
                             course: course,
                             fromStudent: fromStudent,
-                            fromGroup: fromGroup,
-                            toStudent: toStudent,
-                            toGroup: toGroup
+                            toStudent: toStudent
                         },
-                        success: function (response) {
-                            alert('Yêu cầu đã được lưu vào cơ sở dữ liệu.');
-                            // Có thể thêm mã để xử lý phản hồi từ servlet nếu cần
+                        success: function (data) {
+                            // Chuyển đổi chuỗi JSON thành mảng JavaScript
+                            var db = JSON.stringify(data);
+                            var dataArray = JSON.parse(db);
+                            console.log(db);
+                            console.log(dataArray);
+                            // Hiển thị dữ liệu trả về từ servlet lên trang web
+                            var requestInfo = '';
+                            for (var i = 0; i < dataArray.length; i++) {
+                                requestInfo += '<span>' + dataArray[i] + '</span>';
+                            }
+                            $('#test').html(requestInfo); // Sử dụng id của div để hiển thị dữ liệu
                         },
                         error: function (xhr, status, error) {
                             alert('Đã có lỗi xảy ra: ' + error);
@@ -109,16 +120,15 @@
                     var row = $(this).closest('tr');
                     var course = row.find('td:eq(0)').text(); // Lấy nội dung cột course của hàng đó
                     var fromStudent = row.find('td:eq(1)').text(); // Lấy nội dung cột fromStudent của hàng đó
-                    var fromGroup = row.find('td:eq(2)').text(); // Lấy nội dung cột fromGroup của hàng đó
 
                     // Gửi dữ liệu tới servlet
                     $.ajax({
                         type: 'POST',
-                        url: 'your_servlet_url_here', // Địa chỉ của servlet nhận dữ liệu
+                        url: 'change', // Địa chỉ của servlet nhận dữ liệu
                         data: {
+                            action: 'cancel',
                             course: course,
-                            fromStudent: fromStudent,
-                            fromGroup: fromGroup
+                            fromStudent: fromStudent
                         },
                         success: function (response) {
                             // Xử lý phản hồi từ servlet nếu cần
@@ -137,7 +147,7 @@
                 });
 
             <c:forEach items="${requestScope.requireds}" var="request">
-                addRequestToTable('${request.fromGroup.course.code}', '${request.fromStudent.name}', '${request.fromGroup.name}', '${request.toStudent.name}', '${request.toGroup.name}');
+                addRequestToTable('${request.fromGroup.course.code}', '${request.fromStudent.name}', '${request.toStudent.name}');
             </c:forEach>
 
                 // Sự kiện submit cho form
@@ -151,6 +161,7 @@
     </head>
     <body>
         <jsp:include page="../homebutton.jsp"></jsp:include>
+            <div id="test"></div>
             <h2>Change Request</h2>
             <button id="createRequestButton">Tạo Yêu Cầu</button>
             <div id="requestForm" style="display:none;">
@@ -158,18 +169,14 @@
                     <label for="course">Course:</label>
                     <select id="course">
                     <c:forEach items="${requestScope.groups}" var="g" varStatus="loop">
-                        <option value="${g.course.code}">${g.course.code}</option>
+                        <option value="${g.course.code}" data-group-value="${g.id}">${g.course.code}</option>
                     </c:forEach>
-
-                </select><br>
+                </select>
+                <br>
                 <label for="fromStudent">From Student:</label>
                 <input type="text" id="fromStudent" readonly="true" value="${requestScope.studentid}"><br>
-                <label for="fromGroup">From Group:</label>
-                <input type="text" id="fromGroup"><br>
                 <label for="toStudent">To Student:</label>
-                <input type="text" id="toStudent"><br>
-                <label for="toGroup">To Group:</label>
-                <input type="text" id="toGroup"><br>
+                <input type="text" id="toStudent" required="true"><br>
                 <button id="addRequestButton">Thêm Yêu Cầu</button>
             </form>
         </div>
@@ -179,9 +186,7 @@
                 <tr>
                     <th>Course</th>
                     <th>From Student</th>
-                    <th>From Group</th>
                     <th>To Student</th>
-                    <th>To Group</th>
                     <th></th> <!-- Cột cho nút Hủy -->
                 </tr>
             </thead>
@@ -189,5 +194,17 @@
                 <!-- Các yêu cầu sẽ được thêm vào đây -->
             </tbody>
         </table>
+        <script>
+            // Sự kiện change cho phần tử select
+            $('#course').change(function () {
+                // Lấy giá trị của tùy chọn được chọn
+                var selectedOption = $(this).find('option:selected');
+                var groupValue = selectedOption.data('group-value');
+
+                // Cập nhật giá trị của ô input fromGroup
+                $('#fromGroup').val(groupValue);
+            });
+
+        </script>
     </body>
 </html>

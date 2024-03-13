@@ -190,6 +190,27 @@ public class ChangeClassDBContext extends DBContext<ChangeClass> {
             Logger.getLogger(ChangeClassDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public void insertRequired(String fromSt , String fromgr , String tost , String toGr){
+        try {
+            
+            
+            
+            
+            String sql = "insert into changeClass(fromStudent,fromGroup,toStudent,toGroup) values (?,?,?,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, fromSt);
+            stm.setString(3, tost);
+            stm.setString(2, fromgr);
+            stm.setString(4, toGr);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ChangeClassDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+//    public boolean checkInfo(String fromSt , String fromgr , String tost , String toGr){
+//        
+//    }
 
     @Override
     public ArrayList<ChangeClass> list() {

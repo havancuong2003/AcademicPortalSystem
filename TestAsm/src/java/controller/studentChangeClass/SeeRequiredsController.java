@@ -103,7 +103,9 @@ public class SeeRequiredsController extends HttpServlet {
             }
 
         }
-         Gson gson = new Gson();
+        response.sendRedirect("home");
+     
+      
 
     }
 
