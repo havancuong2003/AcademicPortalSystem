@@ -5,8 +5,6 @@
 package dal;
 
 import java.util.ArrayList;
-import model.Group;
-import model.Session;
 
 /**
  *
@@ -18,5 +16,10 @@ public class Main {
         GroupDBContext g = new GroupDBContext();
       AccountDBContext a = new AccountDBContext();
         System.out.println(a.getStudentIDByUserName("cuonghv"));
+        
+          ChangeClassDBContext ccdbc = new ChangeClassDBContext();
+        ArrayList<model.ChangeClass> allRequired = ccdbc.getAllRequired("cuonghv");
+        System.out.println(allRequired.get(0).getFromGroup().getCourse().getCode());
+        
     }
 }

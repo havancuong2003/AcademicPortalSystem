@@ -172,6 +172,10 @@
         <servlet-name>ChangeClass</servlet-name>
         <servlet-class>controller.studentChangeClass.ChangeClass</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SeeRequiredsController</servlet-name>
+        <servlet-class>controller.studentChangeClass.SeeRequiredsController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AttendanceStudentController</servlet-name>
         <url-pattern>/student/timetable</url-pattern>
@@ -291,6 +295,10 @@
     <servlet-mapping>
         <servlet-name>ChangeClass</servlet-name>
         <url-pattern>/student/change</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SeeRequiredsController</servlet-name>
+        <url-pattern>/student/seerequired</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>

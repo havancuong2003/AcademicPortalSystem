@@ -185,7 +185,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <li><a href="updatefeedback" >Update FeedBack</a></li>
                     <li>  <a href="../chat">Group chat</a></li>
                      <li><a href="checkabsent" >Attendance report</a></li>
-                     <li><a href="change" >Yêu cầu đổi chéo lớp sinh viên</a></li>
+                     <li><a href="change" >Yêu cầu đổi chéo lớp sinh viên</a></li><br/><br/>
+                     <li><a href="seerequired" >Xem yêu cầu đổi chéo</a></li>
 
                 </ul>
             </nav>

@@ -59,35 +59,41 @@
                 });
 
                 // Sự kiện click cho nút thêm yêu cầu
-                $('#addRequestButton').click(function () {
+                $('#addRequestButton').click(function (event) {
                     var course = $('#course').val();
                     var fromStudent = $('#fromStudent').val();
                     var fromGroup = $('#fromGroup').val();
                     var toStudent = $('#toStudent').val();
                     var toGroup = $('#toGroup').val();
-                    addRequestToTable(course, fromStudent, fromGroup, toStudent, toGroup);
-                });
 
-                // Sự kiện click cho nút Hủy
-                $('#changeRequestTable').on('click', '.cancelRequestButton', function () {
-                    var row = $(this).closest('tr');
-                    var course = row.find('td:eq(0)').text(); // Lấy nội dung cột course của hàng đó
-                    // Xóa yêu cầu khỏi mảng
-                    changeRequests = changeRequests.filter(function (request) {
-                        return request.course !== course;
+                    // Kiểm tra xem course đã tồn tại trong yêu cầu trước đó chưa
+                    var exists = false;
+                    $.each(changeRequests, function (index, request) {
+                        if (request.course === course) {
+                            exists = true;
+                            return false; // Thoát khỏi vòng lặp khi tìm thấy course trùng
+                        }
                     });
-                    // Xóa hàng khỏi bảng
-                    row.remove();
-                });
 
-                // Sự kiện submit cho form
-               
-                $('#saveRequestButton').click(function () {
+                    if (exists) {
+                        alert('Không thể tạo yêu cầu cho cùng một course ' + course + '!');
+                        event.preventDefault(); // Ngăn chặn hành động mặc định của form
+                        return;
+                    }
+
+                    addRequestToTable(course, fromStudent, fromGroup, toStudent, toGroup);
+
                     // Gửi dữ liệu tới servlet
                     $.ajax({
                         type: 'POST',
                         url: 'change', // Địa chỉ của servlet nhận dữ liệu
-                        data: $('#changeRequestForm').serialize(), // Sử dụng serialize để lấy dữ liệu từ form
+                        data: {
+                            course: course,
+                            fromStudent: fromStudent,
+                            fromGroup: fromGroup,
+                            toStudent: toStudent,
+                            toGroup: toGroup
+                        },
                         success: function (response) {
                             alert('Yêu cầu đã được lưu vào cơ sở dữ liệu.');
                             // Có thể thêm mã để xử lý phản hồi từ servlet nếu cần
@@ -98,16 +104,59 @@
                     });
                 });
 
+                // Sự kiện click cho nút Hủy
+                $('#changeRequestTable').on('click', '.cancelRequestButton', function () {
+                    var row = $(this).closest('tr');
+                    var course = row.find('td:eq(0)').text(); // Lấy nội dung cột course của hàng đó
+                    var fromStudent = row.find('td:eq(1)').text(); // Lấy nội dung cột fromStudent của hàng đó
+                    var fromGroup = row.find('td:eq(2)').text(); // Lấy nội dung cột fromGroup của hàng đó
+
+                    // Gửi dữ liệu tới servlet
+                    $.ajax({
+                        type: 'POST',
+                        url: 'your_servlet_url_here', // Địa chỉ của servlet nhận dữ liệu
+                        data: {
+                            course: course,
+                            fromStudent: fromStudent,
+                            fromGroup: fromGroup
+                        },
+                        success: function (response) {
+                            // Xử lý phản hồi từ servlet nếu cần
+                            alert('Đã hủy yêu cầu thành công.');
+                        },
+                        error: function (xhr, status, error) {
+                            alert('Đã có lỗi xảy ra: ' + error);
+                        }
+                    });
+
+                    // Xóa yêu cầu khỏi mảng và bảng
+                    changeRequests = changeRequests.filter(function (request) {
+                        return request.course !== course;
+                    });
+                    row.remove();
+                });
+
+            <c:forEach items="${requestScope.requireds}" var="request">
+                addRequestToTable('${request.fromGroup.course.code}', '${request.fromStudent.name}', '${request.fromGroup.name}', '${request.toStudent.name}', '${request.toGroup.name}');
+            </c:forEach>
+
+                // Sự kiện submit cho form
+                $('#changeRequestForm').submit(function (event) {
+                    // Ngăn chặn hành động mặc định của form
+                    event.preventDefault();
+                });
+
             });
         </script>
     </head>
     <body>
-        <h2>Change Request</h2>
-        <button id="createRequestButton">Tạo Yêu Cầu</button>
-        <div id="requestForm" style="display:none;">
-            <form id="changeRequestForm" method="post" action="change">
-                <label for="course">Course:</label>
-                <select id="course">
+        <jsp:include page="../homebutton.jsp"></jsp:include>
+            <h2>Change Request</h2>
+            <button id="createRequestButton">Tạo Yêu Cầu</button>
+            <div id="requestForm" style="display:none;">
+                <form id="changeRequestForm" method="post" action="change">
+                    <label for="course">Course:</label>
+                    <select id="course">
                     <c:forEach items="${requestScope.groups}" var="g" varStatus="loop">
                         <option value="${g.course.code}">${g.course.code}</option>
                     </c:forEach>
@@ -122,7 +171,6 @@
                 <label for="toGroup">To Group:</label>
                 <input type="text" id="toGroup"><br>
                 <button id="addRequestButton">Thêm Yêu Cầu</button>
-                <input id="saveRequestButton" type="submit" value="SAVE"/>
             </form>
         </div>
         <br>
@@ -143,5 +191,3 @@
         </table>
     </body>
 </html>
-
-
