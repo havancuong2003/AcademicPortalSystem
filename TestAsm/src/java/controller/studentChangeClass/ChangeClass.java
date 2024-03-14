@@ -97,29 +97,43 @@ public class ChangeClass extends HttpServlet {
         String action = request.getParameter("action");
         ChangeClassDBContext ccdbc = new ChangeClassDBContext();
         ArrayList<String> a = new ArrayList<>();
-        if (action.equals("add")) {
-            String course = request.getParameter("course");
-            String fromStudent = request.getParameter("fromStudent");
-            String toStudent = request.getParameter("toStudent");
+        switch (action) {
+            case "add": {
+                String course = request.getParameter("course");
+                String fromStudent = request.getParameter("fromStudent");
+                String toStudent = request.getParameter("toStudent");
+                if (ccdbc.checkExist(fromStudent, course) == 0) {
 
-        } else if (action.equals("findID")) {
-            String course = request.getParameter("course");
-            String fromStudent = request.getParameter("fromStudent");
-            int newRequestId = ccdbc.findID(fromStudent, course);
-            JsonObject jsonResponse = new JsonObject();
-            jsonResponse.addProperty("", newRequestId);
-            Gson gson = new Gson();
-            String json = gson.toJson(jsonResponse);
-            response.getWriter().write(json);
-        } else if (action.equals("cancel")) {
-
-        }
+                    ccdbc.insertRequired(course, fromStudent, toStudent);
+                    out.print("{\"status\":\"ok\"}");
+                }
+                break;
+            }
 //        JsonObject j = new JsonObject();
 //        j.addProperty("message", "abcd");
 //        // Gửi dữ liệu của ArrayList dưới dạng JSON về client
 //        Gson gson = new Gson();
 //        String json = gson.toJson(j);
 //        out.println(json);
+            case "findID": {
+                String course = request.getParameter("course");
+                String fromStudent = request.getParameter("fromStudent");
+                int newRequestId = ccdbc.findID(fromStudent, course);
+                JsonObject jsonResponse = new JsonObject();
+                jsonResponse.addProperty("", newRequestId);
+                Gson gson = new Gson();
+                String json = gson.toJson(jsonResponse);
+                response.getWriter().write(json);
+                break;
+            }
+            case "cancel":
+                String cid = request.getParameter("cid");
+                ccdbc.deleteRequired(cid);
+                out.print("{\"status\":\"ok\"}");
+                break;
+            default:
+                break;
+        }
 
         // Flush để đảm bảo dữ liệu được gửi đi
         out.flush();

@@ -180,9 +180,8 @@ public class ChangeClassDBContext extends DBContext<ChangeClass> {
 
     public void reject(int changeID) {
         try {
-            String sql = "update changeClass\n"
-                    + "set status = 'Reject'\n"
-                    + "where id = ?";
+            String sql = "	delete from changeClass\n"
+                    + "					where id = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, changeID);
             stm.executeUpdate();
@@ -191,15 +190,23 @@ public class ChangeClassDBContext extends DBContext<ChangeClass> {
         }
     }
 
-    public void insertRequired(String fromSt, String fromgr, String tost, String toGr) {
+    public void insertRequired(String course, String fromSt, String toSt) {
         try {
 
-            String sql = "insert into changeClass(fromStudent,fromGroup,toStudent,toGroup) values (?,?,?,?)";
+            String sql = "	insert into changeClass(fromStudent,fromGroup,toStudent,toGroup) values (?,(select g.id from student_group sg join [Group] g on g.id =sg.groupid\n"
+                    + "	 join course c on c.id=g.courseId\n"
+                    + "	 join student s on s.id=  sg.studentid\n"
+                    + "	  where termID = 2  and c.code =? and s.id =?),?,(select g.id from student_group sg join [Group] g on g.id =sg.groupid\n"
+                    + "	 join course c on c.id=g.courseId\n"
+                    + "	 join student s on s.id=  sg.studentid\n"
+                    + "	  where termID = 2  and c.code =? and s.id =?))";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, fromSt);
-            stm.setString(3, tost);
-            stm.setString(2, fromgr);
-            stm.setString(4, toGr);
+            stm.setString(2, course);
+            stm.setString(3, fromSt);
+            stm.setString(4, toSt);
+            stm.setString(5, course);
+            stm.setString(6, fromSt);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ChangeClassDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -219,10 +226,43 @@ public class ChangeClassDBContext extends DBContext<ChangeClass> {
             stm.setString(1, stid);
             stm.setString(2, course);
             ResultSet rs = stm.executeQuery();
-            if(rs.next()){
-                a  = rs.getInt("id");
+            if (rs.next()) {
+                a = rs.getInt("id");
             }
-            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ChangeClassDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return a;
+    }
+
+    public void deleteRequired(String id) {
+        try {
+            String sql = "	delete from changeClass\n"
+                    + "					where id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ChangeClassDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public int checkExist(String stid, String course) {
+        int a = 0;
+        try {
+            String sql = "	select cc.id from changeClass cc join [group] g on cc.fromGroup = g.id\n"
+                    + "		join course c on c.id=g.courseId\n"
+                    + "		where fromStudent = ?  and c.code =?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, stid);
+            stm.setString(2, course);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                a++;
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(ChangeClassDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }

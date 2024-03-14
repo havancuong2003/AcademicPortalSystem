@@ -24,9 +24,9 @@
                 function showRequestForm() {
                     $('#requestForm').show();
                 }
-               
+
                 // Hàm để thêm yêu cầu vào bảng
-                function addRequestToTable( course, fromStudent, toStudent) {
+                function addRequestToTable(course, fromStudent, toStudent) {
                     // Kiểm tra xem course đã tồn tại trong yêu cầu trước đó chưa
                     var exists = false;
                     $.each(changeRequests, function (index, request) {
@@ -53,7 +53,8 @@
                         success: function (response) {
                             const regex = /\d+/; // Matches one or more digits
                             const number = response.match(regex)[0];
-                            console.log(number);
+                            console.log(course);
+                            console.log(fromStudent);
                             // Thêm yêu cầu vào mảng
                             changeRequests.push({
                                 cid: number,
@@ -87,7 +88,7 @@
                     var course = $('#course').val();
                     var fromStudent = $('#fromStudent').val();
                     var toStudent = $('#toStudent').val();
-
+                    
                     // Kiểm tra xem có ô input nào trống không
                     if (course === '' || fromStudent === '' || toStudent === '') {
                         alert('Vui lòng điền đầy đủ thông tin yêu cầu.');
@@ -122,23 +123,15 @@
                             toStudent: toStudent
                         },
                         success: function (data) {
-                            // Chuyển đổi chuỗi JSON thành mảng JavaScript
-                            var db = JSON.stringify(data);
-                            var dataArray = JSON.parse(db);
-
-                            // Hiển thị dữ liệu trả về từ servlet lên trang web
-                            var requestInfo = '';
-                            for (var i = 0; i < dataArray.length; i++) {
-                                requestInfo += '<span>' + dataArray[i] + '</span>';
-                            }
-                            $('#test').html(requestInfo); // Sử dụng id của div để hiển thị dữ liệu
+                            addRequestToTable(course, fromStudent, toStudent);
+                           
                         },
                         error: function (xhr, status, error) {
                             alert('Đã có lỗi xảy ra: ' + error);
                         }
                     });
 
-                    addRequestToTable('0', course, fromStudent, toStudent);
+
                     // Gửi dữ liệu tới servlet để lấy ID mới
 
 
@@ -150,18 +143,24 @@
                     var row = $(this).closest('tr');
                     var course = row.find('td:eq(0)').text(); // Lấy nội dung cột course của hàng đó
                     var fromStudent = row.find('td:eq(1)').text(); // Lấy nội dung cột fromStudent của hàng đó
+                    var cid = row.find('input[name="cid"]').val(); // Lấy giá trị của input ẩn chứa id của yêu cầu
 
                     // Gửi dữ liệu tới servlet
                     $.ajax({
                         type: 'POST',
                         url: 'change', // Địa chỉ của servlet nhận dữ liệu
                         data: {
+                            cid: cid,
                             action: 'cancel',
                             course: course,
                             fromStudent: fromStudent
                         },
                         success: function (response) {
-                            // Xử lý phản hồi từ servlet nếu cần
+                            // Xóa yêu cầu khỏi mảng và bảng
+                            changeRequests = changeRequests.filter(function (request) {
+                                return request.course !== course;
+                            });
+                            row.remove();
                             alert('Đã hủy yêu cầu thành công.');
                         },
                         error: function (xhr, status, error) {
@@ -169,15 +168,11 @@
                         }
                     });
 
-                    // Xóa yêu cầu khỏi mảng và bảng
-                    changeRequests = changeRequests.filter(function (request) {
-                        return request.course !== course;
-                    });
-                    row.remove();
+
                 });
 
             <c:forEach items="${requestScope.requireds}" var="request">
-                addRequestToTable( '${request.fromGroup.course.code}', '${request.fromStudent.id}', '${request.toStudent.id}');
+                addRequestToTable('${request.fromGroup.course.code}', '${request.fromStudent.id}', '${request.toStudent.id}');
             </c:forEach>
 
                 // Sự kiện submit cho form
