@@ -121,13 +121,17 @@
                 color:blue;
                 
             }
+            .header-timetable{
+                text-align: center;
+                font-size: 35px;
+            }
         </style>
 
     </head>
     <body>
 
           <jsp:include page="../homebutton.jsp"></jsp:include>
-        <div>
+          <div class="header-timetable">
             <h2 id="header-timetable">Student Time Table</h2>
         </div>
 

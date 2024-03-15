@@ -52,20 +52,43 @@
                 margin: 5px 0;
                 color: #666;
             }
+            .links-container {
+                display: flex;
+                justify-content: flex-start;
+                margin: 10px;
+            }
+
+            .link {
+                text-decoration: none;
+                color: #007bff;
+                font-weight: bold;
+                margin: 0 20px;
+                padding: 10px 20px;
+                border: 2px solid #007bff;
+                border-radius: 5px;
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+
+            .link:hover {
+                background-color: #007bff;
+                color: #fff;
+            }
+
         </style>
     </head>
     <body>
         <jsp:include page="../homebutton.jsp"></jsp:include>
-        <div class="container">
+            <div class="container">
 
-            <h1 style="text-align: center;">User Detail</h1>
-            <div>
-                <a href="checkabsent">Course Attendance</a>
-                <a href="mark">Grade</a>
-            </div>
+                <h1 style="text-align: center;">User Detail</h1>
+                <div class="links-container">
+                    <a href="checkabsent" class="link">Course Attendance</a>
+                    <a href="mark" class="link">Grade</a>
+                </div>
 
-            <div class="student">
-                <img src="../img/${requestScope.student.imgUrl}" alt="Avatar">
+
+                <div class="student">
+                    <img src="../img/${requestScope.student.imgUrl}" alt="Avatar">
                 <div class="student-details">
                     <h2>Login: ${requestScope.student.username}</h2>
                     <h2>${requestScope.student.name}</h2>

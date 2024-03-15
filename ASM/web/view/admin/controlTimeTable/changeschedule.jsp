@@ -22,8 +22,8 @@
 
                 </c:if>
             }
-            a:hover {
-                background-color: #45a049;
+            body {
+                font-family: Arial, sans-serif;
             }
             .home a {
                 color: black;
@@ -31,13 +31,43 @@
                 padding: 5px 10px;
                 text-decoration: none;
                 background-color: #ccc;
+                border-radius: 5px;
             }
             .home {
                 padding: 10px;
-                border-radius: 5px;
                 margin: 25px 0;
             }
 
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th, td {
+                border: 1px solid #ccc;
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                background-color: #4CAF50;
+                color: white;
+            }
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+            input[type="submit"] {
+                background-color: #4CAF50;
+                color: white;
+                padding: 8px 16px;
+                border: none;
+                cursor: pointer;
+            }
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+            .formChange{
+                text-align: center;
+            }
+            
         </style>
     </head>
     <body>
@@ -47,11 +77,15 @@
         <div class="home">
             <a href="timetablelecture">Back</a>
         </div>
-        <form method="changeschedule" method="get">
+        <div class="formChange"> 
+            <h3>Input infomation want to Change lecture slot</h3>
+            <form method="changeschedule" method="get">
             <input type="date" name="date" placeholder="date want to change" required/>
             <input type="number" name="slot" placeholder="slot want to change" required/>
             <input type="submit" value="Find"/>
         </form>
+        </div>
+       
 
         <div id="chooseTeacher">
 

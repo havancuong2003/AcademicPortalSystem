@@ -62,16 +62,19 @@ public class ChatController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("account");
-
+        request.setAttribute("username", a.getUsername());
         GroupDBContext gdbc = new GroupDBContext();
         int role = gdbc.getRole(a.getUsername());
         request.setAttribute("role", role);
+       
         if (role == 3) {
             ArrayList<Group> listGroupForStudent = gdbc.getListGroupForStudent(a.getUsername());
             request.setAttribute("studentGroups", listGroupForStudent);
+             request.setAttribute("firstGroup", listGroupForStudent.get(0).getId());
         } else {
             ArrayList<Group> listGroupForLecture = gdbc.getListGroupForLecture(a.getUsername());
              request.setAttribute("studentGroups", listGroupForLecture);
+             request.setAttribute("firstGroup", listGroupForLecture.get(0).getId());
         }
 
         request.getRequestDispatcher("view/chat/groupChat.jsp").forward(request, response);

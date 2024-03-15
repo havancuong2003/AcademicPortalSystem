@@ -65,7 +65,7 @@
                             });
 
                             // Hiển thị yêu cầu trên bảng
-                            var newRow = '<tr><td>' + course + '</td><td>' + fromStudent + '</td><td>' + toStudent + '</td><td><input type="hidden" name="cid" value="' + number + '"></td><td><button class="cancelRequestButton">Hủy</button></td></tr>';
+                            var newRow = '<tr><td>' + course + '</td><td>' + fromStudent + '</td><td>' + toStudent + '</td><input type="hidden" name="cid" value="' + number + '"><td><button class="cancelRequestButton">Hủy</button></td></tr>';
 
 
 
@@ -200,7 +200,7 @@
 //
 //                            // Thêm yêu cầu mới vào bảng
                             $.each(firstElement, function (index, request) {
-                                var newRow = '<tr><td>' + request.fromGroup.course.code + '</td><td>' + request.fromStudent.name + '</td><td>' + request.toStudent.name + '</td><td><input type="hidden" name="cid" value="' + request.id + '"></td><td><button class="cancelRequestButton">Hủy</button></td></tr>';
+                                var newRow = '<tr><td>' + request.fromGroup.course.code + '</td><td>' + request.fromStudent.name + '</td><td>' + request.toStudent.name + '</td><input type="hidden" name="cid" value="' + request.id + '"><td><button class="cancelRequestButton">Hủy</button></td></tr>';
                                 $('#changeRequestTable tbody').append(newRow);
                             });
                         },
@@ -213,42 +213,149 @@
 
             });
         </script>
+        <style>
+            body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+}
+
+#container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+#requestForm {
+  margin-top: 20px;
+}
+
+#changeRequestForm {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+#changeRequestForm label {
+  flex-basis: 20%;
+  margin-bottom: 10px;
+}
+
+#changeRequestForm input[type="text"],
+#changeRequestForm select {
+  flex-basis: 80%;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+#changeRequestForm button {
+  flex-basis: 100%;
+  margin-bottom: 10px;
+}
+
+#changeRequestTable {
+  margin-top: 20px;
+}
+
+.cancelRequestButton {
+  background-color: #f44336;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.cancelRequestButton:hover {
+  background-color: #da190b;
+}
+        </style>
     </head>
     <body>
         <jsp:include page="../homebutton.jsp"></jsp:include>
-            <div id="test"></div>
-            <h2>Change Request</h2>
-            <button id="createRequestButton">Tạo Yêu Cầu</button>
-            <div id="requestForm" style="display:none;">
-                <form id="changeRequestForm" method="post" action="change">
-                    <label for="course">Course:</label>
-                    <select id="course">
-                    <c:forEach items="${requestScope.groups}" var="g" varStatus="loop">
-                        <option value="${g.course.code}" data-group-value="${g.id}">${g.course.code}</option>
-                    </c:forEach>
-                </select>
-                <br>
-                <label for="fromStudent">From Student:</label>
-                <input type="text" id="fromStudent" readonly="true" value="${requestScope.studentid}"><br>
-                <label for="toStudent">To Student:</label>
-                <input type="text" id="toStudent" required="true"><br>
-                <button id="addRequestButton">Thêm Yêu Cầu</button>
-            </form>
+            <div id="container">
+                <div class="header"></div>
+                <h2>Change Request</h2>
+                <button id="createRequestButton">Tạo Yêu Cầu</button>
+                <div id="requestForm" style="display:none;">
+                    <form id="changeRequestForm" method="post" action="change">
+                        <label for="course">Course:</label>
+                        <select id="course">
+                        <c:forEach items="${requestScope.groups}" var="g" varStatus="loop">
+                            <option value="${g.course.code}" data-group-value="${g.id}">${g.course.code}</option>
+                        </c:forEach>
+                    </select>
+                    <br>
+                    <label for="fromStudent">From Student:</label>
+                    <input type="text" id="fromStudent" readonly="true" value="${requestScope.studentid}"><br>
+                    <label for="toStudent">To Student:</label>
+                    <input type="text" id="toStudent" required="true"><br>
+                    <button id="addRequestButton">Thêm Yêu Cầu</button>
+                </form>
+            </div>
+            <br>
+            <table id="changeRequestTable" border="1">
+                <thead>
+                    <tr>
+                        <th>Course</th>
+                        <th>From Student</th>
+                        <th>To Student</th>
+                        <th></th> <!-- Cột cho nút Hủy -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Các yêu cầu sẽ được thêm vào đây -->
+                </tbody>
+
+            </table>
         </div>
-        <br>
-        <table id="changeRequestTable" border="1">
-            <thead>
-                <tr>
-                    <th>Course</th>
-                    <th>From Student</th>
-                    <th>To Student</th>
-                    <th></th> <!-- Cột cho nút Hủy -->
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Các yêu cầu sẽ được thêm vào đây -->
-            </tbody>
-        </table>
         <script>
             // Sự kiện change cho phần tử select
             $('#course').change(function () {

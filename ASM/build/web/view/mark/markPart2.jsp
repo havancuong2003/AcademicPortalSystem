@@ -160,7 +160,7 @@
         </style>
     </head>
     <body>
-        <h1>${requestScope.ts}</h1>
+   
         <h1 style="color:red">${requestScope.error}</h1>
         <jsp:include page="../homebutton.jsp"></jsp:include>
 
@@ -225,7 +225,7 @@
 
 
         <script>
-
+      
 
             var courseData = [
             <c:forEach items="${requestScope.markOfCourse}" var="m">

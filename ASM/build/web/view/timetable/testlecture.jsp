@@ -32,22 +32,7 @@
                 margin: 0;
             }
 
-            .home-link {
-                display: inline-block;
-                margin-top: 20px;
-                font-size: 18px;
-                text-decoration: none;
-                color: #007bff;
-                border: 2px solid #007bff;
-                padding: 10px 20px;
-                border-radius: 5px;
-                transition: background-color 0.3s, color 0.3s;
-            }
-
-            .home-link:hover {
-                background-color: #007bff;
-                color: #fff;
-            }
+          
 
             .timetable {
                 background-color: #fff;
@@ -76,7 +61,7 @@
             }
 
             .dropdowns select:hover {
-                border-color: #0056b3;
+                border-color: #ccc;
             }
 
             .table-container {
@@ -122,15 +107,19 @@
             }
             .disabled-element-atd {
                 cursor: not-allowed;
+                background-color: #ccc;
             }
             #formSearch {
                 width: 300px;
             }
             .containForm {
                 display: flex;
-                justify-content: center; /* Căn giữa theo chiều ngang */
-                align-items: center; /* Căn giữa theo chiều dọc */
+                justify-content: center; 
+                align-items: center; 
 
+            }
+            #header-timetable{
+                text-align: center;
             }
         </style>
 
@@ -141,11 +130,10 @@
 
     </head>
     <body>
-        <h1>${sessionScope.lidsearch}  </h1>  
-        <h6>${requestScope.taaaa} </h6>  
+ 
         <jsp:include page="../homebutton.jsp"></jsp:include>
-            <div>
-                <h2 id="header-timetable">Lecture Time Table</h2>
+            <div id="header-timetable">
+                <h2 >Lecture Time Table</h2>
             </div>
             <div class="containForm">
                 <form id="formSearch" action="timetable" method="get">
@@ -215,8 +203,7 @@
                 </tr>
             </c:forEach>
         </table> 
-        ${requestScope.userNameMain}
-        ${requestScope.userNamefind}
+        
         <div id="timetable"></div>
         <script>
             var usname = "${requestScope.userNameMain}";

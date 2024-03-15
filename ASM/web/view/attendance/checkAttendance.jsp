@@ -28,35 +28,35 @@
                 background-color: #f2f2f2;
             }
             .absent {
-                background-color: #ffcccc; /* Hoặc bất kỳ màu đỏ nào khác bạn muốn */
+                background-color: #ffcccc;
             }
 
-            /* Màu cho present (màu xanh lá) */
+
             .present {
-                background-color: #ccffcc; /* Hoặc bất kỳ màu xanh lá nào khác bạn muốn */
+                background-color: #ccffcc;
             }
             a {
-                text-decoration: none; /* Loại bỏ gạch chân mặc định */
-                color: #333; /* Màu chữ mặc định */
-                display: inline-block; /* Hiển thị dạng block để có thể thiết lập margin và padding */
-                margin-bottom: 10px; /* Khoảng cách dưới giữa các liên kết */
+                text-decoration: none;
+                color: #333;
+                display: inline-block;
+                margin-bottom: 10px;
             }
             a:hover {
-                color: #007bff; /* Màu chữ khi di chuột qua */
+                color: #007bff;
             }
 
-            /* Thiết lập kiểu cho các liên kết được bọc bởi thẻ div */
+
             .term-link, .course-link {
-                padding: 10px 15px; /* Padding cho nút */
-                border: 1px solid #ccc; /* Viền */
-                border-radius: 5px; /* Độ cong viền */
-                background-color: #f8f9fa; /* Màu nền */
-                transition: all 0.3s ease; /* Hiệu ứng chuyển đổi mượt mà */
+                padding: 10px 15px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                background-color: #f8f9fa;
+                transition: all 0.3s ease;
             }
 
-            /* Kiểu cho các liên kết khi di chuột qua */
+
             .term-link:hover, .course-link:hover {
-                background-color: #e9ecef; /* Màu nền khi di chuột qua */
+                background-color: #e9ecef;
             }
             #active${requestScope.active}{
                 color:red;
@@ -67,23 +67,33 @@
             a:hover {
                 background-color: #45a049;
             }
+            .container-header{
+                text-align: center;
+            }
 
         </style>
     </head>
     <body>
         <jsp:include page="../homebutton.jsp"></jsp:include>
-        <c:forEach items="${requestScope.term}" var="t"> 
-            <a id="active${t.term.id}" href="checkabsent?term=${t.term.id}">
-                <div class="term-link">${t.term.description}</div>
+        <div class="container-header">
+            <c:forEach items="${requestScope.term}" var="t"> 
+                <a id="active${t.term.id}" href="checkabsent?term=${t.term.id}">
+                    <div class="term-link">${t.term.description}</div>
 
-            </a>
-        </c:forEach>
+                </a>
+            </c:forEach>
+
+
+
         <br/>
-        <c:forEach items="${requestScope.courseByTerm}" var="c">
-            <a id="activecourse${c.course.id}" href="checkabsent?term=${requestScope.termid}&course=${c.course.id}">
-                <div class="course-link">${c.course.code}</div>
-            </a>
-        </c:forEach>
+     
+            <c:forEach items="${requestScope.courseByTerm}" var="c">
+                <a id="activecourse${c.course.id}" href="checkabsent?term=${requestScope.termid}&course=${c.course.id}">
+                    <div class="course-link">${c.course.code}</div>
+                </a>
+            </c:forEach>
+        </div>
+
 
         <br/>
         <br/>

@@ -5,6 +5,7 @@
 package dal;
 
 import java.util.ArrayList;
+import model.ChangeClass;
 
 /**
  *
@@ -18,7 +19,8 @@ public class Main {
         System.out.println(a.getStudentIDByUserName("cuonghv"));
         
           ChangeClassDBContext ccdbc = new ChangeClassDBContext();
-        System.out.println(ccdbc.findID("he1", "Mad101"));
+        ArrayList<ChangeClass> allRequiredForToStudent = ccdbc.getAllRequiredForToStudent("cuonghv");
+        System.out.println(allRequiredForToStudent.size());
         
     }
 }

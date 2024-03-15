@@ -11,28 +11,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
 
-            table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-            th, td {
-                border: 1px solid #dddddd;
-                text-align: left;
-                padding: 8px;
-            }
-            th {
-                background-color: #f2f2f2;
-            }
-
-            .studentimg  img {
-                max-width: 100px;
-                height: auto;
-            }
-
-            body {
-                font-family: Arial, sans-serif;
+            html, body {
+                height: 100%;
                 margin: 0;
                 padding: 0;
+            }
+            body {
+                font-family: Arial, sans-serif;
+
                 background-color: #f5f5f5;
 
             }
@@ -50,11 +36,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             }
             nav {
                 margin-top: 30px;
+                text-align: center;
             }
             ul {
                 list-style-type: none;
                 padding: 0;
                 text-align: center;
+                margin: 0;
             }
             li {
                 display: inline-block;
@@ -78,7 +66,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 top: 10px;
                 right: 50px;
             }
-
             .logout:hover::before {
                 content: "Logout";
                 position: absolute;
@@ -92,27 +79,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 opacity: 0;
                 transition: opacity 0.3s;
             }
-
             .logout:hover::before {
                 opacity: 1;
             }
             .footer {
-                position: relative;
-                bottom: 0;
-                left: 0;
-                width: 100%;
                 background-color: #ef9926;
                 color: white;
                 font-weight: bold;
+                position: absolute;
+                bottom: 0;
+                font-size: 20px;
+                width: 100%;
+                height: 100px;
                 text-align: center;
                 padding: 20px;
-                font-size: 20px;
-                height: 100px;
-            }
-
-            body {
-                margin: 0;
-                padding: 0;
             }
             header {
                 color: black;
@@ -126,33 +106,92 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 text-align: center;
                 padding: 10px;
             }
-
             .logo-header img {
                 width: 150px;
             }
-            html, body {
-                height: 100%;
-                margin: 0;
+            .feedback {
+                text-align: center;
+                display: ${requestScope.count == 0 ? 'none' : 'block'};
+            }
+            .container-feedback {
+                display: ${requestScope.count == 0 ? 'block' : 'none'};
+            }
+            .listFeature {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 10px;
+                justify-content: center;
+            }
+
+            .listFeature ul {
+                list-style-type: none;
                 padding: 0;
             }
 
-            .container {
-                display: flex;
-                flex-direction: column;
-                min-height: 67%;
+            .listFeature li {
+                text-align: center;
+                background-color: #f1f1f1;
+                padding: 15px;
+                border-radius: 5px;
+                margin:20px;
             }
+
+            .listFeature li a {
+                text-decoration: none;
+                color: #333;
+                font-weight: bold;
+                transition: color 0.3s ease;
+            }
+
+            .listFeature li a:hover {
+                color: #007bff;
+            }
+
 
             .content {
                 flex: 1;
             }
 
             .footer {
+                position: relative;
+                bottom: 0;
                 background-color: #ef9926;
                 color: white;
                 font-weight: bold;
                 text-align: center;
                 padding: 20px;
                 font-size: 20px;
+            }
+        </style>
+
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                overflow-: hidden;
+            }
+
+            .container {
+                min-height: calc(100% - 100px); /* Subtract the height of the footer */
+                display: flex;
+                flex-direction: column;
+            }
+
+            .content {
+                flex: 1;
+             
+            }
+            .footer {
+                height: 100px; /* Set a fixed height for the footer */
+                background-color: #ef9926;
+                color: white;
+                font-weight: bold;
+                text-align: center;
+                padding: 20px;
+                font-size: 20px;
+                position: relative;
+                margin-top: auto; /* Make the footer stick to the bottom */
             }
         </style>
     </head>
@@ -183,12 +222,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </div>
                 </div>
                 <nav>
-                    <ul>
+                    <ul class="listFeature">
                         <li><a href="timetable">Weekly Timetable</a></li>
                         <li><a href="lecture_info.jsp">Thông Tin Lecture</a></li>
                         <li><a href="mark" >Mark report</a></li>
                         <li><a href="seefeedback" >See Feedback</a></li>
-                         <li><a href="../chat" >Chat</a></li>
+                        <li><a href="../chat" >Chat</a></li>
 
                     </ul>
                     <br/>

@@ -43,6 +43,7 @@
             .main-body {
                 width: 100%;
                 padding-top: 20px;
+
             }
 
             #navbar {
@@ -80,6 +81,7 @@
                 grid-template-columns: 1fr 1fr 1fr;
                 grid-area: content;
                 padding: 30px;
+                gap: 30px;
             }
 
             .main-controller .control-model {
@@ -171,68 +173,40 @@
                     </svg>
                 </div>
             </div>
+            
+                <div class="main-body row">
+                    <nav id="navbar" class="col-lg-3">
+                        <header>Feature admin's</header>
+                        <ul>
+                            <li><a class="nav-link" href="changepassword">Change PassWord</a></li>
+                            <li>
+                                <a class="nav-link" href="emailsending"
+                                   >Check student Absent</a
+                                >
+                            </li>
+                            <li>
+                                <a class="nav-link" href="feedback"
+                                   >Check feedback</a
+                                >
+                            </li>
 
-            <div class="main-body row">
-                <nav id="navbar" class="col-lg-4">
-                    <header>Feature admin's</header>
-                    <ul>
-                        <li><a class="nav-link" href="changepassword">Change PassWord</a></li>
-                        <li>
-                            <a class="nav-link" href="emailsending"
-                               >Check student Absent</a
-                            >
-                        </li>
-                        <li>
-                            <a class="nav-link" href="feedback"
-                               >Check feedback</a
-                            >
-                        </li>
-                        <li><a class="nav-link" href="#Hello_world"></a></li>
-                        <li><a class="nav-link" href="#Variables"></a></li>
-                        <li>
-                            <a class="nav-link" href="#Declaring_variables"
-                               > </a
-                            >
-                        </li>
-                        <li>
-                            <a class="nav-link" href="#Variable_scope"> </a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="#Global_variables"> </a>
-                        </li>
-                        <!-- Các mục khác -->
-                    </ul>
-                </nav>
-                <div class="main-controller col-lg-8">
-                    <div class="control-model" onclick="manager(event)">
-                        <span>Student</span>
-                    </div>
-                    <div class="control-model" onclick="manager(event)">
-                        <span>Lecture</span>
-                    </div>
-                    <div class="control-model" onclick="manager(event)">
-                        <span>Lecture Timetable</span>
-                    </div>
-                    <div class="control-model" onclick="manager(event)">
-                        <span>d</span>
-                    </div>
-                    <div class="control-model" onclick="manager(event)">
-                        <span>e</span>
-                    </div>
-                    <div class="control-model" onclick="manager(event)">
-                        <span>f</span>
-                    </div>
-                    <div class="control-model" onclick="manager(event)">
-                        <span>g</span>
-                    </div>
-                    <div class="control-model" onclick="manager(event)">
-                        <span>h</span>
-                    </div>
-                    <div class="control-model" onclick="manager(event)">
-                        <span>i</span>
+                        </ul>
+                    </nav>
+                    <div class="main-controller col-lg-9">
+                        <div class="control-model" onclick="manager(event)">
+                            <span>Student</span>
+                        </div>
+                        <div class="control-model" onclick="manager(event)">
+                            <span>Lecture</span>
+                        </div>
+                        <div class="control-model" onclick="manager(event)">
+                            <span>Lecture Timetable</span>
+                        </div>
+
                     </div>
                 </div>
-            </div>
+     
+
 
             <div class="footer">
                 <p>FPT UNIVERSITY</p>

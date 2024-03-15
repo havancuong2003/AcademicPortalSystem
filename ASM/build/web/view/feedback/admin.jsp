@@ -74,6 +74,7 @@
                     <th>Student</th>
                     <th>Term</th>
                     <th>Course name</th>
+                    <th>Lecture</th>
                     <th>Content</th>
 
                     </thead>
@@ -85,6 +86,7 @@
                             <td>${f.student.name}</td>
                             <td>${f.group.term.description}</td>
                             <td>${f.group.course.code}</td>
+                            <td>${f.group.teacher.name}</td>
                             <td>${f.content}</td>
                         </tr>
                     </c:forEach>

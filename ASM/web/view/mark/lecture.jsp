@@ -128,13 +128,13 @@
 
             </c:forEach>
             ];
-            // Tạo một đối tượng để lưu trữ số lượng mục điểm trong mỗi danh mục
+          
             var categoryCounts = {};
 
-            // Đếm số lượng mục điểm trong mỗi danh mục
+            
             courseData.forEach(function (item) {
                 var category = item.gradeCategory;
-                // Kiểm tra nếu danh mục đã tồn tại trong categoryCounts
+              
                 if (categoryCounts[category] === undefined) {
                     categoryCounts[category] = 1;
                 } else {
@@ -142,7 +142,7 @@
                 }
             });
 
-            // Render HTML cho bảng
+           
             var html = '';
             courseData.forEach(function (item, index) {
                 if (index === 0 || item.gradeCategory !== courseData[index - 1].gradeCategory) {

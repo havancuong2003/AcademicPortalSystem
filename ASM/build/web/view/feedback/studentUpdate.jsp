@@ -13,64 +13,84 @@
         <title>JSP Page</title>
         <style>
             .container {
-                width: 80%; /* Adjust as needed */
-                margin: 0 auto; /* Center the container */
+                width: 80%;
+                margin: 0 auto;
             }
 
             /* Apply styles to the table */
             table {
-                border-collapse: collapse; /* Collapse border spacing */
-                width: 100%; /* Table takes full width */
+                border-collapse: collapse;
+                width: 100%;
             }
 
             /* Apply styles to table headers */
             th {
-                background-color: #f2f2f2; /* Light gray background */
-                border: 1px solid #dddddd; /* Add border */
-                padding: 8px; /* Add padding */
-                text-align: left; /* Align text to the left */
+                background-color: #f2f2f2;
+                border: 1px solid #dddddd;
+                padding: 12px;
+                text-align: left;
+                font-weight: bold; /* Make header text bold */
             }
 
             /* Apply styles to table cells */
             td {
-                border: 1px solid #dddddd; /* Add border */
-                padding: 8px; /* Add padding */
-                text-align: left; /* Align text to the left */
+                border: 1px solid #dddddd;
+                padding: 12px;
+                text-align: left;
             }
 
             /* Style the textarea */
             textarea {
-                width: 100%; /* Make the textarea fill its container */
-                height: 150px; /* Set a fixed height */
-
-                font-size: 14px; /* Adjust font size */
-                resize: vertical; /* Allow vertical resizing */
+                width: 100%;
+                height: 150px;
+                font-size: 14px;
+                resize: vertical;
+                padding: 5px;
+                border: 1px solid #dddddd;
+                border-radius: 5px;
+                margin: 8px 0; /* Add margin between textareas */
             }
+
+            /* Style the submit button */
+            input[type="submit"] {
+                background-color: #4CAF50;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+
         </style>
     </head>
     <body>
         <jsp:include page="../homebutton.jsp"></jsp:include>
-        <div class="container">
-            <form action="updatefeedback" method="post">
+            <div class="container">
+                <form action="updatefeedback" method="post">
 
 
-                <table>
-                    <thead>
-                    <th>Content</th>
-                    <th>Lecture</th>
-                    </thead>
-                    <tbody>
+                    <table>
+                        <thead>
+                        <th>Content</th>
+                        <th>Lecture</th>
+                        </thead>
+                        <tbody>
                         <c:forEach items="${requestScope.feedbacks}" var="f">
                             <tr>
                                 <td><textarea id="content" name="content${f.id}" rows="10" cols="50">${f.content}</textarea></td>
                                 <td>${f.group.teacher.name}</td>
                             </tr>
-                        
-                        
+
+
                         </c:forEach>
                     </tbody>
                 </table>
-                
+
                 <input type="submit" value="save"/>
             </form>
         </div>
