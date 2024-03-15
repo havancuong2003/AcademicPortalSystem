@@ -10,10 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.IEntity;
 
-/**
- *
- * @author sonnt
- */
+
 public abstract class DBContext<T extends IEntity> {
 
     protected Connection connection;

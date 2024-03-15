@@ -94,8 +94,8 @@
             <input type="hidden" name="lectureInfo" value="${requestScope.lectureInfo}"/>
             <table style="border: 1px solid black">
                 <th>NO</th>
-                <th>Student ID</th>
-                <th>Student Name</th>
+                <th>Lecutre ID</th>
+                <th>Lecutre Name</th>
                 <th>Date of birth</th>
                 <th>Email</th>
                 <th>User Name</th>

@@ -63,7 +63,7 @@ public class MarkDBContext extends DBContext<Mark> {
                     + "join [group] g on g.id=sg.groupid\n"
                     + "join Course c on c.id = mc.courseId\n"
                     + "join student s on sg.Studentid=s.id\n"
-                    + "where s.userName =? and g.termID=? and c.id=?";
+                    + "where s.userName =? and g.termID=? and c.id=? and g.termID <5";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);
             stm.setString(2, termid);
@@ -118,7 +118,8 @@ public class MarkDBContext extends DBContext<Mark> {
     public ArrayList<Group> getTermOfStudentLearned(String username) {
         ArrayList<Group> groups = new ArrayList<>();
         try {
-            String sql = "select distinct g.termID from [group] g join student_group sg on g.id=sg.groupid join Student s on s.id=sg.Studentid and s.userName like ?";
+            String sql = "select distinct g.termID from [group] g join student_group sg on g.id=sg.groupid join Student s on s.id=sg.Studentid and s.userName like ?"
+                    + "where g.termID < 5";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);
             ResultSet rs = stm.executeQuery();
@@ -387,7 +388,7 @@ public class MarkDBContext extends DBContext<Mark> {
                     + "join [group] g on g.id=sg.groupid\n"
                     + "join course c on c.id=g.courseId\n"
                     + "\n"
-                    + "where s.username= ? and g.id= ?\n";
+                    + "where s.username= ? and g.id= ? and g.termID < 5\n";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);
             stm.setInt(2, gid);
@@ -436,7 +437,7 @@ public class MarkDBContext extends DBContext<Mark> {
                     + "join [group] g on g.id = sg.groupid\n"
                     + "join term t on t.id = g.termID\n"
                     + "join course c on c.id=g.courseId\n"
-                    + "where s.id =? \n"
+                    + "where s.id =? and g.termID < 5\n"
                     + "order by t.id\n";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, sid);

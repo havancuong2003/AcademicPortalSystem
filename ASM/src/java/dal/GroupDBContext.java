@@ -212,7 +212,7 @@ public class GroupDBContext extends DBContext<Group> {
         try {
             String sql = "select g.id as groupid,g.courseid as cid,g.name from student_group sg join [group] g on sg.groupid = g.id\n"
                     + "join student s on s.id =sg.studentid\n"
-                    + "where g.termid = 2 and s.userName =?";
+                    + "where g.termid = 5 and s.userName =?";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);

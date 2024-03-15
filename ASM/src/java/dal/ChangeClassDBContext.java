@@ -196,10 +196,10 @@ public class ChangeClassDBContext extends DBContext<ChangeClass> {
             String sql = "	insert into changeClass(fromStudent,fromGroup,toStudent,toGroup) values (?,(select g.id from student_group sg join [Group] g on g.id =sg.groupid\n"
                     + "	 join course c on c.id=g.courseId\n"
                     + "	 join student s on s.id=  sg.studentid\n"
-                    + "	  where termID = 2  and c.code =? and s.id =?),?,(select g.id from student_group sg join [Group] g on g.id =sg.groupid\n"
+                    + "	  where termID = 5  and c.code =? and s.id =?),?,(select g.id from student_group sg join [Group] g on g.id =sg.groupid\n"
                     + "	 join course c on c.id=g.courseId\n"
                     + "	 join student s on s.id=  sg.studentid\n"
-                    + "	  where termID = 2  and c.code =? and s.id =?))";
+                    + "	  where termID = 5  and c.code =? and s.id =?))";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, fromSt);
             stm.setString(2, course);
