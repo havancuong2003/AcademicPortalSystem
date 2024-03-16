@@ -180,6 +180,14 @@
         <servlet-name>Toforward</servlet-name>
         <servlet-class>controller.studentChangeClass.Toforward</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LectureInfo</servlet-name>
+        <servlet-class>controller.personalinfo.LectureInfo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NoticeController</servlet-name>
+        <servlet-class>control.studentNotice.NoticeController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AttendanceStudentController</servlet-name>
         <url-pattern>/student/timetable</url-pattern>
@@ -307,6 +315,14 @@
     <servlet-mapping>
         <servlet-name>Toforward</servlet-name>
         <url-pattern>/student/changetostudent</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LectureInfo</servlet-name>
+        <url-pattern>/lecture/info</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NoticeController</servlet-name>
+        <url-pattern>/student/news</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>

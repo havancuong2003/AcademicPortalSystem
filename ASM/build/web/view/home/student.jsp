@@ -137,12 +137,53 @@
             .listFeature li a:hover {
                 color: #007bff;
             }
+            .welcome {
+                background-color: #f1f1f1;
+                padding: 20px;
+                text-align: center;
+            }
+
+            .welcome h2 {
+                margin: 0;
+                padding: 0;
+            }
+
+            .notice {
+                background-color: #4CAF50;
+                width:15%;
+                color: white;
+                padding: 25px;
+                text-align: center;
+                margin-top: 20px;
+                height:80px;
+            }
+
+            .notice a {
+                border-radius:10px;
+                background-color: orange;
+                padding:15px;
+                color: white;
+                text-decoration: none;
+                position: relative;
+                top: 25px;
+               
+            }
+            
+            
+
+            .notice a:hover {
+                color: #f1f1f1;
+            }
 
         </style>
     </head>
     <body>
         <div class="welcome">
             <h2>Hello ${requestScope.user}</h2>
+        </div>
+        <div class="notice">
+            <span>XEM TIN TỨC MỚI</span><br/>
+            <a class="noticeClick" href="news"> TẠI ĐÂY</a>
         </div>
         <div class="feedback">
             <div class="logout">
@@ -198,6 +239,7 @@
                     <li><a href="checkabsent">Attendance report</a></li>
                     <li><a href="change">Yêu cầu đổi chéo lớp sinh viên</a></li>
                     <li><a href="seerequired">Xem yêu cầu đổi chéo</a></li>
+
                 </ul>
             </nav>
         </div>

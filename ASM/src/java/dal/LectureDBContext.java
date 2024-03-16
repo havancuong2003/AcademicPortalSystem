@@ -143,6 +143,24 @@ public class LectureDBContext extends DBContext<Teacher> {
 
     }
 
+      public Teacher getLectureByUserName(String username) {
+        Teacher t = null;
+        try {
+            String sql = "select * from lecture where username = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                t = new Teacher();
+                t.setId(rs.getString("id"));
+                t.setName(rs.getString("name"));
+                t.setDob(rs.getDate("dob"));
+                t.setEmail(rs.getString("email"));
+            }
+        } catch (SQLException e) {
+        }
+        return t;
+    }
     @Override
     public void insert(Teacher entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
