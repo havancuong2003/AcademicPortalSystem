@@ -34,7 +34,7 @@
             border-radius: 5px;
             margin: 25px 0;
         }
-        
+
         .group-item{
             border:1px solid #ccc;
             margin-bottom: 15px;
@@ -60,7 +60,7 @@
             padding: 0px;
         }
 
-       
+
 
         .no-padding-margin {
             margin: 0px;
@@ -71,9 +71,9 @@
             background-color: rgba(215, 214, 214, 0.556)
         }
 
-     
 
-     
+
+
 
         .navbar {
             /* background-color: #005b96; */
@@ -85,7 +85,7 @@
             width: 100%;
         }
 
-  
+
 
         .body-content {
             padding-top: 70px;
@@ -105,7 +105,7 @@
 
         }
 
-      
+
 
         .box-chat-main {
             background-color: white;
@@ -117,7 +117,7 @@
 
         }
 
-    
+
 
         .box-chat-main-header{
             display: flex;
@@ -145,7 +145,7 @@
             height: 465px;
         }
 
-     
+
 
         .box-chat-main-body .friend-conversation{
             display: flex;
@@ -226,7 +226,7 @@
             text-align: center;
         }
 
-        
+
 
 
     </style>
@@ -236,7 +236,7 @@
             <c:if test="${requestScope.role != 3}"> <a href="lecture/home">Home</a></c:if>
             </div>
             <div class="header-chat"> <h2> WebSocket Chat Room</h2></div>
-           
+
 
 
 
@@ -267,7 +267,7 @@
                                     <div class="box-chat-main-header"><h2>Group ${g.name} - ${g.course.code}</h2></div>
                                     <div class="box-chat-main-body"> <textarea id="textAreaMessageGroup${g.id}" rows="10" cols="50" readonly="true"></textarea></div>
                                     <div class="box-chat-main-footer"> 
-                                        <input id="textMessageGroup${g.id}" type="text" />
+                                        <input id="textMessageGroup${g.id}" type="text" onkeypress="sendMessageOnEnter(event, ${g.id})"/>
                                         <input onclick="sendMessageToGroup${g.id}()" value="Send Message" id="sendMess" type="button" /> 
                                     </div>
 
@@ -347,6 +347,25 @@
                 var clickedElement = document.getElementById('group' + groupId);
                 clickedElement.classList.add('highlighted');
             }
+
+            function sendMessageOnEnter(event, groupId) {
+                if (event.keyCode === 13) { // Kiểm tra nếu phím Enter được nhấn
+                    var message = document.getElementById("textMessageGroup" + groupId).value;
+                    if (message.trim() !== '') { // Kiểm tra nếu trường tin nhắn không rỗng
+                        sendMessageToGroup(groupId);
+                    }
+                }
+            }
+
+            function sendMessageToGroup(groupId) {
+                var message = document.getElementById("textMessageGroup" + groupId).value;
+                if (window["websocketGroup" + groupId].readyState === WebSocket.OPEN) {
+                    window["websocketGroup" + groupId].send(message);
+                    document.getElementById("textMessageGroup" + groupId).value = "";
+                }
+            }
+
+
 
         </script>
 
