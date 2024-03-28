@@ -107,7 +107,7 @@ input[type="submit"]:hover {
                             <td>
                                 <input type="checkbox" name="selectedStudents" value="${student.student.id}" />
                                 <input type="hidden" name="course-${student.student.id}" value="${student.course.code}" />
-                                <input type="hidden" name="courseid" value="${student.course.id}" />
+                                <input type="hidden" name="courseid-${student.student.id}" value="${student.course.id}" />
                             </td>
                         </tr>
                     </c:forEach>

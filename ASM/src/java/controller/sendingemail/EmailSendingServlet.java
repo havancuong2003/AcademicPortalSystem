@@ -39,6 +39,8 @@ public class EmailSendingServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String[] selectedStudents = request.getParameterValues("selectedStudents");
+
+       
         String resultMessage = "";
         getStudentHelper g = new getStudentHelper();
         ArrayList<String> sidAndCids = new ArrayList<>();
@@ -54,7 +56,7 @@ public class EmailSendingServlet extends HttpServlet {
                 if (student == null) {
                     throw new IllegalArgumentException("Student with ID " + studentId + " not found.");
                 }
-                String courseid = request.getParameter("courseid");
+                String courseid = request.getParameter("courseid-"+student.getId());
                 String course = request.getParameter("course-" + studentId); // Lấy môn học của sinh viên
                 String emailContent = "You absent more than 10% of " + course +" please attention about lession"; // Nội dung email có thể được tạo dựa trên môn học
                 sidAndCid = (student.getId() + "-" + courseid);

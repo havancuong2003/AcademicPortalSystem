@@ -100,7 +100,7 @@ public class SendingEmailDBContext extends DBContext<SendEmail> {
                         + "		   set emailCheck =1 \n"
                         + "		   where student_group_id = (select sg.id from student_group sg join [Group] g\n"
                         + "		 on sg.groupid = g.id\n"
-                        + "		 where g.courseId=? and sg.Studentid=?)";
+                        + "		 where g.courseId=? and sg.Studentid=? and g.termid < 5)";
                 PreparedStatement stm = connection.prepareStatement(sql);
                 stm.setInt(1, Integer.parseInt(cid));
                 stm.setString(2, sid);

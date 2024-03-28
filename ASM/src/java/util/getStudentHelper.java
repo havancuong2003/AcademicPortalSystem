@@ -14,7 +14,7 @@ import model.Student;
  */
 public class getStudentHelper {
 
-    public static Student getStudentById(String id) {
+    public  Student getStudentById(String id) {
         StudentDBContext sdbc =new StudentDBContext();
         ArrayList<Student> students = sdbc.list();
  
@@ -25,9 +25,6 @@ public class getStudentHelper {
         }
         return null;
     }
-    public static void main(String[] args) {
-        Student s = getStudentById("he1");
-        System.out.println(s.getId());
-    }
+ 
 
 }
